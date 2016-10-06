@@ -70,171 +70,274 @@ public abstract class Cell {
 }
  
 package cells;
+
 public abstract class CellShape {
 ** external **
   	public Node getNode()
+  	
 	public void setColor(Color c)
+	
 	public Paint getColor()
 }
  
 package cells;
+
 public class FireCell extends Cell { 
 ** internal **
+
   	public FireCell(int i, String shapeID)
 }
  
 package cells;
+
 public class GameOfLifeCell extends Cell{ 
 ** internal **
+
   	public GameOfLifeCell(int i, String shapeID)
+  	
 	public void setLiving(boolean b) 
+	
 	public boolean isLiving() 
 }
  
 package cells;
+
 public class Hexagon extends CellShape { 
 ** external **
+
   	public Hexagon(Paint color)
+  	
 	public Node getNode()
+	
 	public void setColor(Color c)
 }
  
 package cells;
+
 public class SegregationCell extends Cell{ 
 ** internal **
+
   	public SegregationCell(int i, String shapeID)
 }
  
 package cells;
+
 public class SlimeCell extends Cell { 
 ** internal **
+
   	public SlimeCell(String shapeID) 
+  	
 	public SlimeCell(String shapeID, int chem, SlimeMold mold) 
+	
 	public void decayChemicals(int i) 
+	
 	public void addChemicals(int i) 
+	
 	public int getChemicals() return chemicals;}
+	
 	public boolean hasMold() return myMold != null;}
+	
 	public SlimeMold getSlimeMold() return myMold == null ? new SlimeMold() : myMold;}
+	
 	public void removeSlimeMold() myMold = null;}
+	
 	public void addSlimeMold(SlimeMold m) myMold = m;}
+	
 	public void setColor() 
 }
  
 package cells;
+
 public class Square extends CellShape{ 
 ** external **
+
   	public Square(int size, Paint color)
+  	
 	public Square(int size)
+	
 	public Node getNode()
+	
 	public void setColor(Color c)
+	
 	public void setSize(int size)
 }
  
 package cells;
 public class SugarScapeCell extends Cell { 
 ** internal **
-  	public SugarScapeCell(String shapeID, int maxS, int s) 
+
+  	public SugarScapeCell(String shapeID, int maxS, int s)
+  	
 	public void growBackSugar(int s) 
+	
 	public void agentEatOrDie() 
+	
 	public SugarScapeAgent removeAgent() 
+	
 	public int getSugar() return sugar;}
+	
 	public boolean hasAgent() return agent != null;}
+	
 	public SugarScapeAgent getAgent() return agent;}
+	
 	public void addAgent(SugarScapeAgent a) 
 }
  
 package cells;
+
 public class Triangle extends CellShape{ 
 ** external **
+
   	public Triangle(Paint color) 
+  	
 	public Node getNode()
+	
 	public void setColor(Color c)
 }
  
 package cells;
+
 public class Wa_TorCell extends Cell { 
 ** internal**
+
   	public Wa_TorCell(int i, String shapeID)
+  	
 	public void setState(int i) 
+	
 	public void setState(int i, int e) 
+	
 	public void resetCycles() cyclesSinceBaby = 0;}
+	
 	public int getCycles() return cyclesSinceBaby;}
+	
 	public void addACycle() cyclesSinceBaby++;}
+	
 	public void setCycle(int c) cyclesSinceBaby = c;}
+	
 	public void addEnergy(int e) energy += e;}
+	
 	public void loseEnergy() energy--;}
+	
 	public boolean isDead() return energy<=0;}
+	
 	public int getEnergy() return energy;}
 }
  
 package cellsociety_team09;
+
 public class Ant { 
 ** should not be public **
+
   	public Ant() 
+  	
 	public Ant(int d) 
+	
 	public boolean goingToFood() return !food;}
+	
 	public boolean goingToHome() return food;}
+	
 	public void depositFood() food = false;}
+	
 	public void grabFood() food = true;}
+	
 	public int getDirection() return direction;}
+	
 	public void setDirection(int d) direction = d;}
 }
  
 package cellsociety_team09;
+
 public class AntReader extends FileReader { 
 ** internal **
+
   	public AntReader(String filename) throws XMLFileException 
+  	
 	public int getpDecayRate() 
+	
 	public int getfDecayRate() 
 }
  
 package cellsociety_team09;
+
 public class Ants extends Model { 
 ** internal **
+
   	public Ants() 
+  	
 	public Ants(int pDR, int fDR) 
+	
 	public Cell[][] update(Cell[][] g) 
+	
 	public void setPheromoneDecayRate(double i) pheromoneDecayRate=i;}
+	
 	public double getPheromoneDecayRate() return pheromoneDecayRate;}
+	
 	public void setFoodDecayRate(double i) foodDecayRate=i;}
+	
 	public double getFoodDecayRate() return foodDecayRate;}
+	
 	public List<Double> getHomeFoodCountList() 
 }
  
 package cellsociety_team09;
+
 public class AntsGrid extends Grid { 
 ** internal to front-end **
+
   	public AntsGrid(int m, int n, String shapeID, String edgeType, int[][] states, Model game) 
 }
  
 package cellsociety_team09;
+
 public class FileReader { 
 ** internal? **
+
   	public FileReader(String filename) 
+  	
 	public String getName() 
+	
 	public String setName(String newName)
+	
 	public int getNumRows() 
+	
 	public int getNumCols() 
+	
 	public String getShape() 
+	
 	public String getEdgeType() 
+	
 	public boolean isTitleValid() throws XMLFileException
+	
 	public void createErrorWindow(Exception e) 
+	
 	public int getNumSliders() 
+	
 	public double getInputMax() 
+	
 	public Document getDocument() 
+	
 	public int[][] getStates() 
+	
 	public int[][] getMold() 
 }
  
 package cellsociety_team09;
+
 public class Fire extends Model{ 
 ** internal **
+
   	public void setSpreadChance(double sp) spreadChance = sp;}
+  	
 	public Fire() 
+	
 	public Fire(double sp) 
+	
 	public Cell[][] update(Cell[][] g) 
+	
 	public List<Integer> getBurningStateCountList() 
+	
 	public List<Integer> getTreeStateCountList() 
+	
 	public List<Integer> getEmptyStateCountList() 
 }
  
