@@ -1,3 +1,5 @@
+**classes that are commented have all their methods of that type**
+
 package cells;
 
 public class AntsCell extends Cell { **internal API (all methods in class- internally used class)**
