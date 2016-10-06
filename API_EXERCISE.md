@@ -1,3 +1,38 @@
+Joy Kim (jmk77@duke.edu)
+
+Ted Marchildon (tmm61@duke.edu)
+
+Pratiksha Sharma (ps179@duke.edu)
+
+Vincent Zhang (vwz2@duke.edu)
+
+
+
+SLogo Discussion
+=====
+
+When does parsing need to take place and what does it need to start properly? 
+* When the user types into the textfield, send it over to backend. It needs to send over the string input.
+
+Result of parsing and who receives it
+* The command and inputs (parameter), received by the error checking process that eventually sends it to the backend
+
+When are errors detected?
+* Right after being parsed in the backend. Some sort of error message would be sent up to the display
+
+When do commands know, when do they know it, and how do they get it?
+* Commands know their command and their inputs. They know it during error checking. They get it through a resource file. Provides what the inputs are
+
+How is the GUI updated after a command has completed execution?
+* Retrieve the position of the actor (turtle) and draw it using JavaFX API.
+
+
+
+
+
+
+
+
 **classes that are commented have all their methods of that type**
 
 package cells;
