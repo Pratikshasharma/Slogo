@@ -1,6 +1,6 @@
 package cells;
 
-public class AntsCell extends Cell { internal API (all methods in class- internally used class)
+public class AntsCell extends Cell { **internal API (all methods in class- internally used class)**
 
   	public AntsCell(int state, String shapeID, int food, int max) 
   	
@@ -41,35 +41,37 @@ package cells;
 
 public abstract class Cell { 
 
-  	public Cell(int i, String shapeID) external
+
+  	public Cell(int i, String shapeID) ** INTERNAL **
   	
-	public Paint getColor() external
+	public Paint getColor() ** external **
 	
-	public void addNeighbor(Cell c) internal
+	public void addNeighbor(Cell c) ** internal ** 
 	
 	public int getState() 
 	
-	public boolean isState(int i) external
+	public boolean isState(int i) ** should not be included **
 	
-	public void setState(int i) external
+	public void setState(int i) ** external **
 	
-	public void setShape(String s)
+	public void setShape(String s) ** external ** 
 	
 	public Node getShape()
 	
-	public ArrayList<Cell> getNeighbors()  
+	public ArrayList<Cell> getNeighbors()  ** internal ** 
 	
-	public ArrayList<Cell> getAdjNeighbors()
+	public ArrayList<Cell> getAdjNeighbors() ** internal** 
 	
-	public void addAdjNeighbor(Cell c)
+	public void addAdjNeighbor(Cell c) ** internal **
 	
-	public void setNeighbors(ArrayList<Cell> n) 
+	public void setNeighbors(ArrayList<Cell> n) ** internal **
 	
-	public int getNumStates() 
+	public int getNumStates() ** external **
 }
  
 package cells;
-public abstract class CellShape { 
+public abstract class CellShape {
+** external **
   	public Node getNode()
 	public void setColor(Color c)
 	public Paint getColor()
@@ -77,11 +79,13 @@ public abstract class CellShape {
  
 package cells;
 public class FireCell extends Cell { 
+** internal **
   	public FireCell(int i, String shapeID)
 }
  
 package cells;
 public class GameOfLifeCell extends Cell{ 
+** internal **
   	public GameOfLifeCell(int i, String shapeID)
 	public void setLiving(boolean b) 
 	public boolean isLiving() 
@@ -89,6 +93,7 @@ public class GameOfLifeCell extends Cell{
  
 package cells;
 public class Hexagon extends CellShape { 
+** external **
   	public Hexagon(Paint color)
 	public Node getNode()
 	public void setColor(Color c)
@@ -96,11 +101,13 @@ public class Hexagon extends CellShape {
  
 package cells;
 public class SegregationCell extends Cell{ 
+** internal **
   	public SegregationCell(int i, String shapeID)
 }
  
 package cells;
 public class SlimeCell extends Cell { 
+** internal **
   	public SlimeCell(String shapeID) 
 	public SlimeCell(String shapeID, int chem, SlimeMold mold) 
 	public void decayChemicals(int i) 
@@ -115,6 +122,7 @@ public class SlimeCell extends Cell {
  
 package cells;
 public class Square extends CellShape{ 
+** external **
   	public Square(int size, Paint color)
 	public Square(int size)
 	public Node getNode()
@@ -124,6 +132,7 @@ public class Square extends CellShape{
  
 package cells;
 public class SugarScapeCell extends Cell { 
+** internal **
   	public SugarScapeCell(String shapeID, int maxS, int s) 
 	public void growBackSugar(int s) 
 	public void agentEatOrDie() 
@@ -136,13 +145,15 @@ public class SugarScapeCell extends Cell {
  
 package cells;
 public class Triangle extends CellShape{ 
-  	public Triangle(Paint color)
+** external **
+  	public Triangle(Paint color) 
 	public Node getNode()
 	public void setColor(Color c)
 }
  
 package cells;
 public class Wa_TorCell extends Cell { 
+** internal**
   	public Wa_TorCell(int i, String shapeID)
 	public void setState(int i) 
 	public void setState(int i, int e) 
@@ -158,6 +169,7 @@ public class Wa_TorCell extends Cell {
  
 package cellsociety_team09;
 public class Ant { 
+** should not be public **
   	public Ant() 
 	public Ant(int d) 
 	public boolean goingToFood() return !food;}
@@ -170,6 +182,7 @@ public class Ant {
  
 package cellsociety_team09;
 public class AntReader extends FileReader { 
+** internal **
   	public AntReader(String filename) throws XMLFileException 
 	public int getpDecayRate() 
 	public int getfDecayRate() 
@@ -177,6 +190,7 @@ public class AntReader extends FileReader {
  
 package cellsociety_team09;
 public class Ants extends Model { 
+** internal **
   	public Ants() 
 	public Ants(int pDR, int fDR) 
 	public Cell[][] update(Cell[][] g) 
@@ -189,11 +203,13 @@ public class Ants extends Model {
  
 package cellsociety_team09;
 public class AntsGrid extends Grid { 
+** internal to front-end **
   	public AntsGrid(int m, int n, String shapeID, String edgeType, int[][] states, Model game) 
 }
  
 package cellsociety_team09;
 public class FileReader { 
+** internal? **
   	public FileReader(String filename) 
 	public String getName() 
 	public String setName(String newName)
@@ -202,7 +218,7 @@ public class FileReader {
 	public String getShape() 
 	public String getEdgeType() 
 	public boolean isTitleValid() throws XMLFileException
-	public void createErrorWindow(Exception e)
+	public void createErrorWindow(Exception e) 
 	public int getNumSliders() 
 	public double getInputMax() 
 	public Document getDocument() 
@@ -212,6 +228,7 @@ public class FileReader {
  
 package cellsociety_team09;
 public class Fire extends Model{ 
+** internal **
   	public void setSpreadChance(double sp) spreadChance = sp;}
 	public Fire() 
 	public Fire(double sp) 
