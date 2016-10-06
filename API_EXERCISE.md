@@ -26,8 +26,9 @@ When do commands know, when do they know it, and how do they get it?
 How is the GUI updated after a command has completed execution?
 * Retrieve the position of the actor (turtle) and draw it using JavaFX API.
 
+General Classes
 
-
+![Image](images/CRC.jpg)
 
 
 
