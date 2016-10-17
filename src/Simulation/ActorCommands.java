@@ -43,24 +43,24 @@ public class ActorCommands {
         return actor.getDistance();
     }     
     
-    public int penDown(Actor actor){
+    public boolean penDown(Actor actor){
         actor.setPenStatus(true);
-        return 1;
+        return actor.getPenStatus();
     }
     
-    public int penUp(Actor actor){
+    public boolean penUp(Actor actor){
         actor.setPenStatus(false);
-        return 0;
+        return actor.getPenStatus();
     }
     
-    public int show(Actor actor){
-        actor.setVisibility(false);
-        return 1;
+    public boolean show(Actor actor){
+        actor.setVisibility(true);
+        return actor.getVisibility();
     }
     
-    public int hide(Actor actor){
+    public boolean hide(Actor actor){
         actor.setVisibility(false);
-        return 0;
+        return actor.getVisibility();
     }
     
     public double home(Actor actor){
@@ -70,25 +70,5 @@ public class ActorCommands {
     
     public double clearScreen(Actor actor){
         return home(actor);
-    }
-    
-    public int xcor(Actor actor){
-        return actor.getX();
-    }
-    
-    public int ycor(Actor actor){
-        return actor.getY();
-    }
-    
-    public double heading(Actor actor){
-        return actor.getAngle();
-    }
-    
-    public boolean isPenDown(Actor actor){
-        return actor.getPenStatus();
-    }
-    
-    public boolean isShowing(Actor actor){
-        return actor.getVisibility();
     }
 }
