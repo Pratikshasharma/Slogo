@@ -4,7 +4,7 @@ public abstract class Actor {
     private final static double DEGREES_CIRCLE=360.0;
     
     protected int xPosition, yPosition;
-    protected double distanceTraveled, degrees;
+    protected double distanceTraveled, degreesMoved, myAngle;
     protected boolean penDown, visible;
     
     public Actor () {
@@ -33,12 +33,17 @@ public abstract class Actor {
         return distanceTraveled;
     }
     
-    public void setDegrees(double angle){
-        degrees=angle%DEGREES_CIRCLE;
+    public void setAngle(double angle){
+        degreesMoved=angle-myAngle;
+        myAngle=angle%DEGREES_CIRCLE;
     }
     
-    public double getDegrees(){
-        return degrees;
+    public double getAngleMoved(){
+        return degreesMoved;
+    }
+    
+    public double getAngle(){
+        return myAngle;
     }
     
     public void setPenStatus(boolean pen){
@@ -61,7 +66,7 @@ public abstract class Actor {
         xPosition=x;
         yPosition=y;
         distanceTraveled=0;
-        degrees=0;
+        myAngle=0;
         penDown=true;
         visible=true;       
     }
