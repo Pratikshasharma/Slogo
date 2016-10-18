@@ -3,18 +3,18 @@ package Simulation;
 import Actors.Actor;
 
 public class ActorCommands {
-    public int forward(Actor actor, int pixels){
+    public double forward(Actor actor, int pixels){
         int x=(int) Math.round(Math.cos(actor.getAngle())*pixels);
         int y=(int) Math.round(Math.sin(actor.getAngle())*pixels);
         actor.setPos(actor.getX()+x,actor.getY()+y);
-        return pixels;
+        return (double) pixels;
     }
     
-    public int backward(Actor actor, int pixels){
+    public double backward(Actor actor, int pixels){
         int x=(int) Math.round(Math.cos(actor.getAngle())*pixels);
         int y=(int) Math.round(Math.sin(actor.getAngle())*pixels);
         actor.setPos(actor.getX()-x,actor.getY()-y);
-        return pixels;
+        return (double) pixels;
     }
     
     public double left(Actor actor, double angle){
@@ -43,24 +43,24 @@ public class ActorCommands {
         return actor.getDistance();
     }     
     
-    public boolean penDown(Actor actor){
+    public double penDown(Actor actor){
         actor.setPenStatus(true);
-        return actor.getPenStatus();
+        return 1;
     }
     
-    public boolean penUp(Actor actor){
+    public double penUp(Actor actor){
         actor.setPenStatus(false);
-        return actor.getPenStatus();
+        return 0;
     }
     
-    public boolean show(Actor actor){
+    public double show(Actor actor){
         actor.setVisibility(true);
-        return actor.getVisibility();
+        return 1;
     }
     
-    public boolean hide(Actor actor){
+    public double hide(Actor actor){
         actor.setVisibility(false);
-        return actor.getVisibility();
+        return 0;
     }
     
     public double home(Actor actor){
