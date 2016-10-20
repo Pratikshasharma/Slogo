@@ -49,7 +49,9 @@ public class History {
     }
     
     public void addToCommandHistory(String command){
+        if(command.length()!=0){
     	commandsList.getItems().add(command);
+        };
     }
     
     public void addToFunctionsHistory(String function){
