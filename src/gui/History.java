@@ -48,8 +48,10 @@ public class History {
 	}
 	
 	private void handleSelection(ListView<String> list){
-		String selectedCommand = list.getSelectionModel().getSelectedItem().toString();
-		myConsole.getTextField().setText(selectedCommand);
+		if(list.getSelectionModel().getSelectedItem() != null){
+			String selectedCommand = list.getSelectionModel().getSelectedItem().toString();
+			myConsole.getTextField().setText(selectedCommand);
+		}
 	}
     
     public VBox getMyHistoryVBox(){
