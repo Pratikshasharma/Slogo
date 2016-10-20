@@ -19,7 +19,6 @@ public class Console {
     }
    
    public TextField getTextField(){
-       return this.myCommand;
+       return myCommand;
    }
-
 }
