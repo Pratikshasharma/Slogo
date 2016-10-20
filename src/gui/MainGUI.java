@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import navigationTabs.FileTab;
@@ -22,8 +23,8 @@ public class MainGUI {
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
-    public MainGUI() throws MalformedURLException{
-        //myTurtle = new Turtle();
+    public MainGUI(){
+        myTurtle = new Turtle();
         myFileTab = new FileTab();
         myTools = new Tools();
         myLanguageTab = new Language();
@@ -38,7 +39,7 @@ public class MainGUI {
         myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
         root.getChildren().add(myVBox);
         
-        //root.getChildren().add(myTurtle.getMyTurtleImageView());
+        root.getChildren().add(myTurtle.getMyTurtleImageView());
         return root;
         
     }
@@ -55,4 +56,5 @@ public class MainGUI {
     private void addItemsInMenuBar(){
         myMenuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu());
     }
+
 }

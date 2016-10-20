@@ -16,5 +16,5 @@ public class GUIController {
     public Scene init(){
         Scene myScene = new Scene(myMainGUI.createRoot(),SCENE_WIDTH,SCENE_HEIGHT,Color.WHITE);
         return myScene;
-    }
+    }   
 }

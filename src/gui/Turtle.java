@@ -1,19 +1,17 @@
 package gui;
 
-import javafx.scene.control.Label;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import java.io.File;
 import java.net.MalformedURLException;
-import org.omg.CORBA.SystemException;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
  * * @author pratiksha sharma
- *
  */
 
 public class Turtle {
@@ -21,8 +19,9 @@ public class Turtle {
     private ImageView myTurtleImageView;
 
     
-    public Turtle() throws MalformedURLException{
-        myTurtleImageView = new ImageView(new Image(chooseFile().toURI().toURL().toString()));
+    public Turtle() {
+        //myTurtleImageView = new ImageView(new Image(chooseFile().toURI().toURL().toString()));
+        myTurtleImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("turtle.png")));
         initializeTurtle();
         myLine = new Polyline();
     }
@@ -60,8 +59,7 @@ public class Turtle {
         myTurtleImageView.setFitWidth(50);
         myTurtleImageView.setFitHeight(50);
         
-        // Change based on Size 
-        setPosition(450,200);
+        setPosition(MainGUI.TURTLE_PANE_WIDTH/2,MainGUI.TURTLE_PANE_HEIGHT/2);
     }
     
     public void setLineColor(String color){
