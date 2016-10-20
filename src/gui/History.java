@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
@@ -19,9 +20,16 @@ public class History {
         myHistoryBox = new VBox(20);
         myHistoryBox.setPadding(new Insets(20));
         initializeHistoryBoxes();
+        myHistoryBox.getChildren().add(createLabel("Command History"));
         setList(commandsList, 8);
+        myHistoryBox.getChildren().add(createLabel("Function History"));
         setList(functionsList, 16);
+        myHistoryBox.getChildren().add(createLabel("Variable History"));
         setList(variableList, 24);
+    }
+    
+    private Label createLabel(String message){
+    	return new Label(message);
     }
 
 	private void initializeHistoryBoxes() {
