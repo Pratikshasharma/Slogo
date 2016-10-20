@@ -33,19 +33,19 @@ public class MathOperations {
         return Math.sin(angle);
     }
     
-    public double cos(double angle){
+    public double cosine(double angle){
         return Math.cos(angle);
     }
     
-    public double tan(double angle){
+    public double tangent(double angle){
         return Math.tan(angle);
     }
     
-    public double atan(double angle){
+    public double arctangent(double angle){
         return Math.atan(angle);
     }
     
-    public double log(double a){
+    public double naturallog(double a){
         return Math.log(a);
     }
     
