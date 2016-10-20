@@ -14,6 +14,7 @@ public class Main extends Application{
 		myGUIController = new GUIController();
 		myStage.setTitle(TITLE);
 		Scene scene = myGUIController.init();
+		scene.setOnKeyPressed(e -> myGUIController.handleKeyInput(e.getCode()));
 		myStage.setScene(scene);
 		myStage.show();
 	}

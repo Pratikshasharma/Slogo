@@ -96,4 +96,8 @@ public class MainGUI {
     public Turtle getTurtle(){
     	return myTurtle;
     }
+    
+    public History getHistory(){
+    	return myHistory;
+    }
 }
