@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import navigationTabs.FileTab;
+import navigationTabs.Help;
 import navigationTabs.Language;
 import navigationTabs.Tools;
 
@@ -26,6 +27,7 @@ public class MainGUI {
     private Tools myTools;
     private Console myConsole;
     private History myHistory;
+    private Help myHelpTab;
     //    private MenuBar myMenuBar = new MenuBar();
     //  VBox myVBox;
     public static final double TURTLE_PANE_WIDTH = 550;
@@ -51,12 +53,11 @@ public class MainGUI {
         BorderPane root = new BorderPane();
         //        Group root = new Group();
         //        myVBox = new VBox(30);
-
         //        addItemsInMenuBar();
         //        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
         //        root.getChildren().add(myVBox);
         //    	addItemsInMenuBar();
-
+        
         root.setTop(createTop());
         root.setLeft(createLeft());
         root.setBottom(myConsole.getTextField());
@@ -74,7 +75,7 @@ public class MainGUI {
     }
     private HBox createTop(){
         HBox top = new HBox();
-        top.getChildren().addAll(addItemsInMenuBar(), createCommandReferenceButton());
+        top.getChildren().addAll(addItemsInMenuBar());
         return top;
     }
 
@@ -88,22 +89,22 @@ public class MainGUI {
     }
 
     private MenuBar addItemsInMenuBar(){
-        createCommandReferenceButton();
+        //createCommandReferenceButton();
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu());
+        menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu(),myHelpTab.getMyMenu());
         return menuBar;
     }
 
-    private Button createCommandReferenceButton() {
-        Button htmlReference = new Button("Command References");
-        htmlReference.setOnAction(e -> openHTMLReference());
-        return htmlReference;
-    }
+//    private Button createCommandReferenceButton() {
+//        Button htmlReference = new Button("Command References");
+//        htmlReference.setOnAction(e -> openHTMLReference());
+//        return htmlReference;
+//    }
 
-    private void openHTMLReference(){
-        HTMLReferencePage page = new HTMLReferencePage();
-        page.getPage();
-    }
+//    private void openHTMLReference(){
+//        HTMLReferencePage page = new HTMLReferencePage();
+//        page.getPage();
+//    }
 
     public Console getConsole(){
         return myConsole;
