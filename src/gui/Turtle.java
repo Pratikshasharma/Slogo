@@ -17,11 +17,12 @@ import javafx.stage.Stage;
 public class Turtle {
     private Polyline myLine;
     private ImageView myTurtleImageView;
+    private static final String TURTLE_TEST_IMAGE = "turtle.png";
 
     
-    public Turtle() {
+    public Turtle() throws MalformedURLException {
         //myTurtleImageView = new ImageView(new Image(chooseFile().toURI().toURL().toString()));
-        myTurtleImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("turtle.png")));
+        myTurtleImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(TURTLE_TEST_IMAGE)));
         initializeTurtle();
         myLine = new Polyline();
     }

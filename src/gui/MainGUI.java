@@ -3,15 +3,16 @@ package gui;
 import java.net.MalformedURLException;
 
 import commandreference.HTMLReferencePage;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-<<<<<<< HEAD
 import javafx.scene.control.TextField;
-=======
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
->>>>>>> b3c7f53965eb8865c43505178238c96ef0bc5e56
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import navigationTabs.FileTab;
@@ -25,63 +26,58 @@ public class MainGUI {
     private Tools myTools;
     private Console myConsole;
     private History myHistory;
-//    private MenuBar myMenuBar = new MenuBar();
-    VBox myVBox;
+    //    private MenuBar myMenuBar = new MenuBar();
+    //  VBox myVBox;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
     public MainGUI(){
-<<<<<<< HEAD
-        myTurtle = new Turtle();
-=======
-    	try {
-    		myTurtle = new Turtle();
-    	} catch (MalformedURLException e){
-    		
-    	}
->>>>>>> b3c7f53965eb8865c43505178238c96ef0bc5e56
+        try {
+            myTurtle = new Turtle();
+        }
+        catch (MalformedURLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
         myFileTab = new FileTab();
         myTools = new Tools();
         myLanguageTab = new Language();
         myConsole = new Console();
         myHistory = new History();
     }
-    
-<<<<<<< HEAD
-    public Group createRoot(){
-        Group root = new Group();
-        myVBox = new VBox(30);
-        myVBox.setPadding(new Insets(20));
-        addItemsInMenuBar();
-        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
-        root.getChildren().add(myVBox);
-        
-        root.getChildren().add(myTurtle.getMyTurtleImageView());
-=======
+
     public Parent createRoot(){
-    	BorderPane root = new BorderPane();
-//        Group root = new Group();
-//        myVBox = new VBox(30);
-//        myVBox.setPadding(new Insets(20));
-//        addItemsInMenuBar();
-//        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
-//        root.getChildren().add(myVBox);
-//        root.getChildren().add(myTurtle.getMyTurtleImageView());
-//    	addItemsInMenuBar();
-    	root.setTop(createTop());
-    	root.setLeft(createTurtlePane());
-    	root.setBottom(myConsole.getTextField());
-    	root.setRight(myHistory.getMyHistoryVBox());
->>>>>>> b3c7f53965eb8865c43505178238c96ef0bc5e56
+        BorderPane root = new BorderPane();
+        //        Group root = new Group();
+        //        myVBox = new VBox(30);
+
+        //        addItemsInMenuBar();
+        //        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
+        //        root.getChildren().add(myVBox);
+        //    	addItemsInMenuBar();
+
+        root.setTop(createTop());
+        root.setLeft(createLeft());
+        root.setBottom(myConsole.getTextField());
+        root.setRight(myHistory.getMyHistoryVBox());
+        root.getChildren().add(myTurtle.getMyTurtleImageView());
+        root.setPadding(new Insets(20));
         return root;
     }
-    
-    private HBox createTop(){
-    	HBox top = new HBox();
-    	top.getChildren().addAll(addItemsInMenuBar(), createCommandReferenceButton());
-    	return top;
+
+    private VBox createLeft(){
+        VBox left = new VBox();
+        left.setPadding(new Insets(20));
+        left.getChildren().addAll(createTurtlePane(),myConsole.getTextField());
+        return left;
     }
-    
+    private HBox createTop(){
+        HBox top = new HBox();
+        top.getChildren().addAll(addItemsInMenuBar(), createCommandReferenceButton());
+        return top;
+    }
+
     private Pane createTurtlePane(){
         Pane canvas = new Pane();
         canvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
@@ -90,35 +86,35 @@ public class MainGUI {
         canvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
         return canvas;
     }
-    
+
     private MenuBar addItemsInMenuBar(){
-    	createCommandReferenceButton();
+        createCommandReferenceButton();
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu());
         return menuBar;
     }
 
-	private Button createCommandReferenceButton() {
-		Button htmlReference = new Button("Command References");
-    	htmlReference.setOnAction(e -> openHTMLReference());
-    	return htmlReference;
-	}
-    
+    private Button createCommandReferenceButton() {
+        Button htmlReference = new Button("Command References");
+        htmlReference.setOnAction(e -> openHTMLReference());
+        return htmlReference;
+    }
+
     private void openHTMLReference(){
-    	HTMLReferencePage page = new HTMLReferencePage();
-    	page.getPage();
+        HTMLReferencePage page = new HTMLReferencePage();
+        page.getPage();
     }
-    
+
     public Console getConsole(){
-    	return myConsole;
+        return myConsole;
     }
-    
+
     public Turtle getTurtle(){
-    	return myTurtle;
+        return myTurtle;
     }
-    
+
     public History getHistory(){
-    	return myHistory;
+        return myHistory;
     }
 
 }
