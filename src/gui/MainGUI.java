@@ -17,7 +17,6 @@ public class MainGUI {
     private Tools myTools;
     private Console myConsole;
     private MenuBar myMenuBar = new MenuBar();
- 
     VBox myVBox;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
@@ -41,8 +40,7 @@ public class MainGUI {
         addItemsInMenuBar();
         myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
         root.getChildren().add(myVBox);
-        
-        //root.getChildren().add(myTurtle.getMyTurtleImageView());
+        root.getChildren().add(myTurtle.getMyTurtleImageView());
         return root;
         
     }
