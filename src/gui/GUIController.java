@@ -33,7 +33,9 @@ public class GUIController {
     
     public void handleKeyInput(KeyCode code){
     	switch(code) {
-    		case ENTER: addToHistory();
+    		case ENTER: 
+    			addToHistory();
+    			myMainGUI.getConsole().getTextField().setText("");
     		default:
     			//Do nothing
     	}
