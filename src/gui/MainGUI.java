@@ -46,8 +46,7 @@ public class MainGUI {
         myTools = new Tools();
         myLanguageTab = new Language();
         myConsole = new Console();
-        myHistory = new History();
-        myHelpTab = new Help();
+        myHistory = new History(myConsole);
     }
 
     public Parent createRoot(){
