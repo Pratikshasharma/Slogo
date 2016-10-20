@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public class GUIController {
@@ -18,11 +19,23 @@ public class GUIController {
         return myScene;
     }
     
+    public void addToHistory(){
+    	myMainGUI.getHistory().addToCommandHistory(getCommandEntered());
+    }
+    
     public String getCommandEntered(){
     	return myMainGUI.getConsole().getTextField().getText();
     }
     
     public void updateLocation(double x, double y){
     	myMainGUI.getTurtle().setPosition(x, y);
+    }
+    
+    public void handleKeyInput(KeyCode code){
+    	switch(code) {
+    		case ENTER: addToHistory();
+    		default:
+    			//Do nothing
+    	}
     }
 }
