@@ -15,7 +15,7 @@ public class History {
     public History(){
         createWindows();
     }
-    
+ 
     private void createWindows(){
         myHistoryBox = new VBox(20);
         myHistoryBox.setPadding(new Insets(20));
