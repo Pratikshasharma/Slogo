@@ -12,11 +12,11 @@ import java.net.URLConnection;
 
 public class HTMLReferencePage {
 
-	public static void getPage(){
+	public void getPage(){
 		//		try {
-		/* The following gets the HTML content
-		 * 
-		 */
+		//			/* The following gets the HTML content
+		//			 * 
+		//			 */
 		//			String a = "http://www.cs.duke.edu/courses/compsci308/fall16/assign/03_slogo/commands.php";
 		//			URL url = new URL(a);
 		//			URLConnection conn = url.openConnection();
@@ -30,7 +30,7 @@ public class HTMLReferencePage {
 		//				System.out.println(inputLine);
 		//			}
 		//			br.close();
-		
+
 		/*
 		 * This part opens a particular URL in the computer's default browser
 		 */
@@ -44,9 +44,5 @@ public class HTMLReferencePage {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args){
-		getPage();
 	}
 }

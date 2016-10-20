@@ -3,23 +3,30 @@ package Simulation;
 import Actors.Actor;
 
 public class ActorQueries {
-    public int xcor(Actor actor){
-        return actor.getX();
+    public double xCoordinate(Actor actor){
+        return (double) actor.getX();
     }
     
-    public int ycor(Actor actor){
-        return actor.getY();
+    public double yCoordinate(Actor actor){
+        return (double) actor.getY();
     }
     
     public double heading(Actor actor){
         return actor.getAngle();
     }
     
-    public boolean isPenDown(Actor actor){
-        return actor.getPenStatus();
+    public double isPenDown(Actor actor){
+        return booleantodouble(actor.getPenStatus());
     }
     
-    public boolean isShowing(Actor actor){
-        return actor.getVisibility();
+    public double isShowing(Actor actor){
+        return booleantodouble(actor.getVisibility());
+    }
+    
+    private double booleantodouble(boolean bool){
+        if(bool){
+            return 1;
+        }
+        return 0;
     }
 }

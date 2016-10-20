@@ -1,11 +1,38 @@
 package Simulation;
 
 public class BooleanOperations {
-    public boolean less(double a, double b){
-        return a<b;
+    public double lessThan(double a, double b){
+        return booleantodouble(a<b);
     }
     
-    public boolean greater(double a, double b){
-        return a>b;
+    public double greaterThan(double a, double b){
+        return booleantodouble(a>b);
+    }
+    
+    public double equal(double a, double b){
+        return booleantodouble(a==b);
+    }
+    
+    public double notEqual(double a, double b){
+        return booleantodouble(a!=b);
+    }
+    
+    public double and(double a, double b){
+        return booleantodouble(a>0 && b>0);
+    }
+    
+    public double or(double a, double b){
+        return booleantodouble(a>0 || b>0);
+    }
+    
+    public double not(double a){
+        return booleantodouble(a==0);
+    }
+    
+    private double booleantodouble(boolean bool){
+        if(bool){
+            return 1;
+        }
+        return 0;
     }
 }
