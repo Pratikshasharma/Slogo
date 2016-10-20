@@ -1,9 +1,13 @@
 package gui;
 
 import java.net.MalformedURLException;
+
+import commandreference.HTMLReferencePage;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import navigationTabs.FileTab;
@@ -45,11 +49,17 @@ public class MainGUI {
 //        root.getChildren().add(myVBox);
 //        root.getChildren().add(myTurtle.getMyTurtleImageView());
 //    	addItemsInMenuBar();
-    	root.setTop(addItemsInMenuBar());
+    	root.setTop(createTop());
     	root.setLeft(createTurtlePane());
     	root.setBottom(myConsole.getTextField());
     	root.setRight(myHistory.getMyHistoryVBox());
         return root;
+    }
+    
+    private HBox createTop(){
+    	HBox top = new HBox();
+    	top.getChildren().addAll(addItemsInMenuBar(), createCommandReferenceButton());
+    	return top;
     }
     
     private Pane createTurtlePane(){
@@ -62,9 +72,21 @@ public class MainGUI {
     }
     
     private MenuBar addItemsInMenuBar(){
+    	createCommandReferenceButton();
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu());
         return menuBar;
+    }
+
+	private Button createCommandReferenceButton() {
+		Button htmlReference = new Button("Command References");
+    	htmlReference.setOnAction(e -> openHTMLReference());
+    	return htmlReference;
+	}
+    
+    private void openHTMLReference(){
+    	HTMLReferencePage page = new HTMLReferencePage();
+    	page.getPage();
     }
     
     public Console getConsole(){
