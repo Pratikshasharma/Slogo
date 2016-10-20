@@ -3,7 +3,9 @@ package gui;
 import java.net.MalformedURLException;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import navigationTabs.FileTab;
@@ -16,6 +18,7 @@ public class MainGUI {
     private Language myLanguageTab; 
     private Tools myTools;
     private Console myConsole;
+    private History myHistory;
     private MenuBar myMenuBar = new MenuBar();
     VBox myVBox;
     public static final double TURTLE_PANE_WIDTH = 550;
@@ -31,18 +34,24 @@ public class MainGUI {
         myTools = new Tools();
         myLanguageTab = new Language();
         myConsole = new Console();
+        myHistory = new History();
     }
     
-    public Group createRoot(){
-        Group root = new Group();
-        myVBox = new VBox(30);
-        myVBox.setPadding(new Insets(20));
-        addItemsInMenuBar();
-        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
-        root.getChildren().add(myVBox);
-        root.getChildren().add(myTurtle.getMyTurtleImageView());
+    public Parent createRoot(){
+    	BorderPane root = new BorderPane();
+//        Group root = new Group();
+//        myVBox = new VBox(30);
+//        myVBox.setPadding(new Insets(20));
+//        addItemsInMenuBar();
+//        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
+//        root.getChildren().add(myVBox);
+//        root.getChildren().add(myTurtle.getMyTurtleImageView());
+    	addItemsInMenuBar();
+    	root.setTop(myMenuBar);
+    	root.setLeft(createTurtlePane());
+    	root.setBottom(myConsole.getTextField());
+    	root.setRight(myHistory.getMyHistoryVBox());
         return root;
-        
     }
     
     private Pane createTurtlePane(){
