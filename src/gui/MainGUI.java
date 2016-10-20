@@ -22,8 +22,12 @@ public class MainGUI {
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
-    public MainGUI() throws MalformedURLException{
-        //myTurtle = new Turtle();
+    public MainGUI(){
+    	try {
+    		myTurtle = new Turtle();
+    	} catch (MalformedURLException e){
+    		
+    	}
         myFileTab = new FileTab();
         myTools = new Tools();
         myLanguageTab = new Language();
@@ -54,5 +58,13 @@ public class MainGUI {
     
     private void addItemsInMenuBar(){
         myMenuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(),myLanguageTab.getMyMenu());
+    }
+    
+    public Console getConsole(){
+    	return myConsole;
+    }
+    
+    public Turtle getTurtle(){
+    	return myTurtle;
     }
 }
