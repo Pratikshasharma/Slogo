@@ -1,13 +1,19 @@
 package navigationTabs;
+
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
 public class Tools extends MenuCreator {
 	
     private Menu colorSubMenu;
     private Menu penSizeSubMenu;
     private Menu backgroundColorMenu;
 
-    public Tools () {
-        super("ToolsCommand");
+    public Tools (BorderPane canvas) {
+        super("ToolsCommand", canvas);
         addItems();
     }
 
@@ -18,9 +24,10 @@ public class Tools extends MenuCreator {
         backgroundColorMenu = new Menu(myResources.getString("BackgroundColorCommand"));
         addColorOptions(colorSubMenu);
         addColorOptions(backgroundColorMenu);
+        setSelectedBackgroundProperties();
         addPenSizeOptions();
         myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);
-    } 
+    }
 
     private void addColorOptions(Menu menu){ 
         menu.getItems().add(createMenuItem("RedPenColor"));
@@ -32,7 +39,15 @@ public class Tools extends MenuCreator {
     private void addPenSizeOptions(){
         penSizeSubMenu.getItems().addAll(createMenuItem("1"),createMenuItem("2"),createMenuItem("3"),createMenuItem("4"),createMenuItem("5"));
     }
-
-
-
+    
+    private void setSelectedBackgroundProperties(){
+    	for(MenuItem m : backgroundColorMenu.getItems()){
+    		m.setOnAction(e -> {
+    			VBox pane = (VBox) myCanvas.getLeft();
+    			Pane p = (Pane) pane.getChildren().get(0);
+    			p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
+    			myCanvas.setLeft(pane);
+    		});
+    	}
+    }
 }
