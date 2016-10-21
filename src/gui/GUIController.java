@@ -19,7 +19,6 @@ public class GUIController {
         return myScene;
     }
 
-
     public void addToHistory(){
         myMainGUI.getHistory().addToCommandHistory(getCommandEntered());
     }
@@ -39,7 +38,6 @@ public class GUIController {
                 myMainGUI.getConsole().getTextField().setText("");
             default:
                 //Do nothing
-
         }
     }
 }

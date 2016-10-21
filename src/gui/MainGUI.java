@@ -70,7 +70,7 @@ public class MainGUI {
     
     private void setBackgroundColorProps(){
     	for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-    		BackgroundChanger p = myTools.getBackgroundChanger(m);
+    		BackgroundChangeable p = myTools.getBackgroundChanger(m);
     		m.setOnAction(e -> {
         		p.changeBackground(myRoot);
     		});

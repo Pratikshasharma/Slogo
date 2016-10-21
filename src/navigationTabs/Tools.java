@@ -1,6 +1,6 @@
 package navigationTabs;
 
-import gui.BackgroundChanger;
+import gui.BackgroundChangeable;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
@@ -40,8 +40,8 @@ public class Tools extends MenuCreator {
 		penSizeSubMenu.getItems().addAll(createMenuItem("1"),createMenuItem("2"),createMenuItem("3"),createMenuItem("4"),createMenuItem("5"));
 	}
 
-	public BackgroundChanger getBackgroundChanger(MenuItem m){
-		BackgroundChanger backgroundChanger = (root) -> {
+	public BackgroundChangeable getBackgroundChanger(MenuItem m){
+		BackgroundChangeable backgroundChanger = (root) -> {
 			VBox pane = (VBox) root.getLeft();
 			Pane p = (Pane) pane.getChildren().get(0);
 			p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
