@@ -28,8 +28,7 @@ public class MainGUI {
     private Console myConsole;
     private History myHistory;
     private Help myHelpTab;
-    //    private MenuBar myMenuBar = new MenuBar();
-    //  VBox myVBox;
+    private BorderPane myRoot;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
@@ -41,9 +40,9 @@ public class MainGUI {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-
+        myRoot = new BorderPane();
         myFileTab = new FileTab();
-        myTools = new Tools();
+        myTools = new Tools(myRoot);
         myLanguageTab = new Language();
         myConsole = new Console();
         myHelpTab = new Help();
@@ -51,21 +50,13 @@ public class MainGUI {
     }
 
     public Parent createRoot(){
-        BorderPane root = new BorderPane();
-        //        Group root = new Group();
-        //        myVBox = new VBox(30);
-        //        addItemsInMenuBar();
-        //        myVBox.getChildren().addAll(myMenuBar,createTurtlePane(),myConsole.getTextField());
-        //        root.getChildren().add(myVBox);
-        //    	addItemsInMenuBar();
-        
-        root.setTop(createTop());
-        root.setLeft(createLeft());
-        root.setBottom(myConsole.getTextField());
-        root.setRight(myHistory.getMyHistoryVBox());
-        root.getChildren().add(myTurtle.getMyTurtleImageView());
-        root.setPadding(new Insets(20));
-        return root;
+        myRoot.setTop(createTop());
+        myRoot.setLeft(createLeft());
+        myRoot.setBottom(myConsole.getTextField());
+        myRoot.setRight(myHistory.getMyHistoryVBox());
+        myRoot.getChildren().add(myTurtle.getMyTurtleImageView());
+        myRoot.setPadding(new Insets(20));
+        return myRoot;
     }
 
     private VBox createLeft(){
@@ -81,12 +72,12 @@ public class MainGUI {
     }
 
     private Pane createTurtlePane(){
-        Pane canvas = new Pane();
-        canvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
-        canvas.setLayoutX(20);
-        canvas.setLayoutY(50);
-        canvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
-        return canvas;
+        Pane myCanvas = new Pane();
+        myCanvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
+        myCanvas.setLayoutX(20);
+        myCanvas.setLayoutY(50);
+        myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
+        return myCanvas;
     }
 
     private MenuBar addItemsInMenuBar(){
