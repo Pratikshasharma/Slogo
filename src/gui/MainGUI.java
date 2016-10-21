@@ -46,6 +46,7 @@ public class MainGUI {
         myTools = new Tools();
         myLanguageTab = new Language();
         myConsole = new Console();
+        myHelpTab = new Help();
         myHistory = new History(myConsole);
     }
 

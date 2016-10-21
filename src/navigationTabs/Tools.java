@@ -1,8 +1,10 @@
 package navigationTabs;
 import javafx.scene.control.Menu;
 public class Tools extends MenuCreator {
+	
     private Menu colorSubMenu;
     private Menu penSizeSubMenu;
+    private Menu backgroundColorMenu;
 
     public Tools () {
         super("ToolsCommand");
@@ -13,16 +15,18 @@ public class Tools extends MenuCreator {
     protected void addItems () {
         colorSubMenu = new Menu(myResources.getString("PenColorCommand"));
         penSizeSubMenu = new Menu(myResources.getString("PenSizeCommand"));
-        addColorOptions();
+        backgroundColorMenu = new Menu(myResources.getString("BackgroundColorCommand"));
+        addColorOptions(colorSubMenu);
+        addColorOptions(backgroundColorMenu);
         addPenSizeOptions();
-        myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu);
+        myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);
     } 
 
-    private void addColorOptions(){ 
-        colorSubMenu.getItems().add(createMenuItem("RedPenColor"));
-        colorSubMenu.getItems().add(createMenuItem("BluePenColor"));
-        colorSubMenu.getItems().add(createMenuItem("PinkPenColor"));
-        colorSubMenu.getItems().add(createMenuItem("BlackPenColor"));
+    private void addColorOptions(Menu menu){ 
+        menu.getItems().add(createMenuItem("RedPenColor"));
+        menu.getItems().add(createMenuItem("BluePenColor"));
+        menu.getItems().add(createMenuItem("PinkPenColor"));
+        menu.getItems().add(createMenuItem("BlackPenColor"));
     }
 
     private void addPenSizeOptions(){

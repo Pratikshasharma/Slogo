@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 
 
 public abstract class MenuCreator {
+	
     protected ResourceBundle myResources;  
     protected HBox mySettingOptions = new HBox();
     protected BorderPane optionsRoot = new BorderPane();
