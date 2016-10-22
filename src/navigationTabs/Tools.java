@@ -26,7 +26,7 @@ public class Tools extends MenuCreator {
 		addColorOptions(backgroundColorMenu);
 		//        setSelectedBackgroundProperties();
 		addPenSizeOptions();
-		myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);
+		myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);	
 	}
 
 	private void addColorOptions(Menu menu){ 
@@ -53,4 +53,13 @@ public class Tools extends MenuCreator {
 	public Menu getBackgroundColorMenu(){
 		return backgroundColorMenu;
 	}
+	
+	public Menu getPenSizeSubMenu(){
+	    return this.penSizeSubMenu;
+	}
+	
+	public Menu getPenColorSubMenu(){
+	    return this.colorSubMenu;
+	}
+	
 }
