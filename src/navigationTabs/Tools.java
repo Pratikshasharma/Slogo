@@ -24,7 +24,6 @@ public class Tools extends MenuCreator {
 		backgroundColorMenu = new Menu(myResources.getString("BackgroundColorCommand"));
 		addColorOptions(colorSubMenu);
 		addColorOptions(backgroundColorMenu);
-		//        setSelectedBackgroundProperties();
 		addPenSizeOptions();
 		myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);
 	}

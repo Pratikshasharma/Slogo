@@ -30,9 +30,6 @@ public class BooleanOperations {
     }
     
     private double booleantodouble(boolean bool){
-        if(bool){
-            return 1;
-        }
-        return 0;
+    	return bool ? 1 : 0;
     }
 }
