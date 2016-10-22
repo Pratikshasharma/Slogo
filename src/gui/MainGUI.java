@@ -51,7 +51,6 @@ public class MainGUI {
         myRoot.setLeft(createLeft());
         myRoot.setBottom(myConsole.getTextField());
         myRoot.setRight(myHistory.getMyHistoryVBox());
-        myRoot.getChildren().add(myTurtle.getMyTurtleImageView());
         myRoot.setPadding(new Insets(20));
         return myRoot;
     }
@@ -92,6 +91,8 @@ public class MainGUI {
         myCanvas.setLayoutX(20);
         myCanvas.setLayoutY(50);
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
+        myCanvas.getChildren().add(myTurtle.getMyTurtleImageView());
+        myCanvas.getChildren().add(myTurtle.getMyLine());
         return myCanvas;
     }
 
