@@ -10,12 +10,10 @@ public class SimulationController {
 	
 //    private List<Actor> actorList;
 	private Actor myActor;
-    private ActorCommands changeActor;
     
     public SimulationController () {
 //        actorList=new ArrayList<Actor>();
     	myActor = new Turtle();
-        changeActor=new ActorCommands();
         createActor("Turtle");
     }
 
