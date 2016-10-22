@@ -16,17 +16,10 @@ public class ActorQueries {
     }
     
     public double isPenDown(Actor actor){
-        return booleantodouble(actor.getPenStatus());
+        return (actor.getPenStatus())?1:0;
     }
     
     public double isShowing(Actor actor){
-        return booleantodouble(actor.getVisibility());
-    }
-    
-    private double booleantodouble(boolean bool){
-        if(bool){
-            return 1;
-        }
-        return 0;
+        return (actor.getVisibility())?1:0;
     }
 }
