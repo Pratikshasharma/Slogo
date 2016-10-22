@@ -33,6 +33,12 @@ public class AppController {
 	private void sendCommand(){
 		//TODO: implement send to back
 		//String command = myGUIController.getCommandEntered();
+
+		//what should a parsed/executed command return from the following line:
+		//mySimulationController.receive(command); 
+			//will be void, will just execute command or throw up error.
+		//need to reach in updatePositions method.
+		
 		updatePositions();
 	}
 
