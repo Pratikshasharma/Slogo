@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Simulation.Node.InfoNode;
 import Simulation.Node.Node;
-import Simulation.Node.TestNode;
 
 
 public class Parser {
@@ -16,14 +16,14 @@ public class Parser {
 	private final static String SYNTAX_LANG = "Syntax";
 	
 	private static TypeDictionary lang;
-	private List<Node> myList;
+	private List<InfoNode> myList;
 	
 	
 	public Parser(String language) {
 		lang = new TypeDictionary();
 		lang.addPatterns(LANG_PATH + language);
 		lang.addPatterns(LANG_PATH + SYNTAX_LANG);
-		myList = new ArrayList<Node>();
+		myList = new ArrayList<InfoNode>();
 	}
 	
 	public Parser() {
@@ -41,25 +41,26 @@ public class Parser {
     }
 
     // given some text, prints results of parsing it using the given language
-    public void parseText (String[] text) {
+    public List<InfoNode> parseText (String[] text) {
         for (String s : text) {
             if (s.trim().length() > 0) {
                 //System.out.println(String.format("%s : %s", s, lang.getSymbol(s)));
-            	myList.add(new TestNode(s, lang.getSymbol(s)));
-            }
-            else {
-            	System.out.println("Did not reach over length 0");
+            	myList.add(new InfoNode(s, lang.getSymbol(s)));
             }
         }
-        System.out.println();
-        for (Node n : myList) {
-        	TestNode node = (TestNode) n;
-        	System.out.println(n.execute());
-        	System.out.println(node.getName());
-        	System.out.println(node.getToken());
-        	
-        }
+
+        return myList;
         
+    }
+    
+    public void printList(List<InfoNode> lst) {
+		System.out.println();
+		for (Node n : myList) {
+			InfoNode node = (InfoNode) n;
+			System.out.println(node.getName());
+			System.out.println(node.getToken());
+
+		}
     }
 
 }

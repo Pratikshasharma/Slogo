@@ -1,6 +1,9 @@
 package Simulation.parse;
 
 import java.io.FileNotFoundException;
+import java.util.List;
+
+import Simulation.Node.InfoNode;
 
 
 public class ParserMain {
@@ -53,9 +56,12 @@ public class ParserMain {
             String userInput = "fd 50 rt 90 BACK :distance Left :angle";
             String fileInput = myParser.readFileToString("data/square.logo");
             // try against different inputs
-            myParser.parseText(examples);
-            myParser.parseText(userInput.split(WHITESPACE));
-            myParser.parseText(fileInput.split(WHITESPACE));
+            List<InfoNode> list1 = myParser.parseText(examples);
+            myParser.printList(list1);
+            List<InfoNode> list2 = myParser.parseText(userInput.split(WHITESPACE));
+            myParser.printList(list2);
+            List<InfoNode> list3 = myParser.parseText(fileInput.split(WHITESPACE));
+            myParser.printList(list3);
         }
         catch (FileNotFoundException e) {
             //e.printStackTrace();
