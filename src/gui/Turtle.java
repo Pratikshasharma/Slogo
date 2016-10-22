@@ -4,6 +4,7 @@ package gui;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -15,16 +16,16 @@ import javafx.stage.Stage;
  */
 
 public class Turtle {
-    private Polyline myLine;
+	
+    private Line myLine;
     private ImageView myTurtleImageView;
     private static final String TURTLE_TEST_IMAGE = "turtle.png";
-
     
     public Turtle() throws MalformedURLException {
         //myTurtleImageView = new ImageView(new Image(chooseFile().toURI().toURL().toString()));
         myTurtleImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(TURTLE_TEST_IMAGE)));
         initializeTurtle();
-        myLine = new Polyline();
+        myLine = new Line();
     }
 
     /**
@@ -47,8 +48,8 @@ public class Turtle {
         return this.myTurtleImageView;
     }
     
-    public Polyline getMyLine(){
-        return this.myLine;
+    public Line getMyLine(){
+        return myLine;
     }
     
     public void setPosition(double xPosition, double yPosition){
@@ -66,4 +67,20 @@ public class Turtle {
     public void setLineColor(String color){
         myLine.setFill(Paint.valueOf(color));
     }
+
+//	public double getCurrentYPosition() {
+//		return currentYPosition;
+//	}
+//	
+//	public void setCurrentYPosition(double pos){
+//		currentYPosition = pos;
+//	}
+//
+//	public double getCurrentXPosition(){
+//		return currentXPosition;
+//	}
+//	
+//	public void setCurrentXPosition(double pos){
+//		currentXPosition = pos;
+//	}
 }

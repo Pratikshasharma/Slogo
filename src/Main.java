@@ -1,5 +1,5 @@
 
-import gui.GUIController;
+import commandreference.AppController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -7,14 +7,13 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	
 	private static final String TITLE = "SLOGO";
-	private GUIController myGUIController;
 	
 	@Override
 	public void start(Stage myStage) throws Exception{
-		myGUIController = new GUIController();
+		AppController myAppController = new AppController();
 		myStage.setTitle(TITLE);
-		Scene scene = myGUIController.init();
-		scene.setOnKeyPressed(e -> myGUIController.handleKeyInput(e.getCode()));
+		Scene scene = myAppController.initiateApp();
+		scene.setOnKeyPressed(e -> myAppController.handleKeyInput(e.getCode()));
 		myStage.setScene(scene);
 		myStage.show();
 	}
