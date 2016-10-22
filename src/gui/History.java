@@ -11,7 +11,7 @@ public class History {
     private ListView<String> commandsList;
     private ListView<String> functionsList;
     private ListView<String> variableList;
-
+    
     public History(){
         createWindows();
     }
@@ -43,6 +43,16 @@ public class History {
         list.setLayoutY(GUIController.SCENE_HEIGHT/offset);
         myHistoryBox.getChildren().add(list);
 	}
+	
+	public HistoryClickable getHistoryClickable(){
+		HistoryClickable hc = (console, list) -> {
+			if(list.getSelectionModel().getSelectedItem() != null){
+				String selectedCommand = list.getSelectionModel().getSelectedItem().toString();
+				console.getTextField().setText(selectedCommand);
+			}
+		};
+		return hc;
+	}
     
     public VBox getMyHistoryVBox(){
         return myHistoryBox;
@@ -58,5 +68,17 @@ public class History {
     
     public void addToVariableList(String variable){
     	variableList.getItems().add(variable);
+    }
+    
+    public ListView<String> getCommandsList(){
+    	return commandsList;
+    }
+    
+    public ListView<String> getFunctionsList(){
+    	return functionsList;
+    }
+    
+    public ListView<String> getVariableList(){
+    	return variableList;
     }
 }
