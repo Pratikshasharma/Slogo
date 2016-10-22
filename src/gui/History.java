@@ -11,10 +11,8 @@ public class History {
     private ListView<String> commandsList;
     private ListView<String> functionsList;
     private ListView<String> variableList;
-    private Console myConsole;
     
-    public History(Console console){
-    	myConsole = console;
+    public History(){
         createWindows();
     }
  
@@ -43,15 +41,17 @@ public class History {
 	private void setList(ListView<String> list, int offset) {
         list.setLayoutX(GUIController.SCENE_HEIGHT/offset);
         list.setLayoutY(GUIController.SCENE_HEIGHT/offset);
-        list.setOnMouseClicked(e -> handleSelection(list));
         myHistoryBox.getChildren().add(list);
 	}
 	
-	private void handleSelection(ListView<String> list){
-		if(list.getSelectionModel().getSelectedItem() != null){
-			String selectedCommand = list.getSelectionModel().getSelectedItem().toString();
-			myConsole.getTextField().setText(selectedCommand);
-		}
+	public HistoryClickable getHistoryClickable(){
+		HistoryClickable hc = (console, list) -> {
+			if(list.getSelectionModel().getSelectedItem() != null){
+				String selectedCommand = list.getSelectionModel().getSelectedItem().toString();
+				console.getTextField().setText(selectedCommand);
+			}
+		};
+		return hc;
 	}
     
     public VBox getMyHistoryVBox(){
@@ -70,5 +70,17 @@ public class History {
     
     public void addToVariableList(String variable){
     	variableList.getItems().add(variable);
+    }
+    
+    public ListView<String> getCommandsList(){
+    	return commandsList;
+    }
+    
+    public ListView<String> getFunctionsList(){
+    	return functionsList;
+    }
+    
+    public ListView<String> getVariableList(){
+    	return variableList;
     }
 }

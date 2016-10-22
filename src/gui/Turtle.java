@@ -12,6 +12,7 @@ import javafx.stage.Stage;
  * * @author pratiksha sharma
  */
 public class Turtle {
+
     private Line myLine;
     private ImageView myTurtleImageView;
     private static final String TURTLE_TEST_IMAGE = "turtle.png";
@@ -37,7 +38,7 @@ public class Turtle {
         initializeTurtle(); 
         initializeLine();
     }
-
+    
     /**
      * Purpose: To choose file for Turtle using File Chooser
      */
@@ -72,15 +73,16 @@ public class Turtle {
     }
 
     public void setColor(String string){
-        System.out.println(" Val " + string);
         myLine.setStroke(Paint.valueOf(string));
     }
     
+
     public void setPenWidth(double width){
         myLine.setStrokeWidth(width);
     }
+
     public Line getMyLine(){
-        return this.myLine;
+        return myLine;
     }
 
     public void setPosition(double xPosition, double yPosition){
@@ -93,5 +95,23 @@ public class Turtle {
         myTurtleImageView.setFitHeight(50);
         setPosition(MainGUI.TURTLE_PANE_WIDTH/3,MainGUI.TURTLE_PANE_HEIGHT/3);
     }
+
+
+
+//	public double getCurrentYPosition() {
+//		return currentYPosition;
+//	}
+//	
+//	public void setCurrentYPosition(double pos){
+//		currentYPosition = pos;
+//	}
+//
+//	public double getCurrentXPosition(){
+//		return currentXPosition;
+//	}
+//	
+//	public void setCurrentXPosition(double pos){
+//		currentXPosition = pos;
+//	}
 
 }

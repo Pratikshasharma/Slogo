@@ -36,7 +36,10 @@ public class MainGUI {
         myLanguageTab = new Language();
         myConsole = new Console();
         myHelpTab = new Help();
-        myHistory = new History(myConsole); 
+
+        myHistory = new History();
+        setHistoryClickables();
+
     }
 
     public Parent createRoot(){
@@ -63,12 +66,21 @@ public class MainGUI {
     }
 
     private void setBackgroundColorProps(){
-        for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-            BackgroundChanger p = myTools.getBackgroundChanger(m);
-            m.setOnAction(e -> {
-                p.changeBackground(myRoot);
-            });
-        }
+
+    	for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
+    		BackgroundChangeable p = myTools.getBackgroundChanger(m);
+    		m.setOnAction(e -> {
+        		p.changeBackground(myRoot);
+    		});
+    	}
+
+    }
+    
+    private void setHistoryClickables(){
+    	HistoryClickable historyClickable = myHistory.getHistoryClickable();
+    	myHistory.getCommandsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getCommandsList()));
+    	myHistory.getFunctionsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getFunctionsList()));
+    	myHistory.getVariableList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getVariableList()));
     }
 
     private Pane createTurtlePane(){
