@@ -15,7 +15,7 @@ public abstract class MenuCreator {
 	protected Menu myMenu;
 	protected MenuBar myMenuBar = new MenuBar();
 	public static final String RESOURCE_PACKAGE = "resources";
-	private static final String BUTTON_LABEL_FILE = "Button";
+	public static final String BUTTON_LABEL_FILE = "Button";
 
 	public MenuCreator(String property) {
 		myResources= ResourceBundle.getBundle(RESOURCE_PACKAGE + File.separator + BUTTON_LABEL_FILE);

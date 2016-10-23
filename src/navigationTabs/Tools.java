@@ -1,10 +1,7 @@
 package navigationTabs;
 
-import gui.BackgroundChangeable;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+
 
 public class Tools extends MenuCreator {
 

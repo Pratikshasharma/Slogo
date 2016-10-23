@@ -2,6 +2,7 @@ package gui;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -24,6 +25,8 @@ public class MainGUI {
     private Help myHelpTab;
     private BorderPane myRoot;
     private Pane myCanvas;
+    private Button runButton;
+    private Button clearButton;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
@@ -44,7 +47,7 @@ public class MainGUI {
     public Parent createRoot(){
         myRoot.setTop(createTop());
         myRoot.setLeft(createLeft());
-        myRoot.setBottom(myConsole.getTextField());
+        myRoot.setBottom(createBottom());
         myRoot.setRight(myHistory.getMyHistoryVBox());
         myRoot.setPadding(new Insets(20));
         return myRoot;
@@ -60,7 +63,7 @@ public class MainGUI {
     }
 
     private HBox createTop(){
-        HBox top = new HBox();
+        HBox top = new HBox(20);
         top.getChildren().addAll(addItemsInMenuBar());
         return top;
     }
@@ -74,6 +77,13 @@ public class MainGUI {
 
     }
     
+    private HBox createBottom(){
+        HBox bottomBox = new HBox(20);
+        makeButton();
+        bottomBox.getChildren().addAll(myConsole.getTextField(),runButton,clearButton);
+        return  bottomBox;
+    }
+    
     private void setHistoryClickables(){
     	HistoryClickable historyClickable = myHistory.getHistoryClickable();
     	myHistory.getCommandsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getCommandsList()));
@@ -85,10 +95,8 @@ public class MainGUI {
         myCanvas = new Pane();
         setBackgroundColorProps();
         myCanvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
-        myCanvas.setLayoutX(20);
-        myCanvas.setLayoutY(50);
-        addTurtleOnScene();
         getLine();
+        addTurtleOnScene();
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
         return myCanvas;
     }
@@ -111,18 +119,6 @@ public class MainGUI {
         return myHistory;
     }
 
-    //    private void addListeners(){
-    //        myTurtle.getMyTurtleImageView().imageProperty().addListener(new ChangeListener<Image>(){
-    //            @Override
-    //            public void changed (ObservableValue<? extends Image> observable,
-    //                                 Image oldValue,
-    //                                 Image newValue) {
-    //                System.out.println(" HERE ");
-    //                // TODO Auto-generated method stub
-    //            }
-    //        });
-    //    }
-
     private void addTurtleOnScene(){
         myFileTab.getNewTurtleItem().setOnAction(e -> {
             if(isOnCanvas(myTurtle.getMyTurtleImageView())){
@@ -133,7 +129,6 @@ public class MainGUI {
             }
             myTurtle= new Turtle(false);
             addTurtleOnCanvas();
-            
             addLineOnCanvas();
         });
         addTurtleOnCanvas();
@@ -156,7 +151,6 @@ public class MainGUI {
         myCanvas.getChildren().add(myTurtle.getMyTurtleImageView());
     } 
 
-   
     private void addLineOnCanvas(){
         myCanvas.getChildren().add(myTurtle.getMyLine());;
     }
@@ -177,6 +171,22 @@ public class MainGUI {
                 root.setLeft(pane);
         };
         return backgroundChanger;
+    }
+    
+    private void makeButton(){
+        runButton = setButton("RunButtonCommand",0.8*GUIController.SCENE_WIDTH, 0.9*GUIController.SCENE_HEIGHT/9);
+         clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
+        clearButton.setOnAction(e -> myConsole.getTextField().clear());
+    }
+    
+    private Button setButton(String property, double xPosition, double yPosition){
+        ButtonTemplate buttonCreator = new ButtonTemplate(property);
+        buttonCreator.changeButtonSettings(xPosition, yPosition);
+        return buttonCreator.getButton();
+    }
+    
+    public Button getRunButton(){
+        return this.runButton;
     }
 }  
 
