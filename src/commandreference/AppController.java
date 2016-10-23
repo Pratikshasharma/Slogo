@@ -55,15 +55,25 @@ public class AppController {
                 work();
                 break;
 
-            case SHIFT:
-                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +2);
-                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() + 2);
+//            case SHIFT:
+//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
+//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() + 2);
+//                updatePositions();
+//                break;
+//
+//            case COMMAND:
+//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -2);
+//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() - 2);
+//                updatePositions();
+//                break;
+                //left
+            case COMMAND:
+                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
                 updatePositions();
                 break;
-
-            case COMMAND:
-                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -2);
-                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() - 2);
+                //right
+            case SHIFT:
+                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
                 updatePositions();
                 break;
 
