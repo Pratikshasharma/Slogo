@@ -3,72 +3,73 @@ package Simulation;
 import Actors.Actor;
 
 public class ActorCommands {
-    public double forward(Actor actor, int pixels){
-        int x=(int) Math.round(Math.cos(actor.getAngle())*pixels);
-        int y=(int) Math.round(Math.sin(actor.getAngle())*pixels);
+    public double Forward(Actor actor, double pixels){
+        double x=Math.cos(actor.getAngle())*pixels;
+        double y=Math.sin(actor.getAngle())*pixels;
         actor.setPos(actor.getX()+x,actor.getY()+y);
-        return (double) pixels;
+        return pixels;
     }
     
-    public double backward(Actor actor, int pixels){
-        int x=(int) Math.round(Math.cos(actor.getAngle())*pixels);
-        int y=(int) Math.round(Math.sin(actor.getAngle())*pixels);
+    public double Backward(Actor actor, double pixels){
+        double x=Math.cos(actor.getAngle())*pixels;
+        double y=Math.sin(actor.getAngle())*pixels;
         actor.setPos(actor.getX()-x,actor.getY()-y);
-        return (double) pixels;
+        return pixels;
     }
     
-    public double left(Actor actor, double angle){
+    public double Left(Actor actor, double angle){
         actor.setAngle(actor.getAngle()+angle);
         return angle;
     }
     
-    public double right(Actor actor, double angle){
+    public double Right(Actor actor, double angle){
         actor.setAngle(actor.getAngle()-angle);
         return angle;
     }
     
-    public double setHeading(Actor actor, double angle){
+    public double SetHeading(Actor actor, double angle){
         actor.setAngle(angle);
         return actor.getAngleMoved();
     }
     
-    public double setTowards(Actor actor, int x, int y){
-        double angle=Math.sin(((double)(actor.getY()-y))/((double)(actor.getX()-x)));
+    public double SetTowards(Actor actor, double x, double y){
+        double angle=Math.sin((actor.getY()-y)/(actor.getX()-x));
         actor.setAngle(angle);
         return actor.getAngleMoved();
     } 
     
-    public double setPosition(Actor actor, int x, int y){
+    public double SetPosition(Actor actor, double x, double y){
         actor.setPos(x,y);
         return actor.getDistance();
     }     
     
-    public double penDown(Actor actor){
+    public double PenDown(Actor actor){
         actor.setPenStatus(true);
         return 1;
     }
     
-    public double penUp(Actor actor){
+    public double PenUp(Actor actor){
         actor.setPenStatus(false);
         return 0;
     }
     
-    public double show(Actor actor){
+    public double ShowTurtle(Actor actor){
         actor.setVisibility(true);
         return 1;
     }
     
-    public double hide(Actor actor){
+    public double HideTurtle(Actor actor){
         actor.setVisibility(false);
         return 0;
     }
     
-    public double home(Actor actor){
+    public double Home(Actor actor){
         actor.setPos(0,0);
         return actor.getDistance();
     }
     
-    public double clearScreen(Actor actor){
-        return home(actor);
+    public double ClearScreen(Actor actor){
+        //set to clear screen in front end
+        return Home(actor);
     }
 }

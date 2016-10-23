@@ -23,6 +23,7 @@ public abstract class Actor {
 //		distanceTraveled=Math.sqrt((xPosition-x)^2+(yPosition-y)^2);
 //		xPosition=x;
 //		yPosition=y;
+	        distanceTraveled=Math.sqrt(Math.pow((coordinates.getX().get()-x),2)+Math.pow((coordinates.getY().get()-y),2));
 		coordinates.setX(x);
 		coordinates.setY(y);
 	}

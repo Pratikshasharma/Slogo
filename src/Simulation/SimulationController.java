@@ -11,29 +11,29 @@ public class SimulationController {
 	
 //    private List<Actor> actorList;
 	private Actor myActor;
-    private ActorCommands changeActor;
     private Parser simParser;
+    private CommandExecute myCommandExecute;
     
     public SimulationController () {
 //        actorList=new ArrayList<Actor>();
+//      createActor("Turtle");
     	myActor = new Turtle();
-        changeActor=new ActorCommands();
-        createActor("Turtle");
+    	myCommandExecute=new CommandExecute(myActor);
     }
     
     public void setLanguage(String language) {
     	simParser = new Parser(language);
     }
 
-    public void createActor(String name){
-        switch(name){
-            case "Turtle":
+//    public void createActor(String name){
+//        switch(name){
+//            case "Turtle":
 //                createTurtle();
-                break;
-            default:
-                break;
-        }
-    }
+//                break;
+//            default:
+//                break;
+//        }
+//    }
     
     public Coordinates getActorCoordinates(){
     	return myActor.getCoordinates();
