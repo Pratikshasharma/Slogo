@@ -1,24 +1,37 @@
 package gui;
 
+import javafx.scene.control.TextField;
+
 /**
  * @author Pratiksha Sharma
  */
-import javafx.scene.control.TextField;
 public class Console {
-    private TextField myCommand;
-    
+    private TextField myCommandWindow;
+    private boolean StartsTyping;
+
     public Console(){
         createTextField();
     }
-    
-   private void createTextField(){
-       myCommand = new TextField("Enter Command");
-       myCommand.setLayoutY(0.8*GUIController.SCENE_HEIGHT);
-       myCommand.setLayoutX(0.02*GUIController.SCENE_WIDTH);
-       myCommand.setPrefSize(GUIController.SCENE_WIDTH/8, GUIController.SCENE_HEIGHT/8.5);
+
+    private void createTextField(){
+        myCommandWindow = new TextField("Enter Command");
+        myCommandWindow.setOnKeyTyped(e -> {
+            if(!StartsTyping){
+                myCommandWindow.clear();
+                StartsTyping = true;}
+        });
+        myCommandWindow.setLayoutY(0.8*GUIController.SCENE_HEIGHT);
+        myCommandWindow.setLayoutX(0.02*GUIController.SCENE_WIDTH);
+        myCommandWindow.setPrefHeight(MainGUI.TURTLE_PANE_HEIGHT/4);
+        myCommandWindow.setPrefSize(MainGUI.TURTLE_PANE_WIDTH, MainGUI.TURTLE_PANE_HEIGHT/4);
+        //myCommandWindow.setMaxWidth(MainGUI.TURTLE_PANE_WIDTH);
     }
-   
-   public TextField getTextField(){
-       return myCommand;
-   }
+
+    public TextField getTextField(){
+        return myCommandWindow;
+    }
+
 }
+
+
+
