@@ -1,95 +1,198 @@
 package Simulation;
 
-import java.lang.reflect.Method;
-import java.util.List;
 import Actors.Actor;
 
+/**
+ * In the interest of having a general database of all the commands and where they come from.
+ * Also allows easy access from reflection as all commands in same place and refer to one actor.
+ * 
+ * @author Vincent
+ *
+ */
 public class CommandArchive {
     private ActorCommands changeActor;
     private ActorQueries askActor;
     private BooleanOperations booleans;
     private MathOperations math;    
-    private List<InfoNode> myCommands;
-    private Method myMethod;
-    /*
-     * one parameter: left
-     * two parameters: left, middle
-     * three parameters: left, middle, right
-     */
+    private Actor myActor;
+
     
-    public CommandArchive () {
+    public CommandArchive (Actor actor) {
+        myActor=actor;
         changeActor = new ActorCommands();
         askActor=new ActorQueries();
         booleans=new BooleanOperations();
         math=new MathOperations();
-        myCommands = new ArrayList<InfoNode>();
     }
     
-    public double execute(List<InfoNode>){
-        myMethod = Method.forName(myCommands.getName());
+    /*
+     * ACTOR COMMANDS
+     */
+    public double Forward(double pixels){
+        return changeActor.Forward(myActor, pixels);
     }
     
-    public double Forward(){
-        
+    public double Backward(double pixels){
+        return changeActor.Backward(myActor, pixels);
+    }   
+    
+    public double Left(double angle){
+        return changeActor.Left(myActor, angle);
     }
     
-    public double Backward(){
-        
+    public double Right(double angle){
+        return changeActor.Right(myActor, angle);
     }
     
-    public double Left(Actor actor, double angle){
-        actor.setAngle(actor.getAngle()+angle);
-        return angle;
+    public double SetHeading(double angle){
+        return changeActor.SetHeading(myActor, angle);
     }
     
-    public double Right(Actor actor, double angle){
-        actor.setAngle(actor.getAngle()-angle);
-        return angle;
-    }
-    
-    public double SetHeading(Actor actor, double angle){
-        actor.setAngle(angle);
-        return actor.getAngleMoved();
-    }
-    
-    public double SetTowards(Actor actor, int x, int y){
-        double angle=Math.sin(((double)(actor.getY()-y))/((double)(actor.getX()-x)));
-        actor.setAngle(angle);
-        return actor.getAngleMoved();
+    public double SetTowards(double x, double y){
+        return changeActor.SetTowards(myActor, x, y);
     } 
     
-    public double SetPosition(Actor actor, int x, int y){
-        actor.setPos(x,y);
-        return actor.getDistance();
+    public double SetPosition(int x, int y){
+        return changeActor.SetPosition(myActor, x, y);
     }     
     
-    public double PenDown(Actor actor){
-        actor.setPenStatus(true);
-        return 1;
+    public double PenDown(){
+        return changeActor.PenDown(myActor);
     }
     
-    public double PenUp(Actor actor){
-        actor.setPenStatus(false);
-        return 0;
+    public double PenUp(){
+        return changeActor.PenUp(myActor);
     }
     
-    public double ShowTurtle(Actor actor){
-        actor.setVisibility(true);
-        return 1;
+    public double ShowTurtle(){
+        return changeActor.ShowTurtle(myActor);
     }
     
-    public double HideTurtle(Actor actor){
-        actor.setVisibility(false);
-        return 0;
+    public double HideTurtle(){
+        return changeActor.HideTurtle(myActor);
     }
     
-    public double Home(Actor actor){
-        actor.setPos(0,0);
-        return actor.getDistance();
+    public double Home(){
+        return changeActor.Home(myActor);
     }
     
-    public double ClearScreen(Actor actor){
+    public double ClearScreen(){
         //set to clear screen in front end
-        return Home(actor);
+        return changeActor.ClearScreen(myActor);
+    }
+    
+    /*
+     * ACTOR QUERIES
+     */
+    
+    public double XCoordinate(){
+        return askActor.XCoordinate(myActor);
+    }
+    
+    public double YCoordinate(){
+        return askActor.YCoordinate(myActor);
+    }
+    
+    public double Heading(){
+        return askActor.Heading(myActor);
+    }
+    
+    public double IsPenDown(){
+        return askActor.IsPenDown(myActor);
+    }
+    
+    public double IsShowing(){
+        return askActor.IsShowing(myActor);
+    }
+    
+    /*
+     * MATH OPERATIONS
+     */    
+    public double Sum(double a, double b){
+        return math.Sum(a, b);
+    }
+    
+    public double Difference(double a, double b){
+        return math.Difference(a, b);
+    }
+    
+    public double Product(double a, double b){
+        return math.Product(a, b);
+    }
+    
+    public double Quotient(double a, double b){
+        return math.Quotient(a, b);
+    }
+    
+    public double Remainder(double a, double b){
+        return math.Remainder(a, b);
+    }
+    
+    public double Minus(double a){
+        return math.Minus(a);
+    }
+    
+    public double Random(double max){
+        return math.Random(max);
+    }
+    
+    public double Sine(double angle){
+        return math.Sine(angle);
+    }
+    
+    public double Cosine(double angle){
+        return math.Cosine(angle);
+    }
+    
+    public double Tangent(double angle){
+        return math.Tangent(angle);
+    }
+    
+    public double ArcTangent(double angle){
+        return math.ArcTangent(angle);
+    }
+    
+    public double NaturalLog(double a){
+        return math.NaturalLog(a);
+    }
+    
+    public double Power(double base, double exp){
+        return math.Power(base, exp);
+    }
+    
+    public double Pi(){
+        return math.Pi();
+    }
+    
+    /*
+     * BOOLEAN OPERATIONS
+     */
+    
+    public double LessThan(double a, double b){
+        return booleans.LessThan(a, b);
+    }
+    
+    public double GreaterThan(double a, double b){
+        return booleans.GreaterThan(a, b);
+    }
+    
+    public double Equal(double a, double b){
+        return booleans.Equal(a, b);
+    }
+    
+    public double NotEqual(double a, double b){
+        return booleans.NotEqual(a, b);
+    }
+    
+    public double And(double a, double b){
+        return booleans.And(a, b);
+    }
+    
+    public double Or(double a, double b){
+        return booleans.Or(a, b);
+    }
+    
+    public double Not(double a){
+        return booleans.Not(a);
     }
 }

@@ -29,7 +29,7 @@ public class MathOperations {
         return Math.random()*max;
     }
     
-    public double Sin(double angle){
+    public double Sine(double angle){
         return Math.sin(angle);
     }
     
@@ -45,7 +45,7 @@ public class MathOperations {
         return Math.atan(angle);
     }
     
-    public double Naturallog(double a){
+    public double NaturalLog(double a){
         return Math.log(a);
     }
     
