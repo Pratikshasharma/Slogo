@@ -34,7 +34,6 @@ public class Tools extends MenuCreator {
 	private void addPenSizeOptions(){
 		penSizeSubMenu.getItems().addAll(createMenuItem("1"),createMenuItem("2"),createMenuItem("3"),createMenuItem("4"),createMenuItem("5"));
 	}
-
 	
 	public Menu getBackgroundColorMenu(){
 		return backgroundColorMenu;
