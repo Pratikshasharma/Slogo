@@ -22,19 +22,19 @@ public class Turtle {
     public Turtle(boolean defaultTurtle)  {
         myLine = new Line();
         if(defaultTurtle){
-            turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(TURTLE_TEST_IMAGE));
+            myTurtleImageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(TURTLE_TEST_IMAGE)));
             
         }else{
             try {
                
-                turtleImage = new Image(chooseFile().toURI().toURL().toString());    
+                myTurtleImageView = new ImageView(new Image(chooseFile().toURI().toURL().toString()));    
             }
             catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        myTurtleImageView = new ImageView(turtleImage);
+        //myTurtleImageView = new ImageView(turtleImage);
         initializeTurtle(); 
         initializeLine();
     }
@@ -55,10 +55,10 @@ public class Turtle {
     }
 
     private void initializeLine(){
-        myLine.setStartX(MainGUI.TURTLE_PANE_WIDTH/3);
-        myLine.setStartY(MainGUI.TURTLE_PANE_HEIGHT/3 +50); 
-        myLine.setEndX((MainGUI.TURTLE_PANE_WIDTH/3));
-        myLine.setEndY((MainGUI.TURTLE_PANE_HEIGHT/3)-50);
+        myLine.setStartX(myTurtleImageView.getX() + myTurtleImageView.getBoundsInLocal().getWidth()/2);
+        myLine.setStartY(myTurtleImageView.getY()); 
+        myLine.setEndX((myLine.getStartX()+2));
+        myLine.setEndY((myLine.getStartY()+2));
     }
 
     public void drawLine(double xPosition, double yPosition){

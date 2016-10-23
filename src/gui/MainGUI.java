@@ -2,13 +2,13 @@ package gui;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -26,7 +26,7 @@ public class MainGUI {
     private Pane myCanvas;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
-    private String myCommandLanguage;
+
 
     public MainGUI(){
         myTurtle = new Turtle(true);
@@ -36,7 +36,6 @@ public class MainGUI {
         myLanguageTab = new Language();
         myConsole = new Console();
         myHelpTab = new Help();
-
         myHistory = new History();
         setHistoryClickables();
 
@@ -54,7 +53,8 @@ public class MainGUI {
 
     private VBox createLeft(){
         VBox left = new VBox();
-        left.setPadding(new Insets(20));
+        left.setPadding(new Insets(20));   
+        setBackgroundColorProps();     
         left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
         return left;
     }
@@ -66,13 +66,11 @@ public class MainGUI {
     }
 
     private void setBackgroundColorProps(){
-
     	for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-    		BackgroundChangeable p = myTools.getBackgroundChanger(m);
+    		BackgroundChangeable p = getBackgroundChanger(m);
     		m.setOnAction(e -> {
         		p.changeBackground(myRoot);
-    		});
-    	}
+    		});}
 
     }
     
@@ -158,24 +156,28 @@ public class MainGUI {
         myCanvas.getChildren().add(myTurtle.getMyTurtleImageView());
     } 
 
-    public String getLanguage(){
-        Language myLanguage = new Language();
-        myLanguage.getLanguageMenu().getItems().stream().forEach((menuitem) -> {
-            menuitem.setOnAction( e -> {
-                myCommandLanguage = menuitem.getText();
-                
-            });
-        });
-        return myCommandLanguage;
-    }
+   
     private void addLineOnCanvas(){
         myCanvas.getChildren().add(myTurtle.getMyLine());;
+    }
+    
+    public Menu getLanguageMenu(){
+        return myLanguageTab.getMyMenu();
     }
     
     private boolean isOnCanvas(Node myNode){
         return myCanvas.getChildren().contains(myNode);
     }
-    
+      
+    public BackgroundChangeable getBackgroundChanger(MenuItem m){
+        BackgroundChangeable backgroundChanger = (root) -> {
+                VBox pane = (VBox) root.getLeft();
+                Pane p = (Pane) pane.getChildren().get(0);
+                p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
+                root.setLeft(pane);
+        };
+        return backgroundChanger;
+    }
 }  
 
 

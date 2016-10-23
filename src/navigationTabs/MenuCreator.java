@@ -21,6 +21,7 @@ public abstract class MenuCreator {
 		myResources= ResourceBundle.getBundle(RESOURCE_PACKAGE + File.separator + BUTTON_LABEL_FILE);
 		String label = myResources.getString(property);
 		myMenu = new Menu (label);
+		addItems();
 	}
 
 	protected MenuItem createMenuItem(String property){

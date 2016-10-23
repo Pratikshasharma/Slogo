@@ -6,7 +6,7 @@ public class Help extends MenuCreator {
 
 	public Help () {
 		super("HelpCommand");
-		addItems();
+		
 	}
 
 	@Override

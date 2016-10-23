@@ -5,7 +5,6 @@ public class FileTab extends MenuCreator{
     private MenuItem newTurtle;
     public FileTab(){
         super("FileCommand");
-        addItems();
     }
 
     @Override
