@@ -14,7 +14,6 @@ public class Tools extends MenuCreator {
 
 	public Tools () {
 		super("ToolsCommand");
-		addItems();
 	}
 
 	@Override
@@ -39,16 +38,7 @@ public class Tools extends MenuCreator {
 		penSizeSubMenu.getItems().addAll(createMenuItem("1"),createMenuItem("2"),createMenuItem("3"),createMenuItem("4"),createMenuItem("5"));
 	}
 
-	public BackgroundChangeable getBackgroundChanger(MenuItem m){
-		BackgroundChangeable backgroundChanger = (root) -> {
-			VBox pane = (VBox) root.getLeft();
-			Pane p = (Pane) pane.getChildren().get(0);
-			p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
-			root.setLeft(pane);
-		};
-		return backgroundChanger;
-	}
-
+	
 	public Menu getBackgroundColorMenu(){
 		return backgroundColorMenu;
 	}
