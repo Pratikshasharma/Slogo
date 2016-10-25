@@ -12,6 +12,7 @@ public class AppController {
 
     public AppController(){
         mySimulationController = new SimulationController();
+        mySimulationController.setLanguage("English");
         myGUIController = new GUIController();
         setBindings();
     }
@@ -35,7 +36,10 @@ public class AppController {
         //String command = myGUIController.getCommandEntered();
 
         //what should a parsed/executed command return from the following line:
+        //System.out.println(x);
         //mySimulationController.receive(command); 
+
+        mySimulationController.receive("fd 50 bk 100 left 300"); 
         //will be void, will just execute command or throw up error.
         //need to reach in updatePositions method.
 

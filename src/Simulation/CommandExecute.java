@@ -16,7 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class CommandExecute {
-    private static final String COMMAND_INPUTS_FILE = "CommandInputs";
+    private static final String COMMAND_INPUTS_FILE = "resources/CommandInputs";
     private static final String ERROR_TITLE="Back End: Command Execution Error";
     private static final String ERROR_COMMAND_EXECUTE_START="Error in starting command execution class.";
     private static final String[] LOOPS_AND_CONDITIONALS=new String[]{"Repeat","DoTimes","For","If","IfElse"};
@@ -48,10 +48,12 @@ public class CommandExecute {
     
     public List<Double> executeCommands(InfoNode myNode){
         List<Double> returnVals=new ArrayList<Double>();
-        while(!myNode.equals(null)){
+        while(myNode!=null){
             returnVals.add(execute(myNode));
+            System.out.println(returnVals.get(returnVals.size()-1));
             myNode=myNode.next();
         }
+        System.out.println(returnVals.size());
         return returnVals;
     }
     
@@ -101,10 +103,11 @@ public class CommandExecute {
                 }
             }
         }
-        catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException e) {
             // TODO Auto-generated catch block
             showError("Error in executing commmand: " + myNode.getName());
         }
+        return (Double) null;
     }
     
     /*
