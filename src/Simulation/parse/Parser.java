@@ -23,7 +23,7 @@ public class Parser {
 	private final static String COMMENT = "Comment";
 	private final static String CONSTANT = "Constant";
 	private final static String TO = "To";
-	private final static String MAKE = "Make";
+	private final static String MAKE = "MakeVariable";
 
 	private ResourceBundle inputResource = ResourceBundle.getBundle("resources/CommandInputs");
 
@@ -54,8 +54,13 @@ public class Parser {
 				myList.push(new InfoNode(s, lang.getSymbol(s)));
 			}
 		}
+		
 		InfoNode tree;
-		if (checkMake(text)) {
+		String isMake = text[0];
+		System.out.println(isMake);
+		if (myList.peekLast().getToken().equals(MAKE)) {
+			myList.removeLast();
+			makeVariable();
 			tree = myVar.getVar(text[1]);
 		} else if (checkTo(text)) {
 			tree = new InfoNode("1", "1"); // CHANGE THIS TO RETRIEVE THE TO
@@ -67,18 +72,11 @@ public class Parser {
 		return tree;
 	}
 
-	private boolean checkMake(String[] text) {
-		if (text[0].equals(MAKE)) {
-			String variable = text[1];
-			String[] makeVar = new String[text.length - 2];
-			for (int i = 2; i < text.length; i++) {
-				makeVar[i - 2] = text[i];
-			}
-			InfoNode varNode = parseText(makeVar);
-			myVar.storeVar(variable, varNode);
-			return true;
-		}
-		return false;
+	private InfoNode makeVariable() {
+			InfoNode variable = myList.removeLast();
+			InfoNode varNode = createTree();
+			myVar.storeVar(variable.getName(), varNode);
+			return varNode;
 	}
 
 	private boolean checkTo(String[] text) {
@@ -136,7 +134,6 @@ public class Parser {
 				}
 				myStack.push(current);
 
-
 			} else {
 				// throw new compiler exception
 			}
@@ -164,7 +161,6 @@ public class Parser {
 			default:
 				break;
 			}
-
 
 			if (!myStack.isEmpty()) {
 				InfoNode next = myStack.pop();
