@@ -41,7 +41,6 @@ public class MainGUI {
         myHelpTab = new Help();
         myHistory = new History();
         setHistoryClickables();
-
     }
 
     public Parent createRoot(){
@@ -51,7 +50,6 @@ public class MainGUI {
         myRoot.setRight(myHistory.getMyHistoryVBox());
         myRoot.setPadding(new Insets(20));
         return myRoot;
-
     }
 
     private VBox createLeft(){
@@ -175,7 +173,7 @@ public class MainGUI {
     
     private void makeButton(){
         runButton = setButton("RunButtonCommand",0.8*GUIController.SCENE_WIDTH, 0.9*GUIController.SCENE_HEIGHT/9);
-         clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
+        clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
         clearButton.setOnAction(e -> myConsole.getTextField().clear());
     }
     

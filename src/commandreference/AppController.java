@@ -3,6 +3,7 @@ package commandreference;
 import Simulation.SimulationController;
 import gui.GUIController;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 
 public class AppController {
@@ -16,6 +17,11 @@ public class AppController {
         myGUIController = new GUIController();
         setBindings();
     }
+    
+    private void setRunButton(){
+    	Button b = myGUIController.getRunButton();
+    	b.setOnAction(e -> work());
+    }
 
     private void setBindings(){
         myGUIController.getCoordinates().getX().bind(mySimulationController.getActorCoordinates().getX());
@@ -23,12 +29,15 @@ public class AppController {
     }
 
     private void work(){
+    	myGUIController.addToHistory();
         sendCommand();
         updatePositions();
     }
 
     public Scene initiateApp(){
-        return myGUIController.init();
+        Scene mainScene = myGUIController.init();
+        setRunButton();
+        return mainScene;
     }
 
     private void sendCommand(){
@@ -39,12 +48,12 @@ public class AppController {
         //System.out.println(x);
         //mySimulationController.receive(command); 
 
-        mySimulationController.receive("make :distance fd 50"); 
+//        mySimulationController.receive("make :distance fd 50"); 
+    	mySimulationController.receive(myGUIController.getCommandEntered());
         //mySimulationController.receive("fd sum 80 sin 100"); 
         //will be void, will just execute command or throw up error.
         //need to reach in updatePositions method.
 
-        updatePositions();
     }
 
     private void updatePositions(){
@@ -53,12 +62,12 @@ public class AppController {
     }
 
     public void handleKeyInput(KeyCode code){
-        switch(code) {
-            case ENTER: 
-                myGUIController.addToHistory();
-                myGUIController.getMainGUI().getConsole().getTextField().setText("");
-                work();
-                break;
+//        switch(code) {
+//            case ENTER: 
+//                myGUIController.addToHistory();
+//                myGUIController.getMainGUI().getConsole().getTextField().setText("");
+//                work();
+//                break;
 
 //            case SHIFT:
 //                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
@@ -72,18 +81,18 @@ public class AppController {
 //                updatePositions();
 //                break;
                 //left
-            case COMMAND:
-                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
-                updatePositions();
-                break;
-                //right
-            case SHIFT:
-                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
-                updatePositions();
-                break;
-
-            default:
-                //Do nothing
-        }
+//            case COMMAND:
+//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
+//                updatePositions();
+//                break;
+//                //right
+//            case SHIFT:
+//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
+//                updatePositions();
+//                break;
+//
+//            default:
+//                //Do nothing
+//        }
     }
 }
