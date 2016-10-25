@@ -1,13 +1,28 @@
 package Simulation.parse;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Scanner;
 
 import Simulation.Node.InfoNode;
 
 
 public class ParserMain {
 
+	
+	
+	// utility function that reads given file and returns its entire contents as
+	// a single string
+	//put this back in parser class
+	public String readFileToString(String filename) throws FileNotFoundException {
+		final String END_OF_FILE = "\\z";
+		Scanner input = new Scanner(new File(filename));
+		input.useDelimiter(END_OF_FILE);
+		String result = input.next();
+		input.close();
+		return result;
+	}
 	
     public static void main (String[] args) {
     	Parser myParser = new Parser();
