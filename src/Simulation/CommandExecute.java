@@ -46,14 +46,13 @@ public class CommandExecute {
         }
     }
     
-    public List<Double> executeCommands(InfoNode myNode){
+    public List<Double> executeList(InfoNode myNode){
         List<Double> returnVals=new ArrayList<Double>();
         while(myNode!=null){
+            System.out.println(myNode.getToken());
             returnVals.add(execute(myNode));
-            System.out.println(returnVals.get(returnVals.size()-1));
             myNode=myNode.next();
         }
-        System.out.println(returnVals.size());
         return returnVals;
     }
     
@@ -64,50 +63,56 @@ public class CommandExecute {
                 return Double.parseDouble(myNode.getName());
             case ("Variable"):
                 return Variables.get(myNode.getName());
-            case ("Command"):
-                executeCommand(myNode);
             default:
-                return (Double) null;
+                return executeCommand(myNode);
         }
     }
     
     private double executeCommand(InfoNode myNode){
         try {
-            if(Arrays.asList(LOOPS_AND_CONDITIONALS).contains(myNode.getName())){
+            Method myMethod;
+            if(Arrays.asList(LOOPS_AND_CONDITIONALS).contains(myNode.getToken())){
                 Class cls2 = Class.forName("Simulation.CommandArchive");
                 Constructor cons2 = cls2.getConstructor(Actor.class);
                 Object myComEx=cons2.newInstance(myActor);
-                Method myMethod= myComEx.getClass().getMethod(myNode.getName());
-                switch(myMethod.getParameterCount()){
+                switch(Integer.parseInt(myResources.getString(myNode.getToken()))){
                     case 0:
+                        myMethod= myComEx.getClass().getMethod(myNode.getToken());
                         return (double) myMethod.invoke(myComEx);
                     case 1:
+                        myMethod= myComEx.getClass().getMethod(myNode.getToken(),myNode.getClass());
                         return (double) myMethod.invoke(myComEx,myNode.left());
                     case 2:
+                        myMethod= myComEx.getClass().getMethod(myNode.getToken(),myNode.getClass(),myNode.getClass());
                         return (double) myMethod.invoke(myComEx,myNode.left(),myNode.right());
                     case 3:
+                        myMethod= myComEx.getClass().getMethod(myNode.getToken(),myNode.getClass(),myNode.getClass(),myNode.getClass());
                         return (double) myMethod.invoke(myComEx,myNode.left(),myNode.middle(),myNode.right());
                 }              
             }
-            else{
-                Method myMethod= myCommandArchive.getClass().getMethod(myNode.getName());
-                switch(myMethod.getParameterCount()){
+            else{                
+                switch(Integer.parseInt(myResources.getString(myNode.getToken()))){
                     case 0:
+                        myMethod= myCommandArchive.getClass().getMethod(myNode.getToken());
                         return (double) myMethod.invoke(myCommandArchive);
                     case 1:
+                        myMethod= myCommandArchive.getClass().getMethod(myNode.getToken(),double.class);
                         return (double) myMethod.invoke(myCommandArchive,execute(myNode.left()));
                     case 2:
+                        myMethod= myCommandArchive.getClass().getMethod(myNode.getToken(),double.class,double.class);
                         return (double) myMethod.invoke(myCommandArchive,execute(myNode.left()),execute(myNode.right()));
                     case 3:
+                        myMethod= myCommandArchive.getClass().getMethod(myNode.getToken(),double.class,double.class,double.class);
                         return (double) myMethod.invoke(myCommandArchive, execute(myNode.left()),execute(myNode.middle()),execute(myNode.right()));
                 }
             }
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException e) {
             // TODO Auto-generated catch block
-            showError("Error in executing commmand: " + myNode.getName());
+            e.printStackTrace();
+           // showError(myNode.getName());
         }
-        return (Double) null;
+        return Double.NaN;
     }
     
     /*
@@ -121,7 +126,7 @@ public class CommandExecute {
         int limit=(int) execute(conditional);
         for(int i=1;i<=limit;i++){
             Variables.put(":repcount", (double) i);
-            List<Double> results=executeCommands(commands);
+            List<Double> results=executeList(commands);
            // Variables.put(":repcount", (double) i);//reset in case changed by nested loops, not sure if needed         
             lastresult=results.get(results.size()-1);         
         }
@@ -132,10 +137,10 @@ public class CommandExecute {
         InfoNode startNode=commands;
         double lastresult=0;
         int limit=(int) execute(conditional.next());
-        String var=conditional.getName();
+        String var=conditional.getToken();
         for(int i=0;i<=limit;i++){
             Variables.put(var, (double) i);
-            List<Double> results=executeCommands(commands);
+            List<Double> results=executeList(commands);
            // Variables.put(var, (double) i);//reset in case changed by nested loops, not sure if needed         
             lastresult=results.get(results.size()-1); 
         }     
@@ -145,13 +150,13 @@ public class CommandExecute {
     private double For(InfoNode conditional, InfoNode commands){
         InfoNode startNode=commands;
         double lastresult=0;
-        String var=conditional.getName();
+        String var=conditional.getToken();
         int start=(int) execute(conditional.next());
         int end=(int) execute(conditional.next().next());
         int increment=(int) execute(conditional.next().next().next());
         for(int i=start;i<=end;i+=increment){
             Variables.put(var, (double) i);
-            List<Double> results=executeCommands(commands);
+            List<Double> results=executeList(commands);
            // Variables.put(var, (double) i);//reset in case changed by nested loops, not sure if needed         
             lastresult=results.get(results.size()-1); 
         }     
@@ -162,7 +167,7 @@ public class CommandExecute {
     private double If(InfoNode conditional, InfoNode commands){
         double lastresult=0;
         if((int)execute(conditional)!=0){
-            List<Double> results=executeCommands(commands);
+            List<Double> results=executeList(commands);
             lastresult=results.get(results.size()-1); 
         }
         return lastresult;
@@ -172,11 +177,11 @@ public class CommandExecute {
     private double IfElse(InfoNode conditional, InfoNode commandsIf, InfoNode commandsElse){
         double lastresult=0;
         if((int)execute(conditional)!=0){
-            List<Double> results=executeCommands(commandsIf);
+            List<Double> results=executeList(commandsIf);
             lastresult=results.get(results.size()-1); 
         }
         else{
-            List<Double> results=executeCommands(commandsElse);
+            List<Double> results=executeList(commandsElse);
             lastresult=results.get(results.size()-1); 
         }
         return lastresult;
@@ -185,10 +190,10 @@ public class CommandExecute {
     
     
     // causes error to display in place of stacktrace message when exceptiosn are reached
-    private void showError (String message) {
+    private void showError (String commandName) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(ERROR_TITLE);
-        alert.setContentText(myResources.getString(message));
+        alert.setContentText("Error in executing commmand: " + commandName);
         alert.showAndWait();
     }
 
