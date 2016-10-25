@@ -43,6 +43,8 @@ public class SimulationController {
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
     	InfoNode test=simParser.parseText(commandArray);
+    	
+    	//test.printTree();
 
     	List<Double> results=myCommandExecute.executeList(test);
     	for(double r1:results){
