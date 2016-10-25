@@ -23,9 +23,7 @@ public class SimulationController {
     }
     
     public void setLanguage(String language) {
-        System.out.println("before sim arsser");
     	simParser = new Parser(language);
-    	System.out.println("created parsers");
     }
 
 //    public void createActor(String name){
