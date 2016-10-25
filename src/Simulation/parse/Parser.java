@@ -101,6 +101,7 @@ public class Parser {
 		if (!myStack.isEmpty()) {
 			// throw a new error: there were leftover stuff when there shouldn't
 			// have been
+		    System.out.println("ERROR");
 		}
 
 		return finalTree;
