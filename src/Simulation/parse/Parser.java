@@ -58,20 +58,21 @@ public class Parser {
 		if (checkMake(text)) {
 			tree = myVar.getVar(text[1]);
 		} else if (checkTo(text)) {
-			tree = new InfoNode("1", "1"); //CHANGE THIS TO RETRIEVE THE TO FUNCTION RETURN
+			tree = new InfoNode("1", "1"); // CHANGE THIS TO RETRIEVE THE TO
+											// FUNCTION RETURN
 		} else {
 			tree = createTree();
 		}
-		
+
 		return tree;
 	}
 
 	private boolean checkMake(String[] text) {
 		if (text[0].equals(MAKE)) {
 			String variable = text[1];
-			String[] makeVar = new String[text.length-2];
-			for (int i=2; i < text.length; i++) {
-				makeVar[i-2] = text[i];
+			String[] makeVar = new String[text.length - 2];
+			for (int i = 2; i < text.length; i++) {
+				makeVar[i - 2] = text[i];
 			}
 			InfoNode varNode = parseText(makeVar);
 			myVar.storeVar(variable, varNode);
@@ -88,15 +89,10 @@ public class Parser {
 	}
 
 	private InfoNode createTree() {
-		for (InfoNode e : myList) {
-		    System.out.println(e.getName() + " gettum");
-		}
-		
+
 		while (!myList.isEmpty()) {
 			InfoNode current = myList.pop();
-			System.out.println(current.getName() + "popped list");
 			String check = current.getToken();
-			System.out.println(check);
 			addTreeNode(current, check);
 
 		}
@@ -135,18 +131,10 @@ public class Parser {
 				// split it
 				// if size is greater than 1, evaluate the expression
 				if (!token.equals(CONSTANT)) {
-				        System.out.println(node.getName() + " enter here");
 					current = createTreeNode(node);
-					System.out.println(current.getName());
 				}
 				myStack.push(current);
-				//System.out.println(bigStack.peek().getName() + " this first");
-				//System.out.println(bigStack.peekLast().getName() + " this last");
-				
-//				InfoNode tester = bigStack.pop();
-//				if (tester.next()!= null) {
-//				    System.out.println(tester.next().getName() + " hustlers");
-//				}
+
 
 			} else {
 				// throw new compiler exception
@@ -154,7 +142,6 @@ public class Parser {
 
 		}
 	}
-	
 
 	private InfoNode createTreeNode(InfoNode command) {
 		// InfoNode[] parameter = new InfoNode[3];
@@ -163,20 +150,23 @@ public class Parser {
 			switch (numParam) {
 			case ("1"):
 				command.setLeft(myStack.pop());
-			System.out.println(command.left().getName() + " setleft");
+				break;
 			case ("2"):
 				command.setLeft(myStack.pop());
 				command.setRight(myStack.pop());
+				break;
 			case ("3"):
 				command.setLeft(myStack.pop());
 				command.setRight(myStack.pop());
 				command.setMiddle(myStack.pop());
+				break;
 			default:
+				break;
 			}
 
+
 			if (!myStack.isEmpty()) {
-			        InfoNode next = myStack.pop();
-			        System.out.println(next.getName() + " dis name");
+				InfoNode next = myStack.pop();
 				command.setNext(next);
 			}
 
