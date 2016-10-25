@@ -1,13 +1,13 @@
 package Simulation.Node;
 
-public class TreeNod {
-	left 
-	
-	right 
-	
-	middle
-	
-	
-	
-	
-}
+//public class TreeNod {
+//	left 
+//	
+//	right 
+//	
+//	middle
+//	
+//	
+//	
+//	
+//}
