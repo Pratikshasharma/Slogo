@@ -30,6 +30,7 @@ public class Parser {
 	private static TypeDictionary lang;
 	private VariableTable myVar;
 	private Deque<InfoNode> myList;
+	private Deque<InfoNode> myStack;
 
 	public Parser(String language) {
 		lang = new TypeDictionary();
@@ -46,10 +47,11 @@ public class Parser {
 	// given some text, prints results of parsing it using the given language
 	public InfoNode parseText(String[] text) {
 		myList = new ArrayDeque<InfoNode>();
+		myStack = new ArrayDeque<InfoNode>();
 
 		for (String s : text) {
 			if (s.trim().length() > 0) {
-				myList.add(new InfoNode(s, lang.getSymbol(s)));
+				myList.push(new InfoNode(s, lang.getSymbol(s)));
 			}
 		}
 		InfoNode tree;
@@ -86,20 +88,23 @@ public class Parser {
 	}
 
 	private InfoNode createTree() {
-		Deque<InfoNode> stack = new ArrayDeque<InfoNode>();
+		for (InfoNode e : myList) {
+		    System.out.println(e.getName() + " gettum");
+		}
 		
 		while (!myList.isEmpty()) {
 			InfoNode current = myList.pop();
+			System.out.println(current.getName() + "popped list");
 			String check = current.getToken();
-
-			addTreeNode(stack, current, check);
+			System.out.println(check);
+			addTreeNode(current, check);
 
 		}
 		// if there's still stuff at the end but no more commands or something
 		// weird like that
 		// throw compile error
-		InfoNode finalTree = stack.pop();
-		if (!stack.isEmpty()) {
+		InfoNode finalTree = myStack.pop();
+		if (!myStack.isEmpty()) {
 			// throw a new error: there were leftover stuff when there shouldn't
 			// have been
 		}
@@ -107,7 +112,7 @@ public class Parser {
 		return finalTree;
 	}
 
-	private void addTreeNode(Deque<InfoNode> bigStack, InfoNode node, String token) {
+	private void addTreeNode(InfoNode node, String token) {
 		InfoNode current = node;
 		if (!token.equals(COMMENT)) {
 			if (!token.equals(NO_MATCH)) {
@@ -130,9 +135,18 @@ public class Parser {
 				// split it
 				// if size is greater than 1, evaluate the expression
 				if (!token.equals(CONSTANT)) {
-					current = createTreeNode(bigStack, node);
+				        System.out.println(node.getName() + " enter here");
+					current = createTreeNode(node);
+					System.out.println(current.getName());
 				}
-				bigStack.push(current);
+				myStack.push(current);
+				//System.out.println(bigStack.peek().getName() + " this first");
+				//System.out.println(bigStack.peekLast().getName() + " this last");
+				
+//				InfoNode tester = bigStack.pop();
+//				if (tester.next()!= null) {
+//				    System.out.println(tester.next().getName() + " hustlers");
+//				}
 
 			} else {
 				// throw new compiler exception
@@ -140,26 +154,30 @@ public class Parser {
 
 		}
 	}
+	
 
-	private InfoNode createTreeNode(Deque<InfoNode> stack, InfoNode command) {
+	private InfoNode createTreeNode(InfoNode command) {
 		// InfoNode[] parameter = new InfoNode[3];
 		try {
 			String numParam = inputResource.getString(command.getToken());
 			switch (numParam) {
 			case ("1"):
-				command.setLeft(stack.pop());
+				command.setLeft(myStack.pop());
+			System.out.println(command.left().getName() + " setleft");
 			case ("2"):
-				command.setLeft(stack.pop());
-				command.setRight(stack.pop());
+				command.setLeft(myStack.pop());
+				command.setRight(myStack.pop());
 			case ("3"):
-				command.setLeft(stack.pop());
-				command.setRight(stack.pop());
-				command.setMiddle(stack.pop());
+				command.setLeft(myStack.pop());
+				command.setRight(myStack.pop());
+				command.setMiddle(myStack.pop());
 			default:
 			}
 
-			if (!stack.isEmpty()) {
-				command.setNext(stack.pop());
+			if (!myStack.isEmpty()) {
+			        InfoNode next = myStack.pop();
+			        System.out.println(next.getName() + " dis name");
+				command.setNext(next);
 			}
 
 		} catch (NoSuchElementException e) {

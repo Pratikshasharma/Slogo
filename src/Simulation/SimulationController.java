@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import Actors.Actor;
 import Actors.Turtle;
+import Simulation.Node.InfoNode;
 import Simulation.parse.*;
 import commandreference.Coordinates;
 
 public class SimulationController {
 	
 //    private List<Actor> actorList;
-	private Actor myActor;
+    private Actor myActor;
     private Parser simParser;
     private CommandExecute myCommandExecute;
     
@@ -22,7 +23,9 @@ public class SimulationController {
     }
     
     public void setLanguage(String language) {
+        System.out.println("before sim arsser");
     	simParser = new Parser(language);
+    	System.out.println("created parsers");
     }
 
 //    public void createActor(String name){
@@ -41,7 +44,18 @@ public class SimulationController {
     
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
-    	myCommandExecute.executeCommands(simParser.parseText(commandArray));
+    	InfoNode test=simParser.parseText(commandArray);
+        System.out.println("results");
+        InfoNode temp=test;
+        while(temp!=null){
+            System.out.println(temp.getName());
+            temp=temp.next();
+        }
+
+    	List<Double> results=myCommandExecute.executeCommands(test);
+    	for(double r1:results){
+            System.out.println(r1);
+    	}
     }
 
 //    private void createTurtle(){
