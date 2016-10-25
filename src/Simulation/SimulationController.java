@@ -41,7 +41,7 @@ public class SimulationController {
     
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
-    	simParser.parseText(commandArray);
+    	myCommandExecute.executeCommands(simParser.parseText(commandArray));
     }
 
 //    private void createTurtle(){
