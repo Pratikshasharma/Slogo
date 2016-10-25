@@ -23,9 +23,7 @@ public class SimulationController {
     }
     
     public void setLanguage(String language) {
-        System.out.println("before sim arsser");
     	simParser = new Parser(language);
-    	System.out.println("created parsers");
     }
 
 //    public void createActor(String name){
@@ -45,14 +43,9 @@ public class SimulationController {
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
     	InfoNode test=simParser.parseText(commandArray);
-        System.out.println("results");
         InfoNode temp=test;
-        while(temp!=null){
-            System.out.println(temp.getName());
-            temp=temp.next();
-        }
 
-    	List<Double> results=myCommandExecute.executeCommands(test);
+    	List<Double> results=myCommandExecute.executeList(test);
     	for(double r1:results){
             System.out.println(r1);
     	}
