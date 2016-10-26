@@ -1,9 +1,7 @@
-package Commands;
+package Command;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import Actors.Actor;
 import Simulation.CommandProcess;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;

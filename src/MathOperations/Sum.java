@@ -1,18 +1,20 @@
-package ActorQueries;
+package MathOperations;
 
 import java.util.List;
-import Actors.Actor;
-import Command.ActorQuery;
+import Command.MathOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public class XCoordinate extends ActorQuery{
+public class Sum extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-        Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
-        return actor.getX();
+        double sum=0;
+        for(InfoNode parameter:args){
+            sum+=myCommandProcess.executeList(myCommandStorage, ActorsChanged, parameter);
+        }
+        return sum;
     }
 
 }
