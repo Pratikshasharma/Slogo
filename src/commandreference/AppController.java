@@ -67,12 +67,12 @@ public class AppController {
     }
 
     public void handleKeyInput(KeyCode code){
-//        switch(code) {
-//            case ENTER: 
-//                myGUIController.addToHistory();
-//                myGUIController.getMainGUI().getConsole().getTextField().setText("");
-//                work();
-//                break;
+        switch(code) {
+            case ENTER: 
+                myGUIController.addToHistory();
+                myGUIController.getMainGUI().getConsole().getTextField().setText("");
+                work();
+                break;
 
 //            case SHIFT:
 //                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
@@ -96,8 +96,8 @@ public class AppController {
 //                updatePositions();
 //                break;
 //
-//            default:
-//                //Do nothing
-//        }
+            default:
+                //Do nothing
+        }
     }
 }
