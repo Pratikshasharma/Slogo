@@ -84,3 +84,31 @@ public class ParserMain {
         }
     }
 }
+
+//old way of createTree when parameters were assigned nodes and not arraylist
+//switch (stringParam) {
+//case ("1"):
+//	leftNode = createTree(myList.pop());
+//	current.setLeft(leftNode);
+//
+//	break;
+//case ("2"):
+//	leftNode = createTree(myList.pop());
+//	rightNode = createTree(myList.pop());
+//	current.setLeft(leftNode);
+//	current.setRight(rightNode);
+//	break;
+//case ("3"):
+//	leftNode = createTree(myList.pop());
+//	rightNode = createTree(myList.pop());
+//	middleNode = createTree(myList.pop());
+//	current.setLeft(leftNode);
+//	current.setRight(rightNode);
+//	current.setMiddle(middleNode);
+//	break;
+//case ("MAKE"):
+//	//do special stuffs
+//	break;
+//default:
+//	break;
+//}

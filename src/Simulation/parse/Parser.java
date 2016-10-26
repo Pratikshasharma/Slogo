@@ -82,36 +82,49 @@ public class Parser {
 
 	private InfoNode createTree(InfoNode current) {
 
-		InfoNode leftNode, rightNode, middleNode;
+		InfoNode listNode, leftNode, rightNode, middleNode;
 
 		try {
-			String numParam = inputResource.getString(current.getToken());
-			switch (numParam) {
-			case ("1"):
-				leftNode = createTree(myList.pop());
-				current.setLeft(leftNode);
-
-				break;
-			case ("2"):
-				leftNode = createTree(myList.pop());
-				rightNode = createTree(myList.pop());
-				current.setLeft(leftNode);
-				current.setRight(rightNode);
-				break;
-			case ("3"):
-				leftNode = createTree(myList.pop());
-				rightNode = createTree(myList.pop());
-				middleNode = createTree(myList.pop());
-				current.setLeft(leftNode);
-				current.setRight(rightNode);
-				current.setMiddle(middleNode);
-				break;
-			case ("MAKE"):
-				//do special stuffs
-				break;
-			default:
-				break;
+			String stringParam = inputResource.getString(current.getToken());
+			System.out.println(stringParam);
+			if (stringParam.equals("MAKE")) {
+				
 			}
+			
+			int intParam = Integer.parseInt(stringParam);
+//			switch (stringParam) {
+//			case ("1"):
+//				leftNode = createTree(myList.pop());
+//				current.setLeft(leftNode);
+//
+//				break;
+//			case ("2"):
+//				leftNode = createTree(myList.pop());
+//				rightNode = createTree(myList.pop());
+//				current.setLeft(leftNode);
+//				current.setRight(rightNode);
+//				break;
+//			case ("3"):
+//				leftNode = createTree(myList.pop());
+//				rightNode = createTree(myList.pop());
+//				middleNode = createTree(myList.pop());
+//				current.setLeft(leftNode);
+//				current.setRight(rightNode);
+//				current.setMiddle(middleNode);
+//				break;
+//			case ("MAKE"):
+//				//do special stuffs
+//				break;
+//			default:
+//				break;
+//			}
+			while (intParam > 0) {
+				listNode = myList.pop();
+				current.myParameters.add(createTree(listNode));
+				intParam--;
+				System.out.println(intParam);
+			}
+			
 
 
 		} catch (NoSuchElementException e) {

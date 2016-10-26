@@ -1,6 +1,7 @@
 package Simulation.Node;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InfoNode extends Node{
 
@@ -9,6 +10,7 @@ public class InfoNode extends Node{
 	private InfoNode myLeft;
 	private InfoNode myRight;
 	private InfoNode myMiddle;
+	public List<InfoNode> myParameters;
 	private InfoNode myNext;
 
 	
@@ -16,6 +18,7 @@ public class InfoNode extends Node{
 	public InfoNode(String name, String type) {
 		myName = name;
 		myToken = type;
+		myParameters = new ArrayList<>();
 		myLeft = null;
 		myRight = null;
 		myMiddle = null;

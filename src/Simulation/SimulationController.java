@@ -46,9 +46,19 @@ public class SimulationController {
     	
     	//test.printTree();
 
-    	List<Double> results=myCommandExecute.executeList(test);
-    	for(double r1:results){
-            System.out.println(r1);
+//    	List<Double> results=myCommandExecute.executeList(test);
+//    	for(double r1:results){
+//            System.out.println(r1);
+//            System.out.println("mm");
+//    	}
+    	while (test != null) {
+    		System.out.println("current: " + test.getName());
+    		List<InfoNode> theList = test.myParameters;
+    		System.out.println("current's parameters: ");
+    		for (InfoNode node : theList) {
+    			System.out.println(node.getName());
+    		}
+    		test = test.next();
     	}
     }
 
