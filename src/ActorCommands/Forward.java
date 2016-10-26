@@ -4,7 +4,7 @@ package ActorCommands;
 import java.util.List;
 import java.util.Map;
 import Actors.Actor;
-import Commands.ActorCommand;
+import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

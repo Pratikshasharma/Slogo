@@ -3,12 +3,12 @@ package Simulation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import Commands.Command;
 import Simulation.Node.InfoNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import Commands.ActorCommand;
 import ActorCommands.Forward;
+import Command.ActorCommand;
+import Command.Command;
 import java.lang.reflect.InvocationTargetException;
 
 
