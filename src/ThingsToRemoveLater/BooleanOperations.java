@@ -1,4 +1,4 @@
-package Simulation;
+package ThingsToRemoveLater;
 
 public class BooleanOperations {
     public double LessThan(double a, double b){

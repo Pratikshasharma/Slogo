@@ -39,7 +39,7 @@ public class AppController {
         //System.out.println(x);
         //mySimulationController.receive(command); 
 
-        mySimulationController.receive("make :distance fd 50"); 
+        mySimulationController.receive("seth 90 fd 20 left 10 bk 50"); 
         //mySimulationController.receive("fd sum 80 sin 100"); 
         //will be void, will just execute command or throw up error.
         //need to reach in updatePositions method.
