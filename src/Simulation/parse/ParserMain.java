@@ -15,7 +15,7 @@ public class ParserMain {
 	// utility function that reads given file and returns its entire contents as
 	// a single string
 	//put this back in parser class
-	public String readFileToString(String filename) throws FileNotFoundException {
+	public static String readFileToString(String filename) throws FileNotFoundException {
 		final String END_OF_FILE = "\\z";
 		Scanner input = new Scanner(new File(filename));
 		input.useDelimiter(END_OF_FILE);
@@ -69,14 +69,14 @@ public class ParserMain {
 
         try {
             String userInput = "fd 50 rt 90 BACK :distance Left :angle";
-            String fileInput = myParser.readFileToString("data/square.logo");
+            String fileInput = readFileToString("data/square.logo");
             // try against different inputs
-            List<InfoNode> list1 = myParser.parseText(examples);
-            myParser.printList(list1);
-            List<InfoNode> list2 = myParser.parseText(userInput.split(WHITESPACE));
-            myParser.printList(list2);
-            List<InfoNode> list3 = myParser.parseText(fileInput.split(WHITESPACE));
-            myParser.printList(list3);
+            InfoNode list1 = myParser.parseText(examples);
+            list1.printTree();
+            InfoNode list2 = myParser.parseText(userInput.split(WHITESPACE));
+            list2.printTree();
+            InfoNode list3 = myParser.parseText(fileInput.split(WHITESPACE));
+            list3.printTree();
         }
         catch (FileNotFoundException e) {
             //e.printStackTrace();

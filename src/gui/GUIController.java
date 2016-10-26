@@ -2,6 +2,7 @@ package gui;
 
 import commandreference.Coordinates;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
 public class GUIController {
@@ -80,6 +81,10 @@ public class GUIController {
             return true;   
         } 
         return false;
+    }
+    
+    public Button getRunButton(){
+    	return myMainGUI.getRunButton();
     }
 }
 

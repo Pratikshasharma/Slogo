@@ -47,34 +47,28 @@ public class Parser {
 	// given some text, prints results of parsing it using the given language
 	public InfoNode parseText(String[] text) {
 		myList = new ArrayDeque<InfoNode>();
-		myStack = new ArrayDeque<InfoNode>();
-
+		
 		for (String s : text) {
-			if (s.trim().length() > 0) {
-				myList.push(new InfoNode(s, lang.getSymbol(s)));
-			}
+			myList.add(new InfoNode(s, lang.getSymbol(s)));
+		}
+
+		InfoNode first = myList.pop();
+
+		first = createTree(first);
+		InfoNode current = first;
+		while (!myList.isEmpty()) {
+			InfoNode nextTree = createTree(myList.pop());
+			current.setNext(nextTree);
+			current = current.next();
 		}
 		
-		InfoNode tree;
-		String isMake = text[0];
-		System.out.println(isMake);
-		if (myList.peekLast().getToken().equals(MAKE)) {
-			myList.removeLast();
-			makeVariable();
-			tree = myVar.getVar(text[1]);
-		} else if (checkTo(text)) {
-			tree = new InfoNode("1", "1"); // CHANGE THIS TO RETRIEVE THE TO
-											// FUNCTION RETURN
-		} else {
-			tree = createTree();
-		}
 
-		return tree;
+		return first;
 	}
 
 	private InfoNode makeVariable() {
 			InfoNode variable = myList.removeLast();
-			InfoNode varNode = createTree();
+			InfoNode varNode = createTree(variable);
 			myVar.storeVar(variable.getName(), varNode);
 			return varNode;
 	}
@@ -86,93 +80,45 @@ public class Parser {
 		return false;
 	}
 
-	private InfoNode createTree() {
+	private InfoNode createTree(InfoNode current) {
 
-		while (!myList.isEmpty()) {
-			InfoNode current = myList.pop();
-			String check = current.getToken();
-			addTreeNode(current, check);
+		InfoNode leftNode, rightNode, middleNode;
 
-		}
-		// if there's still stuff at the end but no more commands or something
-		// weird like that
-		// throw compile error
-		InfoNode finalTree = myStack.pop();
-		if (!myStack.isEmpty()) {
-			// throw a new error: there were leftover stuff when there shouldn't
-			// have been
-		    System.out.println("ERROR");
-		}
-
-		return finalTree;
-	}
-
-	private void addTreeNode(InfoNode node, String token) {
-		InfoNode current = node;
-		if (!token.equals(COMMENT)) {
-			if (!token.equals(NO_MATCH)) {
-				// if it's create custom command (check for "To")
-				// new method that uses the myList to find
-				// [ bracket, all the nodes in between, then end bracket] THESE
-				// ARE VARIABLES LOL.
-				if (token.equals(MAKE)) {
-					// need a new method: at the beginning, check if it's a make
-					// or a to.
-					// there's no way to do this in the middle of making the
-					// tree.
-				}
-
-				// check if use custom command (Command)
-				// if no such command, throw error
-				// if it's VARIABLE
-				// get it and use it
-				// if no such variable, throw compile error.
-				// split it
-				// if size is greater than 1, evaluate the expression
-				if (!token.equals(CONSTANT)) {
-					current = createTreeNode(node);
-				}
-				myStack.push(current);
-
-			} else {
-				// throw new compiler exception
-			}
-
-		}
-	}
-
-	private InfoNode createTreeNode(InfoNode command) {
-		// InfoNode[] parameter = new InfoNode[3];
 		try {
-			String numParam = inputResource.getString(command.getToken());
+			String numParam = inputResource.getString(current.getToken());
 			switch (numParam) {
 			case ("1"):
-				command.setLeft(myStack.pop());
+				leftNode = createTree(myList.pop());
+				current.setLeft(leftNode);
+
 				break;
 			case ("2"):
-				command.setLeft(myStack.pop());
-				command.setRight(myStack.pop());
+				leftNode = createTree(myList.pop());
+				rightNode = createTree(myList.pop());
+				current.setLeft(leftNode);
+				current.setRight(rightNode);
 				break;
 			case ("3"):
-				command.setLeft(myStack.pop());
-				command.setRight(myStack.pop());
-				command.setMiddle(myStack.pop());
+				leftNode = createTree(myList.pop());
+				rightNode = createTree(myList.pop());
+				middleNode = createTree(myList.pop());
+				current.setLeft(leftNode);
+				current.setRight(rightNode);
+				current.setMiddle(middleNode);
+				break;
+			case ("MAKE"):
+				//do special stuffs
 				break;
 			default:
 				break;
 			}
 
-			if (!myStack.isEmpty()) {
-				InfoNode next = myStack.pop();
-				command.setNext(next);
-			}
 
 		} catch (NoSuchElementException e) {
 			// throw new compileException(message: incorrect number of
 			// parameter)
 		}
-		return command;
 
+		return current;
 	}
-
 }

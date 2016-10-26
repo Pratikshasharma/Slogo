@@ -29,6 +29,8 @@ public class SimulationController {
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
     	InfoNode test=simParser.parseText(commandArray);
+    	
+    	//test.printTree();
 
     	List<Integer> tempList=new ArrayList<Integer>();
     	tempList.add(1);
