@@ -2,18 +2,17 @@ package ActorQueries;
 
 import java.util.List;
 import Actors.Actor;
-import Commands.ActorCommand;
+import Commands.ActorQuery;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public class XCoordinate extends ActorCommand{
+public class XCoordinate extends ActorQuery{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
-        actor.setVisibility(true);
-        return 1;
+        return actor.getX();
     }
 
 }
