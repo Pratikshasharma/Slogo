@@ -112,3 +112,14 @@ public class ParserMain {
 //default:
 //	break;
 //}
+
+
+//while (test != null) {
+//	System.out.println("current: " + test.getName());
+//	List<InfoNode> theList = test.myParameters;
+//	System.out.println("current's parameters: ");
+//	for (InfoNode node : theList) {
+//		System.out.println(node.getName());
+//	}
+//	test = test.next();
+//}
