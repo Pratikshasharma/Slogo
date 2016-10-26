@@ -1,4 +1,4 @@
-package Simulation;
+package ThingsToRemoveLater;
 
 public class MathOperations {
     public double Sum(double a, double b){

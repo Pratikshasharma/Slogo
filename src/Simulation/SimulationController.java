@@ -2,42 +2,28 @@ package Simulation;
 
 import java.util.ArrayList;
 import java.util.List;
-import Actors.Actor;
-import Actors.Turtle;
 import Simulation.Node.InfoNode;
 import Simulation.parse.*;
 import commandreference.Coordinates;
 
 public class SimulationController {
 	
-//    private List<Actor> actorList;
-    private Actor myActor;
     private Parser simParser;
-    private CommandExecute myCommandExecute;
+    private CommandStorage myCommandStorage;
+    private CommandProcess myCommandProcess;
     
     public SimulationController () {
-//        actorList=new ArrayList<Actor>();
-//      createActor("Turtle");
-    	myActor = new Turtle();
-    	myCommandExecute=new CommandExecute(myActor);
+    	myCommandStorage=new CommandStorage();
+    	myCommandStorage.addNewActors(1);
+    	myCommandProcess=new CommandProcess();
     }
     
     public void setLanguage(String language) {
     	simParser = new Parser(language);
     }
-
-//    public void createActor(String name){
-//        switch(name){
-//            case "Turtle":
-//                createTurtle();
-//                break;
-//            default:
-//                break;
-//        }
-//    }
     
     public Coordinates getActorCoordinates(){
-    	return myActor.getCoordinates();
+    	return myCommandStorage.getActor(1).getCoordinates();
     }
     
     public void receive(String command) {
@@ -46,13 +32,9 @@ public class SimulationController {
     	
     	//test.printTree();
 
-    	List<Double> results=myCommandExecute.executeList(test);
-    	for(double r1:results){
-            System.out.println(r1);
-    	}
+    	List<Integer> tempList=new ArrayList<Integer>();
+    	tempList.add(1);
+    	double result=myCommandProcess.executeList(myCommandStorage,tempList,test);
+    	System.out.println(result);
     }
-
-//    private void createTurtle(){
-//        actorList.add(new Turtle());
-//    }
 }
