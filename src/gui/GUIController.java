@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import navigationTabs.FileTab;
 
 public class GUIController {
 	
@@ -25,6 +26,14 @@ public class GUIController {
         setLanguage();
         return myScene;
     }
+    
+    public Console getConsole(){
+		return myMainGUI.getConsole();
+    }
+    
+    public FileTab getFileTab(){
+    	return myMainGUI.getMyFileTab();
+    }
 
     public History getHistory(){
         return myMainGUI.getHistory();
@@ -35,18 +44,6 @@ public class GUIController {
     }
 
     public void updateLocation(){
-        // System.out.println(myCoordinates.getX().get() + " " + myCoordinates.getY());
-        if (!checkOutOfBounds()){
-//            myMainGUI.getTurtle().getMyTurtleImageView().setRotate(turtleHeading);
-//            myMainGUI.getTurtle().setPosition(myMainGUI.getTurtle().getMyTurtleImageView().getX() + myCoordinates.getX().get(),myMainGUI.getTurtle().getMyTurtleImageView().getY() + myCoordinates.getY().get());
-//            myMainGUI.getTurtle().getMyLine().setEndX(myMainGUI.getTurtle().getMyLine().getEndX()+ myCoordinates.getX().get());
-//            myMainGUI.getTurtle().getMyLine().setEndY(myMainGUI.getTurtle().getMyLine().getEndY()+ myCoordinates.getY().get());
-        }
-
-    }
-
-    public MainGUI getMainGUI(){
-        return myMainGUI;
     }
     
     public File chooseFile(){
@@ -75,24 +72,6 @@ public class GUIController {
         if(myCommandLanguage.length()!=0){ return this.myCommandLanguage; };
         myCommandLanguage = DEFAULT_LANGUAGE;
         return myCommandLanguage;  
-    }
-
-    private boolean checkOutOfBounds(){
-//        if((myMainGUI.getTurtle().getMyTurtleImageView().getY() + myCoordinates.getY().get() + myMainGUI.getTurtle().getMyTurtleImageView().getBoundsInLocal().getHeight() +20  >= MainGUI.TURTLE_PANE_HEIGHT )){
-//            return true;
-//        }
-//        if(myMainGUI.getTurtle().getMyTurtleImageView().getY() + myCoordinates.getY().get() <=0){
-//            return true;
-//        }
-//        // left
-//        if(myMainGUI.getTurtle().getMyTurtleImageView().getX() + myCoordinates.getX().get() + myMainGUI.getTurtle().getMyTurtleImageView().getBoundsInLocal().getWidth()<=0){ 
-//            return true;
-//        }
-//        //right
-//        if(myMainGUI.getTurtle().getMyTurtleImageView().getX() + myCoordinates.getX().get() +  myMainGUI.getTurtle().getMyTurtleImageView().getBoundsInLocal().getWidth()>= MainGUI.TURTLE_PANE_WIDTH){
-//            return true;   
-//        } 
-        return false;
     }
     
     public Button getRunButton(){

@@ -1,15 +1,11 @@
 package commandreference;
 
 import java.net.MalformedURLException;
-import java.util.Map;
-
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
 import gui.GUIController;
-import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -29,7 +25,7 @@ public class AppController {
 		Scene mainScene = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
-//		updateFront();
+		mySimulationController.getStorage().setActive(1);
 		handleNewTurtle();
 		return mainScene;
 	}
@@ -94,7 +90,7 @@ public class AppController {
 	}
 
 	private void handleNewTurtle(){
-		myGUIController.getMainGUI().getMyFileTab().getNewTurtleItem().setOnAction(e -> {
+		myGUIController.getFileTab().getNewTurtleItem().setOnAction(e -> {
 			try {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
@@ -118,27 +114,17 @@ public class AppController {
 
 	private void setRunButton(){
 		Button b = myGUIController.getRunButton();
-		b.setOnAction(e -> work());
-	}
-
-	private void work(){
-		sendCommand();
+		b.setOnAction(e -> sendCommand());
 	}
 
 	private void sendCommand(){
-		//mySimulationController.receive("make :distance fd sum sin 20 20");
-		//mySimulationController.receive("make :distance fd 50"); 
-		//mySimulationController.receive("fd sum 80 sin 100");
-		//mySimulationController.receive("fd sum 20 30 bk 100 left 300");
-		//mySimulationController.receive("fd sum 80 sin 100"); 
 		mySimulationController.receive(myGUIController.getCommandEntered());
 	}
 
 	public void handleKeyInput(KeyCode code){
 		switch(code) {
 		case ENTER: 
-			myGUIController.getMainGUI().getConsole().getTextField().setText("");
-			work();
+			myGUIController.getConsole().getTextField().setText(myGUIController.getConsole().getTextField().getText() + "\n");
 			break;
 
 			//            case SHIFT:
