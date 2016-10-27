@@ -13,3 +13,8 @@ Execution was originally planned to have commands in the methods which would be 
 
 
 ## Front End
+One major change in the internal front end api was the addition of the navigationtabs package which consists of classes such as Tools.java, FileTab.java, Help.java,etc.
+These classes are all menu objects which are then called in the MainGUI class to add them up to the Scene. 
+
+Another change is the use of functional interface for using lambda expression while passing in the events from the front end to the back end.
+
