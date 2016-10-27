@@ -1,42 +1,43 @@
 package Actors;
 
 import commandreference.Coordinates;
+import commandreference.Turtleable;
+import gui.MainGUI;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
 
-public abstract class Actor {
+public abstract class Actor implements Turtleable {
 
 	private final static double DEGREES_CIRCLE=360.0;
-
-
-	//    protected int xPosition, yPosition;
+	private ImageView myImage;
 	protected Coordinates coordinates;
 	protected double distanceTraveled, degreesMoved, myAngle;
 	protected boolean penDown, visible;
-        private int pencolorindex;
-        private int pensizeindex;
-        private int shapeindex;
-
-	public Actor () {
-		init(0,0);
+	private int penColorIndex;
+	private int penSizeIndex;
+	private int shapeIndex;
+	private Line myLine;
+	
+	public Actor (String imageFilePath) {
+		init(MainGUI.TURTLE_PANE_WIDTH / 2, MainGUI.TURTLE_PANE_HEIGHT / 2, imageFilePath);
 	}
 
-	public Actor (double x, double y) {
-		init(x,y);
+	public Actor (double x, double y, String imageFilePath) {
+		init(x,y, imageFilePath);
 	}
 
 	public void setPos(double x, double y){
-//		distanceTraveled=Math.sqrt((xPosition-x)^2+(yPosition-y)^2);
-//		xPosition=x;
-//		yPosition=y;
-	        distanceTraveled=Math.sqrt(Math.pow((coordinates.getX().get()-x),2)+Math.pow((coordinates.getY().get()-y),2));
+		distanceTraveled=Math.sqrt(Math.pow((coordinates.getX().get()-x),2)+Math.pow((coordinates.getY().get()-y),2));
 		coordinates.setX(x);
 		coordinates.setY(y);
 	}
 
+	@Override
 	public double getX(){
-//		return xPosition;
 		return coordinates.getX().get();
 	}
 
+	@Override
 	public double getY(){
 		return coordinates.getY().get();
 	}
@@ -54,16 +55,13 @@ public abstract class Actor {
 		return degreesMoved;
 	}
 
+	@Override
 	public double getAngle(){
 		return myAngle;
 	}
 
 	public void setPenStatus(boolean pen){
 		penDown=pen;
-	}
-
-	public boolean getPenStatus(){
-		return penDown;
 	}
 
 	public void setVisibility(boolean vis){
@@ -74,15 +72,45 @@ public abstract class Actor {
 		return visible;
 	}    
 
-	private void init(double x, double y){
+	private void init(double x, double y, String imageFilePath){
 		coordinates = new Coordinates(x, y);
+		myImage = new ImageView(imageFilePath);
+		myImage.setFitWidth(40);
+		myImage.setFitHeight(40);
+		myLine = new Line();
 		distanceTraveled=0;
 		myAngle=0;
 		penDown=true;
 		visible=true;       
 	}
+
+	@Override
+	public int getPenColorIndex() {
+		return penColorIndex;
+	}
+
+	@Override
+	public int getPenSizeIndex() {
+		return penSizeIndex;
+	}
+
+	@Override
+	public int getShapeIndex() {
+		return shapeIndex;
+	}
 	
-	public Coordinates getCoordinates(){
-		return coordinates;
+	@Override
+	public boolean getPenStatus(){
+		return penDown;
+	}
+	
+	@Override
+	public ImageView getImageView(){
+		return myImage;
+	}
+	
+	@Override
+	public Line getLine(){
+		return myLine;
 	}
 }
