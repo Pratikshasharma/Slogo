@@ -24,14 +24,6 @@ public class To extends ComplexCommand{
         }
         InfoNode commands=args.get(2);
         myCommandStorage.addFunction(commandName, myFunctionVariables, commands);
-        InfoNode testNode=new InfoNode(commandName,"Command");
-        testNode.setParameters(testParameters);
-        
-        //fix checking
-        if(myCommandProcess.executeList(myCommandStorage, testNode) ==Double.NaN){
-            myCommandStorage.removeFunction(commandName);
-            return 0;
-        }
         return 1;    
     }
 }
