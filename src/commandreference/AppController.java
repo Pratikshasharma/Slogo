@@ -68,7 +68,7 @@ public class AppController {
 	}
 
 	private void setActorObserver() {
-		mySimulationController.getStorage().getActorList().addListener(new MapChangeListener<Integer, Actor>() {
+		mySimulationController.getStorage().getActorMap().addListener(new MapChangeListener<Integer, Actor>() {
             @Override
             public void onChanged(MapChangeListener.Change change) {
             	Turtleable newTurtle = (Turtleable) change.getValueAdded();
@@ -108,8 +108,8 @@ public class AppController {
 	
 	private int getUnusedID(){
 		int i = 0;
-		for(i = 0; i < mySimulationController.getStorage().getActorList().keySet().size(); i++){
-			if(!mySimulationController.getStorage().getActorList().keySet().contains(i)){
+		for(i = 0; i < mySimulationController.getStorage().getActorMap().keySet().size(); i++){
+			if(!mySimulationController.getStorage().getActorMap().keySet().contains(i)){
 				return i;
 			}
 		}

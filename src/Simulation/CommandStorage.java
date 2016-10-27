@@ -63,7 +63,7 @@ public class CommandStorage extends Storage {
     
     //note index starts at 1
     public Actor getActor(int index){
-        return actors.get(1);
+        return actors.get(index);
     }
     
     public double getVariable(String key){
@@ -83,7 +83,8 @@ public class CommandStorage extends Storage {
     }
     
     //return lists/maps
-    public ObservableMap<Integer,Actor> getActorList(){
+
+    public ObservableMap<Integer,Actor> getActorMap(){
         return actors;
     }
     

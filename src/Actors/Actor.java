@@ -31,6 +31,10 @@ public abstract class Actor implements Turtleable {
 		coordinates.setX(x);
 		coordinates.setY(y);
 	}
+	
+	public Coordinates getCoordinates(){
+		return coordinates;
+	}
 
 	@Override
 	public double getX(){

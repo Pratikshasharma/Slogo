@@ -71,12 +71,12 @@ public class ParserMain {
             String userInput = "fd 50 rt 90 BACK :distance Left :angle";
             String fileInput = readFileToString("data/square.logo");
             // try against different inputs
-            InfoNode list1 = myParser.parseText(examples);
-            list1.printTree();
-            InfoNode list2 = myParser.parseText(userInput.split(WHITESPACE));
-            list2.printTree();
-            InfoNode list3 = myParser.parseText(fileInput.split(WHITESPACE));
-            list3.printTree();
+//            InfoNode list1 = myParser.parseText(examples);
+//            list1.printTree();
+//            InfoNode list2 = myParser.parseText(userInput.split(WHITESPACE));
+//            list2.printTree();
+//            InfoNode list3 = myParser.parseText(fileInput.split(WHITESPACE));
+//            list3.printTree();
         }
         catch (FileNotFoundException e) {
             //e.printStackTrace();
@@ -111,4 +111,15 @@ public class ParserMain {
 //	break;
 //default:
 //	break;
+//}
+
+
+//while (test != null) {
+//	System.out.println("current: " + test.getName());
+//	List<InfoNode> theList = test.myParameters;
+//	System.out.println("current's parameters: ");
+//	for (InfoNode node : theList) {
+//		System.out.println(node.getName());
+//	}
+//	test = test.next();
 //}
