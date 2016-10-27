@@ -8,7 +8,8 @@ import Actors.Actor;
 import Actors.Turtle;
 import Simulation.Node.InfoNode;
 
-public class CommandStorage extends Storage{
+public class CommandStorage extends Storage {
+	private final String DEFAULT_IMAGE_PATH = "turtle.png";
     private Map<Integer,Actor> actors;
     private List<Integer> active;
     private Map<String,Double> variables;
@@ -21,14 +22,20 @@ public class CommandStorage extends Storage{
         variables=new HashMap<String,Double>();
         functions=new HashMap<String,InfoNode>();
         functionvariables=new HashMap<String,List<String>>();
-        addNewActors(1);
+        addNewActors(1, DEFAULT_IMAGE_PATH);
         setActive(1);
     }
     
     //adding to lists/maps
+    public void addNewActors(int newnum, String filePath){
+        if(!actors.containsKey(newnum)){
+            actors.put(newnum, new Turtle(filePath));
+        }
+    }
+    
     public void addNewActors(int newnum){
         if(!actors.containsKey(newnum)){
-            actors.put(newnum,new Turtle());
+            actors.put(newnum, new Turtle(DEFAULT_IMAGE_PATH));
         }
     }
 
