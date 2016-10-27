@@ -7,20 +7,22 @@ import java.util.Map;
 import Actors.Actor;
 import Actors.Turtle;
 import Simulation.Node.InfoNode;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 public class CommandStorage extends Storage {
 	private final String DEFAULT_IMAGE_PATH = "turtle.png";
-    private Map<Integer,Actor> actors;
+    private ObservableMap<Integer,Actor> actors;
     private List<Integer> active;
-    private Map<String,Double> variables;
-    private Map<String,InfoNode> functions;
+    private ObservableMap<String,Double> variables;
+    private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
     
     public CommandStorage () {
-        actors=new HashMap<Integer,Actor>();
+        actors=FXCollections.observableMap(new HashMap<Integer,Actor>());
         active=new ArrayList<Integer>();
-        variables=new HashMap<String,Double>();
-        functions=new HashMap<String,InfoNode>();
+        variables=FXCollections.observableMap(new HashMap<String,Double>());
+        functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
         addNewActors(1, DEFAULT_IMAGE_PATH);
         setActive(1);
@@ -81,15 +83,16 @@ public class CommandStorage extends Storage {
     }
     
     //return lists/maps
-    public Map<Integer,Actor> getActorMap(){
+
+    public ObservableMap<Integer,Actor> getActorMap(){
         return actors;
     }
     
-    public Map<String,Double> getVariableMap(){
+    public ObservableMap<String,Double> getVariableMap(){
         return variables;
     }
     
-    public Map<String,InfoNode> getFunctionMap(){
+    public ObservableMap<String,InfoNode> getFunctionMap(){
         return functions;
     }
     
@@ -103,7 +106,7 @@ public class CommandStorage extends Storage {
     
     //for use in temporary variables
     public void setVariableMap(Map <String,Double> inputMap){
-        variables=new HashMap<String,Double>(inputMap);
+        variables=FXCollections.observableMap(inputMap);
     }
     
     public void removeFunction(String key){
