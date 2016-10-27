@@ -16,7 +16,7 @@ public class To extends ComplexCommand{
         InfoNode myNode=args.get(1);
         List<String> myFunctionVariables=new ArrayList<String>();
         List<Double> testParameters=new ArrayList<Double>();
-
+        
         while(myNode!=null){
             testParameters.add((double) 0);
             myFunctionVariables.add(myNode.getName());
@@ -26,6 +26,8 @@ public class To extends ComplexCommand{
         myCommandStorage.addFunction(commandName, myFunctionVariables, commands);
         InfoNode testNode=new InfoNode(commandName,"Command");
         testNode.setParameters(testParameters);
+        
+        //fix checking
         if(myCommandProcess.executeList(myCommandStorage, testNode) ==Double.NaN){
             myCommandStorage.removeFunction(commandName);
             return 0;
