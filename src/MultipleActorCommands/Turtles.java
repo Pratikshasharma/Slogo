@@ -5,11 +5,11 @@ import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public class ID extends MultipleActorCommand{
+public class Turtles extends MultipleActorCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {
-        return myCommandStorage.getActive();
+        return myCommandStorage.getActorMap().size();
     }
 
 }
