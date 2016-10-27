@@ -8,15 +8,15 @@ import Actors.Actor;
 import Actors.Turtle;
 import Simulation.Node.InfoNode;
 
-public class CommandStorage {
-    private List<Actor> actors;
+public class CommandStorage extends Storage{
+    private Map<Integer,Actor> actors;
     private List<Integer> active;
     private Map<String,Double> variables;
     private Map<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
     
     public CommandStorage () {
-        actors=new ArrayList<Actor>();
+        actors=new HashMap<Integer,Actor>();
         active=new ArrayList<Integer>();
         variables=new HashMap<String,Double>();
         functions=new HashMap<String,InfoNode>();
@@ -27,8 +27,8 @@ public class CommandStorage {
     
     //adding to lists/maps
     public void addNewActors(int newnum){
-        for(int i=0;i<newnum;i++){
-            actors.add(new Turtle());
+        if(!actors.containsKey(newnum)){
+            actors.put(newnum,new Turtle());
         }
     }
 
@@ -74,7 +74,7 @@ public class CommandStorage {
     }
     
     //return lists/maps
-    public List<Actor> getActorList(){
+    public Map<Integer,Actor> getActorList(){
         return actors;
     }
     
