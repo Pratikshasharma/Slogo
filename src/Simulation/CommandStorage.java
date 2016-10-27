@@ -42,11 +42,11 @@ public class CommandStorage {
         return actors;
     }
     
-    public Map<String,Double> getVariableList(){
+    public Map<String,Double> getVariableMap(){
         return variables;
     }
     
-    public Map<String,InfoNode> getFunctionList(){
+    public Map<String,InfoNode> getFunctionMap(){
         return functions;
     }
 }

@@ -28,7 +28,7 @@ public class SimulationController {
     
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
-    	InfoNode test=simParser.parseText(commandArray);
+    	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
     	
     	//test.printTree();
 

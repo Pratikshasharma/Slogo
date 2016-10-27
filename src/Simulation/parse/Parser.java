@@ -6,11 +6,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Deque;
 
+import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import Simulation.Node.Node;
 
@@ -18,19 +20,14 @@ public class Parser {
 	private final static String LANG_PATH = "resources/languages/";
 	private final static String DEFAULT_LANG = "English";
 	private final static String SYNTAX_LANG = "Syntax";
-	private final static String COMMAND = "Command";
-	private final static String NO_MATCH = "NO MATCH";
-	private final static String COMMENT = "Comment";
-	private final static String CONSTANT = "Constant";
 	private final static String TO = "To";
-	private final static String MAKE = "MakeVariable";
 
 	private ResourceBundle inputResource = ResourceBundle.getBundle("resources/CommandInputs");
 
 	private static TypeDictionary lang;
+	private CommandStorage myCustom;
 	private VariableTable myVar;
 	private Deque<InfoNode> myList;
-	private Deque<InfoNode> myStack;
 
 	public Parser(String language) {
 		lang = new TypeDictionary();
@@ -45,9 +42,10 @@ public class Parser {
 	}
 
 	// given some text, prints results of parsing it using the given language
-	public InfoNode parseText(String[] text) {
+	public InfoNode parseText(String[] text, CommandStorage custom) {
 		myList = new ArrayDeque<InfoNode>();
-		
+		myCustom = custom;
+
 		for (String s : text) {
 			myList.add(new InfoNode(s, lang.getSymbol(s)));
 		}
@@ -61,46 +59,34 @@ public class Parser {
 			current.setNext(nextTree);
 			current = current.next();
 		}
-		
 
 		return first;
 	}
 
-	private InfoNode makeVariable() {
-			InfoNode variable = myList.removeLast();
-			InfoNode varNode = createTree(variable);
-			myVar.storeVar(variable.getName(), varNode);
-			return varNode;
-	}
-
-	private boolean checkTo(String[] text) {
-		if (text[0].equals(TO)) {
-			return true;
-		}
-		return false;
-	}
-
 	private InfoNode createTree(InfoNode current) {
 
-		InfoNode listNode, leftNode, rightNode, middleNode;
+		InfoNode listNode;
+		int intParam;
 
 		try {
-			String stringParam = inputResource.getString(current.getToken());
-			System.out.println(stringParam);
-			if (stringParam.equals("MAKE")) {
-				
+
+			if (current.getToken().equals("Variable")) {
+				Map<String,Double>varMap = myCustom.getVariableMap();
+				if (varMap.containsKey(current.getName())){
+					intParam = varMap.get(current.getName()).;
+				}
+			} else {
+				String stringParam = inputResource.getString(current.getToken());
+				intParam = Integer.parseInt(stringParam);
 			}
+
 			
-			int intParam = Integer.parseInt(stringParam);
 
 			while (intParam > 0) {
 				listNode = myList.pop();
-				current.myParameters.add(createTree(listNode));
+				current.addParameter(createTree(listNode));
 				intParam--;
-				System.out.println(intParam);
 			}
-			
-
 
 		} catch (NoSuchElementException e) {
 			// throw new compileException(message: incorrect number of
