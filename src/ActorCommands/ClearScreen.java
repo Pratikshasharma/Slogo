@@ -9,9 +9,8 @@ import Simulation.Node.InfoNode;
 public class ClearScreen extends ActorCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-        Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
+        Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         //set to clear screen in front end
         actor.setPos(0,0);
         return actor.getDistance();

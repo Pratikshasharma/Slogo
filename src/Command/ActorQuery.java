@@ -6,18 +6,16 @@ import Simulation.CommandProcess;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-//shouldn't need to repeat a bunch for actorqueries
+//shouldn't need to repeat a bunch for actorqueries-want to return only one number still
 public abstract class ActorQuery implements Command{
     public CommandProcess myCommandProcess;
     @Override
-    public double call (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args) {
+    public double call (CommandStorage myCommandStorage,  List<InfoNode> args) {
         myCommandProcess=new CommandProcess();
-        List<Integer> tempList=new ArrayList<Integer>();
-        tempList.add(ActorsChanged.get(0));
-        return execute(myCommandStorage, tempList, args);
+        return execute(myCommandStorage, args);
     }
 
     @Override
-    public abstract double execute (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args);
+    public abstract double execute (CommandStorage myCommandStorage, List<InfoNode> args);
 
 }

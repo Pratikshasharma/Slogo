@@ -8,11 +8,10 @@ import Simulation.Node.InfoNode;
 public class Product extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
         double product=1;
         for(InfoNode parameter:args){
-            product*=myCommandProcess.executeList(myCommandStorage, ActorsChanged, parameter);
+            product*=myCommandProcess.executeList(myCommandStorage, parameter);
         }
         return product;
     }

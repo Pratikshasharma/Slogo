@@ -8,12 +8,12 @@ import Simulation.Node.InfoNode;
 public abstract class BooleanOperation implements Command{
     public CommandProcess myCommandProcess;
     @Override
-    public double call (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args) {
+    public double call (CommandStorage myCommandStorage,  List<InfoNode> args) {
         myCommandProcess=new CommandProcess();
-        return execute(myCommandStorage, ActorsChanged, args);
+        return execute(myCommandStorage, args);
     }
 
     @Override
-    public abstract double execute (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args);
+    public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);
 
 }

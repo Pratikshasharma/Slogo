@@ -8,10 +8,9 @@ import Simulation.Node.InfoNode;
 public class Power extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-         return Math.pow(myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(0)),
-                         myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(1)));
+         return Math.pow(myCommandProcess.executeList(myCommandStorage, args.get(0)),
+                         myCommandProcess.executeList(myCommandStorage, args.get(1)));
     }
 
 }
