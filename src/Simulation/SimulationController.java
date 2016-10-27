@@ -33,4 +33,8 @@ public class SimulationController {
     	double result=myCommandProcess.executeList(myCommandStorage,test);
     	System.out.println(result);
     }
+    
+    public CommandStorage getStorage(){
+        return myCommandStorage;
+    }
 }
