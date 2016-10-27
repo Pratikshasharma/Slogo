@@ -1,6 +1,6 @@
 package Actors;
 
-public class Turtle extends Actor{
+public class Turtle extends Actor{    
 
     public Turtle () {
         super();

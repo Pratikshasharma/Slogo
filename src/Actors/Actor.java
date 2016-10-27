@@ -6,10 +6,14 @@ public abstract class Actor {
 
 	private final static double DEGREES_CIRCLE=360.0;
 
+
 	//    protected int xPosition, yPosition;
 	protected Coordinates coordinates;
 	protected double distanceTraveled, degreesMoved, myAngle;
 	protected boolean penDown, visible;
+        private int pencolorindex;
+        private int pensizeindex;
+        private int shapeindex;
 
 	public Actor () {
 		init(0,0);
