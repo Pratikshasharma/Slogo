@@ -54,7 +54,7 @@ public class CommandStorage extends Storage{
     
     //note index starts at 1
     public Actor getActor(int index){
-        return actors.get(index-1);
+        return actors.get(1);
     }
     
     public double getVariable(String key){
