@@ -17,6 +17,10 @@ public class Turtle {
     private ImageView myTurtleImageView;
     private static final String TURTLE_TEST_IMAGE = "turtle.png";
     private Image turtleImage;
+    
+    private int pencolorindex;
+    private int pensizeindex;
+    private int turtleshapeindex;
 
 
     public Turtle(boolean defaultTurtle)  {
