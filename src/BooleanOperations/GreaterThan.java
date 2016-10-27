@@ -8,9 +8,8 @@ import Simulation.Node.InfoNode;
 public class GreaterThan extends BooleanOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-         return (myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(0))>myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(1)))?1:0;
+         return (myCommandProcess.executeList(myCommandStorage, args.get(0))>myCommandProcess.executeList(myCommandStorage, args.get(1)))?1:0;
     }
 
 }

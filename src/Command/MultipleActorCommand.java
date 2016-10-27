@@ -6,7 +6,7 @@ import Simulation.CommandProcess;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public abstract class MathOperation implements Command{
+public abstract class MultipleActorCommand implements Command{
     public CommandProcess myCommandProcess;
     @Override
     public double call (CommandStorage myCommandStorage,  List<InfoNode> args) {

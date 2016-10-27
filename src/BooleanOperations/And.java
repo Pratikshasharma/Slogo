@@ -7,12 +7,11 @@ import Simulation.Node.InfoNode;
 
 public class And extends BooleanOperation{
     @Override
-    public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
+    public double execute (CommandStorage myCommandStorage,                           
                            List<InfoNode> args) {       
         double and=1;
         for(InfoNode parameter:args){
-            and=(and!=0 && myCommandProcess.executeList(myCommandStorage, ActorsChanged, parameter)!=0)?1:0;
+            and=(and!=0 && myCommandProcess.executeList(myCommandStorage, parameter)!=0)?1:0;
         }
         return and;    
     }

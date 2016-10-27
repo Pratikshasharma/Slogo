@@ -9,9 +9,8 @@ import Simulation.Node.InfoNode;
 public class XCoordinate extends ActorQuery{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-        Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
+        Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         return actor.getX();
     }
 
