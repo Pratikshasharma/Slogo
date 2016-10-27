@@ -16,7 +16,7 @@ public class To extends ComplexCommand{
         InfoNode myNode=args.get(1);
         List<String> myFunctionVariables=new ArrayList<String>();
         List<Double> testParameters=new ArrayList<Double>();
-        
+        //change command
         while(myNode!=null){
             testParameters.add((double) 0);
             myFunctionVariables.add(myNode.getName());
