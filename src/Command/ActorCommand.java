@@ -9,19 +9,21 @@ import Simulation.Node.InfoNode;
 public abstract class ActorCommand implements Command{
     public CommandProcess myCommandProcess;
     @Override
-    public double call (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args) {
+    public double call (CommandStorage myCommandStorage,  List<InfoNode> args) {
         double result = Double.NaN;
+        List<Integer> activeList=myCommandStorage.getActiveList();
+
         myCommandProcess=new CommandProcess();
-        for(int i:ActorsChanged){
-            List<Integer> tempList=new ArrayList<Integer>();
-            tempList.add(i);
-            result=execute(myCommandStorage, tempList, args);
+        for(int i:activeList){
+            myCommandStorage.setActive(i);
+            result=execute(myCommandStorage, args);
         }
+        myCommandStorage.setActive(activeList);
         //return result of last command or else if result is used for other operations it wont make sense (generally used for the execution part of moving turtle)
         return result;
     }
 
     @Override
-    public abstract double execute (CommandStorage myCommandStorage, List<Integer> ActorsChanged, List<InfoNode> args);
+    public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);
 
 }

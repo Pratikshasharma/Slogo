@@ -8,9 +8,8 @@ import Simulation.Node.InfoNode;
 public class Cosine extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-         return Math.cos(myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(0)));
+         return Math.cos(myCommandProcess.executeList(myCommandStorage, args.get(0)));
     }
 
 }

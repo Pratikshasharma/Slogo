@@ -9,9 +9,8 @@ import Simulation.Node.InfoNode;
 public class IsPenDown extends ActorQuery{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-        Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
+        Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         return (actor.getPenStatus())?1:0;
     }
 

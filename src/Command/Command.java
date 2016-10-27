@@ -12,7 +12,7 @@ public interface Command {
      * @param args
      * @return
      */
-    public double call(CommandStorage myCommandStorage, List<Integer> ActorsChanged,List<InfoNode> args);
+    public double call(CommandStorage myCommandStorage, List<InfoNode> args);
     /**
      * Take care of running multiple inputs
      * @param myCommandStorage
@@ -20,5 +20,5 @@ public interface Command {
      * @param args
      * @return
      */
-    public double execute(CommandStorage myCommandStorage, List<Integer> ActorsChanged,List<InfoNode> args);
+    public double execute(CommandStorage myCommandStorage, List<InfoNode> args);
 }

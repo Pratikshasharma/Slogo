@@ -14,7 +14,6 @@ public class SimulationController {
     
     public SimulationController () {
     	myCommandStorage=new CommandStorage();
-    	myCommandStorage.addNewActors(1);
     	myCommandProcess=new CommandProcess();
     }
     
@@ -31,10 +30,7 @@ public class SimulationController {
     	InfoNode test=simParser.parseText(commandArray);
     	
     	//test.printTree();
-
-    	List<Integer> tempList=new ArrayList<Integer>();
-    	tempList.add(1);
-    	double result=myCommandProcess.executeList(myCommandStorage,tempList,test);
+    	double result=myCommandProcess.executeList(myCommandStorage,test);
     	System.out.println(result);
     }
 }

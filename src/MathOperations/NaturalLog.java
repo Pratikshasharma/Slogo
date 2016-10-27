@@ -8,9 +8,8 @@ import Simulation.Node.InfoNode;
 public class NaturalLog extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
-         return Math.log(myCommandProcess.executeList(myCommandStorage, ActorsChanged, args.get(0)));
+         return Math.log(myCommandProcess.executeList(myCommandStorage, args.get(0)));
     }
 
 }

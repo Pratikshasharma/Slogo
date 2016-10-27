@@ -8,7 +8,6 @@ import Simulation.Node.InfoNode;
 public class Pi extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
          return Math.PI;
     }

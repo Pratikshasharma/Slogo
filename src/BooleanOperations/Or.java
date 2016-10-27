@@ -8,11 +8,10 @@ import Simulation.Node.InfoNode;
 public class Or extends BooleanOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {       
         double or=0;
         for(InfoNode parameter:args){
-            or=(or!=0 || myCommandProcess.executeList(myCommandStorage, ActorsChanged, parameter)!=0)?1:0;
+            or=(or!=0 || myCommandProcess.executeList(myCommandStorage, parameter)!=0)?1:0;
         }
         return or;    
     }

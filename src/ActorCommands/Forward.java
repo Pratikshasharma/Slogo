@@ -11,12 +11,11 @@ import Simulation.Node.InfoNode;
 public class Forward extends ActorCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<Integer> ActorsChanged,
                            List<InfoNode> args) {
         double x=0,y=0,pixels=0;
-        Actor actor=myCommandStorage.getActor(ActorsChanged.get(0));
+        Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         for(InfoNode parameter:args){
-            double segmentedpixels=myCommandProcess.executeList(myCommandStorage, ActorsChanged, parameter);
+            double segmentedpixels=myCommandProcess.executeList(myCommandStorage, parameter);
             pixels+=segmentedpixels;
             x+=Math.cos(actor.getAngle())*segmentedpixels;
             y+=Math.sin(actor.getAngle())*segmentedpixels;
