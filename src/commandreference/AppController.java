@@ -1,9 +1,15 @@
 package commandreference;
 
 import java.net.MalformedURLException;
+import java.util.Map;
 
+import Actors.Actor;
 import Simulation.SimulationController;
+import Simulation.Node.InfoNode;
 import gui.GUIController;
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -16,13 +22,14 @@ public class AppController {
 	public AppController(){
 		initializeSimulationController();
 		initializeGUIController();
+		setObservables();
 	}
 
 	public Scene initiateApp(){
 		Scene mainScene = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
-		updateFront();
+//		updateFront();
 		handleNewTurtle();
 		return mainScene;
 	}
@@ -35,18 +42,43 @@ public class AppController {
 		mySimulationController = new SimulationController();
 		mySimulationController.setLanguage("English");
 	}
-
-	private void updateFront(){
-		updateTurtlesOnFront();
-		updateFunctionHistoryOnFront();
-		updateVariableHistoryOnFront();
+	
+	private void setObservables(){
+		setActorObserver();
+		setFunctionObserver();
+		setVariableListObserver();
 	}
 
-	private void updateTurtlesOnFront(){
-		for(Integer i : mySimulationController.getStorage().getActorList().keySet()){
-			Turtleable ourTurtle = mySimulationController.getStorage().getActorList().get(i);
-			myGUIController.addToScene(ourTurtle);
-		}
+	private void setVariableListObserver() {
+		mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
+			@Override
+			public void onChanged(MapChangeListener.Change change) {
+				updateFunctionHistoryOnFront();
+			}
+		});
+	}
+
+	private void setFunctionObserver() {
+		mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
+			@Override
+			public void onChanged(MapChangeListener.Change change){
+				updateVariableHistoryOnFront();
+			}
+		});
+	}
+
+	private void setActorObserver() {
+		mySimulationController.getStorage().getActorList().addListener(new MapChangeListener<Integer, Actor>() {
+            @Override
+            public void onChanged(MapChangeListener.Change change) {
+            	Turtleable newTurtle = (Turtleable) change.getValueAdded();
+                updateTurtlesOnFront(newTurtle);
+            }
+        });
+	}
+
+	private void updateTurtlesOnFront(Turtleable turtle){
+		myGUIController.addToScene(turtle);
 	}
 
 	private void updateFunctionHistoryOnFront(){
@@ -67,7 +99,6 @@ public class AppController {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
 				mySimulationController.getStorage().addNewActors(id, filePath);
-				updateFront();
 			}
 			catch (MalformedURLException error) {
 				error.printStackTrace();
@@ -92,7 +123,6 @@ public class AppController {
 
 	private void work(){
 		sendCommand();
-		updateFront();
 	}
 
 	private void sendCommand(){
