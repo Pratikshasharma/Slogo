@@ -52,10 +52,7 @@ public class CommandProcess {
         try {
             cls = Class.forName(myResources.getString(myNode.getToken()) + myNode.getToken());
             clsInstance = (Command) cls.newInstance();
-   //         return clsInstance.call(myCommandStorage, ActorsChanged, myNode.getParameters());
-            List<InfoNode> myList=new ArrayList<InfoNode>();
-            myList.add(myNode.left());
-            return clsInstance.call(myCommandStorage, myList);
+            return clsInstance.call(myCommandStorage, myNode.getParameters());
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
@@ -66,7 +63,7 @@ public class CommandProcess {
     
     private double executeCustomCommand(CommandStorage myCommandStorage, InfoNode myNode){
         CustomCommand myCustomCommand=new CustomCommand();
-        myNode.getParameters().add(0,myNode.left());
+        myNode.getParameters().add(0,myNode);//so can get name
         return myCustomCommand.call(myCommandStorage, myNode.getParameters());
         
   //      return Double.NaN;
