@@ -48,9 +48,14 @@ public class AppController {
         //System.out.println(x);
         //mySimulationController.receive(command); 
 
-//        mySimulationController.receive("make :distance fd 50"); 
-    	mySimulationController.receive(myGUIController.getCommandEntered());
+    	//mySimulationController.receive("make :distance fd sum sin 20 20");
+        //mySimulationController.receive("make :distance fd 50"); 
+        //mySimulationController.receive("fd sum 80 sin 100");
+    	//mySimulationController.receive("fd sum 20 30 bk 100 left 300");
         //mySimulationController.receive("fd sum 80 sin 100"); 
+        
+        mySimulationController.receive(myGUIController.getCommandEntered());
+
         //will be void, will just execute command or throw up error.
         //need to reach in updatePositions method.
 
@@ -62,12 +67,12 @@ public class AppController {
     }
 
     public void handleKeyInput(KeyCode code){
-//        switch(code) {
-//            case ENTER: 
-//                myGUIController.addToHistory();
-//                myGUIController.getMainGUI().getConsole().getTextField().setText("");
-//                work();
-//                break;
+        switch(code) {
+            case ENTER: 
+                myGUIController.addToHistory();
+                myGUIController.getMainGUI().getConsole().getTextField().setText("");
+                work();
+                break;
 
 //            case SHIFT:
 //                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
@@ -91,8 +96,8 @@ public class AppController {
 //                updatePositions();
 //                break;
 //
-//            default:
-//                //Do nothing
-//        }
+            default:
+                //Do nothing
+        }
     }
 }
