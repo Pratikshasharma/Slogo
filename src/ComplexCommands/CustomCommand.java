@@ -17,6 +17,7 @@ public class CustomCommand extends ComplexCommand{
         List<String> functionvariables=myCommandStorage.getFunctionVariables(commandName);
         Map<String,Double> originalvariables= new HashMap<String,Double>(myCommandStorage.getVariableMap());
 
+        //take out checking
         int index=0;
         while(argNode!=null){
             myCommandStorage.addVariable(functionvariables.get(index), myCommandProcess.executeList(myCommandStorage,argNode));
