@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
-import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.collections.MapChangeListener;
 import javafx.scene.Scene;
@@ -77,6 +76,8 @@ public class AppController {
 				myTurtleManager.addTurtle(id, newTurtle);
 				newTurtle.getImageView().setOnMouseClicked(e -> {
 					mySimulationController.getStorage().setActive(id);
+					myTurtleManager.setActiveTurtle(newTurtle);
+					updateActiveLabels();
 				});
 				updateTurtlesOnFront(newTurtle);
 			}
@@ -125,13 +126,17 @@ public class AppController {
 		sendCommand();
 		renderTurtles();
 		myGUIController.getConsole().getTextField().clear();
+		updateActiveLabels();
+	}
+	
+	private void updateActiveLabels(){
+		myGUIController.updateActiveLabels(myTurtleManager.getActiveTurtle());
 	}
 
 	private void sendCommand(){
 		if(!myGUIController.getCommandEntered().isEmpty()){
 			myGUIController.getHistory().addToCommandHistory(myGUIController.getCommandEntered());
 			mySimulationController.receive(myGUIController.getCommandEntered());
-			
 		}
 	}
 

@@ -17,7 +17,7 @@ public class GUIController {
 	public static final double SCENE_HEIGHT = 650;
 	public static final String DEFAULT_LANGUAGE = "English";
 	private String myCommandLanguage;
-
+	
 	public GUIController() {
 		myMainGUI = new MainGUI();
 	}
@@ -26,6 +26,10 @@ public class GUIController {
 		Scene myScene = new Scene(myMainGUI.createRoot(),SCENE_WIDTH,SCENE_HEIGHT,Color.WHITE);
 		setLanguage();
 		return myScene;
+	}
+	
+	public void setActiveTurtle(Turtleable turtle){
+		myMainGUI.updateActiveTurtleInfo(turtle);
 	}
 
 	public Console getConsole(){
@@ -77,6 +81,10 @@ public class GUIController {
 
 	public Button getRunButton(){
 		return myMainGUI.getRunButton();
+	}
+	
+	public void updateActiveLabels(Turtleable turtle){
+		myMainGUI.updateActiveTurtleInfo(turtle);
 	}
 }
 
