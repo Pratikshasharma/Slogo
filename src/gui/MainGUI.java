@@ -164,7 +164,12 @@ public class MainGUI {
 
 	private void addLineOnCanvas(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getLine())){
+			turtle.getLine().setStartX(turtle.getImageView().getX());
+			turtle.getLine().setStartY(turtle.getImageView().getY());
 			myCanvas.getChildren().add(turtle.getLine());;
+		} else {
+			turtle.getLine().setEndX(turtle.getImageView().getX());
+			turtle.getLine().setEndY(turtle.getImageView().getY());
 		}
 	}
 
