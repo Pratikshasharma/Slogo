@@ -2,7 +2,6 @@ package gui;
 
 import java.io.File;
 
-import commandreference.Turtleable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
@@ -28,7 +27,7 @@ public class GUIController {
 		return myScene;
 	}
 	
-	public void setActiveTurtle(int id, Turtleable turtle){
+	public void setActiveTurtle(int id, FrontTurtle turtle){
 		myMainGUI.updateActiveTurtleInfo(id, turtle);
 	}
 
@@ -48,9 +47,6 @@ public class GUIController {
 		return myMainGUI.getConsole().getTextField().getText();
 	}
 
-	public void updateLocation(){
-	}
-
 	public File chooseFile(){
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("Image Files","*.bmp", "*.png", "*.jpg", "*.gif");
@@ -63,7 +59,7 @@ public class GUIController {
 		return chosenFile;
 	}
 
-	public void addToScene(Turtleable t){
+	public void addToScene(FrontTurtle t){
 		myMainGUI.addTurtleOnCanvas(t);
 	}
 
@@ -83,7 +79,7 @@ public class GUIController {
 		return myMainGUI.getRunButton();
 	}
 	
-	public void updateActiveLabels(int id, Turtleable turtle){
+	public void updateActiveLabels(int id, FrontTurtle turtle){
 		myMainGUI.updateActiveTurtleInfo(id, turtle);
 	}
 }

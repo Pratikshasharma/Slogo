@@ -6,7 +6,7 @@ import javafx.scene.shape.Line;
 
 public interface Turtleable {
 	
-	public double getAngle();
+	public DoubleProperty getAngleProp();
 	
 	public DoubleProperty getX();
 	

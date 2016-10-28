@@ -1,6 +1,5 @@
 package gui;
 
-import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -12,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -76,8 +76,8 @@ public class MainGUI {
 			});
 		}
 	}
-	
-	public void updateActiveTurtleInfo(int id, Turtleable turtle){
+
+	public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
 		myActiveTurtleInfo.updateStatus(id, turtle);
 	}
 
@@ -119,7 +119,7 @@ public class MainGUI {
 		return myHistory;
 	}
 
-	private void addTurtleOnScene(Turtleable turtle){
+	private void addTurtleOnScene(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getImageView())){
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
@@ -129,24 +129,22 @@ public class MainGUI {
 		return myFileTab;
 	}
 
-	public void addTurtleOnCanvas(Turtleable turtle){
-		turtle.getImageView().setX(turtle.getX().get());
-		turtle.getImageView().setY(turtle.getY().get());
+	public void addTurtleOnCanvas(FrontTurtle turtle){
+		Line l = new Line();
+		l.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth());
+		l.setStartY(turtle.getImageView().getY());
+		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 		addTurtleOnScene(turtle);
-		if(turtle.getPenStatus()){
-			addLineOnCanvas(turtle);
+		if(turtle.isPenUp()){
+			addLineOnCanvas(turtle, l);
 		}
 	}
 
-	private void addLineOnCanvas(Turtleable turtle){
-		if(!isOnCanvas(turtle.getLine())){
-			turtle.getLine().setStartX(turtle.getImageView().getX());
-			turtle.getLine().setStartY(turtle.getImageView().getY());
-			myCanvas.getChildren().add(turtle.getLine());;
-		} else {
-			turtle.getLine().setEndX(turtle.getImageView().getX());
-			turtle.getLine().setEndY(turtle.getImageView().getY());
-		}
+	private void addLineOnCanvas(FrontTurtle turtle, Line l){
+		l.setEndX(turtle.getImageView().getX());
+		l.setEndY(turtle.getImageView().getY());
+		myCanvas.getChildren().add(l);
 	}
 
 	public Menu getLanguageMenu(){
