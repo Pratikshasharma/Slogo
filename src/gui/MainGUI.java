@@ -18,7 +18,7 @@ import navigationTabs.Language;
 import navigationTabs.Tools;
 
 public class MainGUI {
-	//    private Turtle myTurtle;
+
 	private FileTab myFileTab;
 	private Language myLanguageTab; 
 	private Tools myTools;
@@ -29,11 +29,11 @@ public class MainGUI {
 	private Pane myCanvas;
 	private Button runButton;
 	private Button clearButton;
+	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
 	public static final double TURTLE_PANE_WIDTH = 550;
 	public static final double TURTLE_PANE_HEIGHT = 450;
 
 	public MainGUI(){
-		//        myTurtle = new Turtle(true);
 		myRoot = new BorderPane();
 		myFileTab = new FileTab();
 		myTools = new Tools();
@@ -41,6 +41,7 @@ public class MainGUI {
 		myConsole = new Console();
 		myHelpTab = new Help();
 		myHistory = new History();
+		myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
 		setHistoryClickables();
 	}
 
@@ -75,12 +76,18 @@ public class MainGUI {
 			});
 		}
 	}
+	
+	public void updateActiveTurtleInfo(Turtleable turtle){
+		myActiveTurtleInfo.updateStatus(turtle);
+	}
 
 	private HBox createBottom(){
 		HBox bottomBox = new HBox(20);
-		makeButton();
-		bottomBox.getChildren().addAll(myConsole.getTextField(),runButton,clearButton);
-		return  bottomBox;
+		makeConsoleControlButtons();
+		VBox activeLabels = new VBox();
+		activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
+		bottomBox.getChildren().addAll(myConsole.getTextField(), runButton, clearButton, activeLabels);
+		return bottomBox;
 	}
 
 	private void setHistoryClickables(){
@@ -160,7 +167,7 @@ public class MainGUI {
 		return backgroundChanger;
 	}
 
-	private void makeButton(){
+	private void makeConsoleControlButtons(){
 		runButton = setButton("RunButtonCommand",0.8*GUIController.SCENE_WIDTH, 0.9*GUIController.SCENE_HEIGHT/9);
 		clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
 		clearButton.setOnAction(e -> myConsole.getTextField().clear());

@@ -6,6 +6,7 @@ import java.util.Collection;
 public class TurtleManager {
 	
 	Collection<Turtleable> myTurtles;
+	private Turtleable myActiveTurtle;
 	
 	public TurtleManager(){
 		myTurtles = new ArrayList<Turtleable>();
@@ -17,5 +18,13 @@ public class TurtleManager {
 	
 	public Collection<Turtleable> getTurtles(){
 		return myTurtles;
+	}
+	
+	public void setActiveTurtle(Turtleable turtle){
+		myActiveTurtle = turtle;
+	}
+	
+	public Turtleable getActiveTurtle(){
+		return myActiveTurtle;
 	}
 }
