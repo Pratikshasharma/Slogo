@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import navigationTabs.MenuCreator;
 
 public class ButtonTemplate {

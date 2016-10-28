@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 
 public class AppController {
@@ -56,7 +55,7 @@ public class AppController {
 			@Override
 			public void onChanged(MapChangeListener.Change change) {
 				String name = (String) change.getKey();
-				myGUIController.getHistory().addToVariableList(name);
+				myGUIController.addToVariableHistory(name);
 			}
 		});
 	}
@@ -65,7 +64,7 @@ public class AppController {
 		mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change){
-				myGUIController.getHistory().addToFunctionsHistory((String) change.getKey());
+				myGUIController.addToFunctionHistory((String) change.getKey());
 			}
 		});
 	}
@@ -135,14 +134,13 @@ public class AppController {
 	}
 
 	private void setRunButton(){
-		Button b = myGUIController.getRunButton();
-		b.setOnAction(e -> work());
+		myGUIController.setOnRunButton(e -> work());
 	}
 
 	private void work(){
 		sendCommand();
 		renderTurtles();
-		myGUIController.getConsole().getTextField().clear();
+		myGUIController.clearConsole();
 		updateActiveLabels();
 	}
 	
@@ -152,7 +150,7 @@ public class AppController {
 
 	private void sendCommand(){
 		if(!myGUIController.getCommandEntered().isEmpty()){
-			myGUIController.getHistory().addToCommandHistory(myGUIController.getCommandEntered());
+			myGUIController.addToCommandHistory(myGUIController.getCommandEntered());
 			mySimulationController.receive(myGUIController.getCommandEntered());
 		}
 	}
@@ -160,7 +158,7 @@ public class AppController {
 	public void handleKeyInput(KeyCode code){
 		switch(code) {
 		case ENTER: 
-			myGUIController.getConsole().getTextField().setText(myGUIController.getConsole().getTextField().getText() + "\n");
+			myGUIController.setConsole(myGUIController.getCommandEntered() + "\n");
 			break;
 		default:
 			//Do nothing

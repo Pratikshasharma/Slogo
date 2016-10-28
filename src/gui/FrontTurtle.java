@@ -3,6 +3,7 @@ package gui;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
@@ -21,7 +22,7 @@ public class FrontTurtle {
     
     public FrontTurtle(int id, Turtleable turtle){
     	initializeCoordinates(turtle.getX(), turtle.getY());
-    	myAngle = turtle.getAngleProp();
+    	bindAngle(turtle);
     	intializePenProperties(turtle);
     	myLine = new Line();
     	myTurtleImageView = turtle.getImageView();
@@ -42,6 +43,7 @@ public class FrontTurtle {
 	}
 	
 	private void bindAngle(Turtleable turtle){
+		myAngle = new SimpleDoubleProperty();
 		myAngle.bind(turtle.getAngleProp());
 	}
     
