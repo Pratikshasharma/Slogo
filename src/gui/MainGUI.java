@@ -77,8 +77,8 @@ public class MainGUI {
 		}
 	}
 	
-	public void updateActiveTurtleInfo(Turtleable turtle){
-		myActiveTurtleInfo.updateStatus(turtle);
+	public void updateActiveTurtleInfo(int id, Turtleable turtle){
+		myActiveTurtleInfo.updateStatus(id, turtle);
 	}
 
 	private HBox createBottom(){
