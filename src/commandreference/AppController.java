@@ -4,7 +4,10 @@ import java.net.MalformedURLException;
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import gui.FrontTurtle;
 import gui.GUIController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +30,7 @@ public class AppController {
 		Scene mainScene = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
-		mySimulationController.getStorage().setActive(1);
+		setActiveID(1);
 		setNewTurtleHandler();
 		renderTurtles();
 		return mainScene;
@@ -74,23 +77,38 @@ public class AppController {
 				Turtleable newTurtle = (Turtleable) change.getValueAdded();
 				int id = (int) change.getKey();
 				myTurtleManager.addTurtle(id, newTurtle);
+				setCoordinateListeners(id, newTurtle);
 				newTurtle.getImageView().setOnMouseClicked(e -> {
-					mySimulationController.getStorage().setActive(id);
-					myTurtleManager.setActiveTurtle(id, newTurtle);
-					updateActiveLabels();
+					setActiveID(id);
 				});
-				updateTurtlesOnFront(newTurtle);
+				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
+			}
+		});
+	}
+	
+	private void setActiveID(int id) {
+		mySimulationController.getStorage().setActive(id);
+		myTurtleManager.setActiveTurtle(id);
+		updateActiveLabels();
+	}
+	
+	private void setCoordinateListeners(int id, Turtleable turtle){
+		turtle.getX().addListener(new ChangeListener<Number>(){
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("changed");
+				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
 			}
 		});
 	}
 
 	private void renderTurtles(){
-		for(Turtleable turtle : myTurtleManager.getTurtles()){
+		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
 			updateTurtlesOnFront(turtle);
 		}
 	}
 
-	private void updateTurtlesOnFront(Turtleable turtle){
+	private void updateTurtlesOnFront(FrontTurtle turtle){
 		myGUIController.addToScene(turtle);
 	}
 
@@ -100,8 +118,7 @@ public class AppController {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
 				mySimulationController.getStorage().addNewActors(id, filePath);
-			}
-			catch (MalformedURLException error) {
+			} catch (MalformedURLException error) {
 				error.printStackTrace();
 			}
 		});
@@ -114,7 +131,7 @@ public class AppController {
 				return i;
 			}
 		}
-		return i + 1;
+		return i;
 	}
 
 	private void setRunButton(){
@@ -130,7 +147,7 @@ public class AppController {
 	}
 	
 	private void updateActiveLabels(){
-		myGUIController.updateActiveLabels(myTurtleManager.getActiveID(), myTurtleManager.getActiveTurtle());
+		myGUIController.updateActiveLabels(myTurtleManager.getActiveID(), myTurtleManager.getTurtleAtIndex(myTurtleManager.getActiveID()));
 	}
 
 	private void sendCommand(){

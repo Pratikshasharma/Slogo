@@ -1,8 +1,6 @@
 package gui;
 
 import java.text.DecimalFormat;
-
-import commandreference.Turtleable;
 import javafx.scene.control.Label;
 
 public class ActiveTurtleDisplayInformation {
@@ -21,10 +19,10 @@ public class ActiveTurtleDisplayInformation {
 		return idLabel;
 	}
 	
-	public void updateStatus(int id, Turtleable turtle){
+	public void updateStatus(int id, FrontTurtle turtle){
 		setID(id);
-		setOrientation(turtle.getAngle());
-		setPenStatus(turtle.getPenStatus());
+		setOrientation(turtle.getAngle().get());
+		setPenStatus(turtle.isPenUp());
 	}
 	
 	public Label getCurrentOrienation(){

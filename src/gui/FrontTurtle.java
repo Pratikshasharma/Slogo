@@ -1,6 +1,7 @@
 package gui;
 
 import commandreference.Coordinates;
+import commandreference.Turtleable;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
@@ -9,7 +10,7 @@ import javafx.scene.shape.Line;
 public class FrontTurtle {
 
 	private Coordinates myCoordinates;
-	private double myAngle;
+	private DoubleProperty myAngle;
 	private boolean isPenUp;
 	private boolean isVisible;
 	private int penColorIndex;
@@ -18,26 +19,30 @@ public class FrontTurtle {
     private ImageView myTurtleImageView;
     private int myID;
     
-    public FrontTurtle(DoubleProperty x, DoubleProperty y, double angle, int id, ImageView imageView){
-    	initializeCoordinates(x, y);
-    	myAngle = angle;
-    	intializePenProperties();
+    public FrontTurtle(int id, Turtleable turtle){
+    	initializeCoordinates(turtle.getX(), turtle.getY());
+    	myAngle = turtle.getAngleProp();
+    	intializePenProperties(turtle);
     	myLine = new Line();
-    	myTurtleImageView = imageView;
+    	myTurtleImageView = turtle.getImageView();
     	myID = id;
     }
 
-	private void intializePenProperties() {
-		isPenUp = false;
+	private void intializePenProperties(Turtleable turtle) {
+		isPenUp = turtle.getPenStatus();
     	isVisible = true;
-    	penColorIndex = 1;
-    	penSizeIndex = 1;
+    	penColorIndex = turtle.getPenColorIndex();
+    	penSizeIndex = turtle.getPenSizeIndex();
 	}
 
 	private void initializeCoordinates(DoubleProperty x, DoubleProperty y) {
 		myCoordinates = new Coordinates(x.get(), y.get());
     	myCoordinates.getX().bind(x);
     	myCoordinates.getY().bind(y);
+	}
+	
+	private void bindAngle(Turtleable turtle){
+		myAngle.bind(turtle.getAngleProp());
 	}
     
     public Coordinates getCoordinates(){
@@ -53,7 +58,7 @@ public class FrontTurtle {
     	return myID;
     }
     
-    public double getAngle(){
+    public DoubleProperty getAngle(){
     	return myAngle;
     }
     
