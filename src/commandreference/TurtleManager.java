@@ -3,22 +3,19 @@ package commandreference;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import gui.FrontTurtle;
-
 public class TurtleManager {
-
-	Collection<FrontTurtle> myTurtles;
+	
+	Collection<Turtleable> myTurtles;
 	
 	public TurtleManager(){
-		myTurtles = new ArrayList<FrontTurtle>();
+		myTurtles = new ArrayList<Turtleable>();
 	}
 	
 	public void addTurtle(int id, Turtleable turtle){
-		FrontTurtle newTurtle = new FrontTurtle(turtle.getX(), turtle.getY(), turtle.getAngle(), id, turtle.getImageView());
-		myTurtles.add(newTurtle);
+		myTurtles.add(turtle);
 	}
 	
-	public Collection<FrontTurtle> getTurtles(){
+	public Collection<Turtleable> getTurtles(){
 		return myTurtles;
 	}
 }

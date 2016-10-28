@@ -57,7 +57,7 @@ public class FrontTurtle {
     	return myAngle;
     }
     
-    public boolean getPenStatus(){
+    public boolean isPenUp(){
     	return isPenUp;
     }
    

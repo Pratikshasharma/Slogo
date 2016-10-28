@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.File;
+
+import commandreference.Turtleable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
@@ -57,7 +59,7 @@ public class GUIController {
 		return chosenFile;
 	}
 
-	public void addToScene(FrontTurtle t){
+	public void addToScene(Turtleable t){
 		myMainGUI.addTurtleOnCanvas(t);
 	}
 

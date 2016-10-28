@@ -1,5 +1,6 @@
 package gui;
 
+import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -111,7 +112,7 @@ public class MainGUI {
 		return myHistory;
 	}
 
-	private void addTurtleOnScene(FrontTurtle turtle){
+	private void addTurtleOnScene(Turtleable turtle){
 		if(!isOnCanvas(turtle.getImageView())){
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
@@ -121,14 +122,16 @@ public class MainGUI {
 		return myFileTab;
 	}
 
-	public void addTurtleOnCanvas(FrontTurtle turtle){
-		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
-		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+	public void addTurtleOnCanvas(Turtleable turtle){
+		turtle.getImageView().setX(turtle.getX().get());
+		turtle.getImageView().setY(turtle.getY().get());
 		addTurtleOnScene(turtle);
-		addLineOnCanvas(turtle);
+		if(turtle.getPenStatus()){
+			addLineOnCanvas(turtle);
+		}
 	}
 
-	private void addLineOnCanvas(FrontTurtle turtle){
+	private void addLineOnCanvas(Turtleable turtle){
 		if(!isOnCanvas(turtle.getLine())){
 			turtle.getLine().setStartX(turtle.getImageView().getX());
 			turtle.getLine().setStartY(turtle.getImageView().getY());
