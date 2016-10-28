@@ -136,11 +136,14 @@ public class AppController {
 	private void work(){
 		sendCommand();
 		renderTurtles();
+		myGUIController.getConsole().getTextField().clear();
 	}
 
 	private void sendCommand(){
 		if(!myGUIController.getCommandEntered().isEmpty()){
+			myGUIController.getHistory().addToCommandHistory(myGUIController.getCommandEntered());
 			mySimulationController.receive(myGUIController.getCommandEntered());
+			
 		}
 	}
 
