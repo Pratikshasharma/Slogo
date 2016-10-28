@@ -88,6 +88,7 @@ public class MainGUI {
 		HBox bottomBox = new HBox(20);
 		VBox activeLabels = new VBox(20);
 		VBox controlButtons = new VBox(20);
+		setOnClearButton();
 		controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
 		activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
 		bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
@@ -163,6 +164,12 @@ public class MainGUI {
 
 	public void setOnRunButton(EventHandler<? super MouseEvent> handler){
 		myControlButtons.setOnRun(handler);
+	}
+	
+	private void setOnClearButton(){
+		myControlButtons.setOnClear(e -> {
+			myConsole.clear();
+		});
 	}
 	
 	public void clearConsole(){
