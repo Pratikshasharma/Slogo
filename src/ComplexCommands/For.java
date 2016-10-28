@@ -20,7 +20,7 @@ public class For extends ComplexCommand{
         int increment=(int) myCommandProcess.executeList(myCommandStorage, args.get(3));
         for(int i=start;i<=end;i+=increment){
             myCommandStorage.addVariable(variable, (double) i);
-            result=myCommandProcess.executeList(myCommandStorage, args.get(2));
+            result=myCommandProcess.executeList(myCommandStorage, args.get(4));
         }
         myCommandStorage.setVariableMap(originalvariables);
         return result;    

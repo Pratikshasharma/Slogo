@@ -17,6 +17,9 @@ public class CommandStorage extends Storage {
     private ObservableMap<String,Double> variables;
     private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
+    private Map<Integer,Integer[]> colorValues;
+    private int backgroundindex;
+
     
     public CommandStorage () {
         actors=FXCollections.observableMap(new HashMap<Integer,Actor>());

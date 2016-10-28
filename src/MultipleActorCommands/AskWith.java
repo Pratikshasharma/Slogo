@@ -6,16 +6,20 @@ import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public class Ask extends MultipleActorCommand{
+public class AskWith extends MultipleActorCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {
         List<Integer> originalActive=new ArrayList<Integer>(myCommandStorage.getActiveList());
-        Tell tell=new Tell();
-        List<InfoNode> tellArgs=new ArrayList<InfoNode>(args);
-        tellArgs.remove(tellArgs.size()-1);
-        tell.call(myCommandStorage, tellArgs);
-        double result=myCommandProcess.executeList(myCommandStorage,args.get(args.size()-1));
+        List<Integer> askActive=new ArrayList<Integer>();
+        for(int i: myCommandStorage.getActiveList()){
+            myCommandStorage.setActive(i);
+            if(myCommandProcess.executeList(myCommandStorage,args.get(0))==1){
+                askActive.add(i);
+            }
+        }
+        myCommandStorage.setActive(askActive);        
+        double result=myCommandProcess.executeList(myCommandStorage,args.get(1));
         myCommandStorage.setActive(originalActive);
         return result;
     }
