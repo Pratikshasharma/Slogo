@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
 public abstract class Actor implements Turtleable {
-
 	private final static double DEGREES_CIRCLE=360.0;
 	private ImageView myImage;
 	protected Coordinates coordinates;
@@ -68,46 +67,48 @@ public abstract class Actor implements Turtleable {
 	public void setPenStatus(boolean pen){
 		penDown=pen;
 	}
+	
+        @Override
+        public boolean getPenStatus(){
+                return penDown;
+        }
 
 	public void setVisibility(boolean vis){
 		visible=vis;
 	}
+	
 
 	public boolean getVisibility(){
 		return visible;
 	}    
 
-	private void init(double x, double y, String imageFilePath){
-		coordinates = new Coordinates(x, y);
-		myImage = new ImageView(imageFilePath);
-		myImage.setFitWidth(40);
-		myImage.setFitHeight(40);
-		myLine = new Line();
-		distanceTraveled=0;
-		myAngle=0;
-		penDown=true;
-		visible=true;       
-	}
+        public void setPenColorIndex(int index) {
+            penColorIndex=index;
+        }
 
 	@Override
 	public int getPenColorIndex() {
 		return penColorIndex;
 	}
 
+        public void setPenSizeIndex(int index) {
+                penSizeIndex=index;
+        }
+	
 	@Override
 	public int getPenSizeIndex() {
 		return penSizeIndex;
 	}
+	
+        public void setShapeIndex(int index) {
+                shapeIndex=index;
+        }       
 
 	@Override
 	public int getShapeIndex() {
 		return shapeIndex;
-	}
-	
-	@Override
-	public boolean getPenStatus(){
-		return penDown;
-	}
+	}	
+
 	
 	@Override
 	public ImageView getImageView(){
@@ -118,4 +119,16 @@ public abstract class Actor implements Turtleable {
 	public Line getLine(){
 		return myLine;
 	}
+	
+        private void init(double x, double y, String imageFilePath){
+            coordinates = new Coordinates(x, y);
+            myImage = new ImageView(imageFilePath);
+            myImage.setFitWidth(40);
+            myImage.setFitHeight(40);
+            myLine = new Line();
+            distanceTraveled=0;
+            myAngle=0;
+            penDown=true;
+            visible=true;       
+        }
 }
