@@ -1,12 +1,15 @@
 package gui;
 
+import javafx.event.EventHandler;
+
+import commandreference.ControlButtons;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -27,8 +30,7 @@ public class MainGUI {
 	private Help myHelpTab;
 	private BorderPane myRoot;
 	private Pane myCanvas;
-	private Button runButton;
-	private Button clearButton;
+	private ControlButtons myControlButtons;
 	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
 	public static final double TURTLE_PANE_WIDTH = 550;
 	public static final double TURTLE_PANE_HEIGHT = 450;
@@ -42,6 +44,7 @@ public class MainGUI {
 		myHelpTab = new Help();
 		myHistory = new History();
 		myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
+		myControlButtons = new ControlButtons();
 		setHistoryClickables();
 	}
 
@@ -83,10 +86,11 @@ public class MainGUI {
 
 	private HBox createBottom(){
 		HBox bottomBox = new HBox(20);
-		makeConsoleControlButtons();
-		VBox activeLabels = new VBox();
+		VBox activeLabels = new VBox(20);
+		VBox controlButtons = new VBox(20);
+		controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
 		activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
-		bottomBox.getChildren().addAll(myConsole.getTextField(), runButton, clearButton, activeLabels);
+		bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
 		return bottomBox;
 	}
 
@@ -109,14 +113,6 @@ public class MainGUI {
 		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu());
 		return menuBar;
-	}
-
-	public Console getConsole(){
-		return myConsole;
-	}
-
-	public History getHistory(){
-		return myHistory;
 	}
 
 	private void addTurtleOnScene(FrontTurtle turtle){
@@ -165,20 +161,24 @@ public class MainGUI {
 		return backgroundChanger;
 	}
 
-	private void makeConsoleControlButtons(){
-		runButton = setButton("RunButtonCommand",0.8*GUIController.SCENE_WIDTH, 0.9*GUIController.SCENE_HEIGHT/9);
-		clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
-		clearButton.setOnAction(e -> myConsole.getTextField().clear());
+	public void setOnRunButton(EventHandler<? super MouseEvent> handler){
+		myControlButtons.setOnRun(handler);
 	}
-
-	private Button setButton(String property, double xPosition, double yPosition){
-		ButtonTemplate buttonCreator = new ButtonTemplate(property);
-		buttonCreator.changeButtonSettings(xPosition, yPosition);
-		return buttonCreator.getButton();
+	
+	public void clearConsole(){
+		myConsole.clear();
 	}
-
-	public Button getRunButton(){
-		return runButton;
+	
+	public void setConsole(String text){
+		myConsole.setText(text);
+	}
+	
+	public String getCommand(){
+		return myConsole.getText();
+	}
+	
+	public History getHistory(){
+		return myHistory;
 	}
 }  
 

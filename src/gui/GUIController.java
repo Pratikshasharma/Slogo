@@ -2,8 +2,9 @@ package gui;
 
 import java.io.File;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,21 +31,33 @@ public class GUIController {
 	public void setActiveTurtle(int id, FrontTurtle turtle){
 		myMainGUI.updateActiveTurtleInfo(id, turtle);
 	}
-
-	public Console getConsole(){
-		return myMainGUI.getConsole();
+	
+	public void clearConsole(){
+		myMainGUI.clearConsole();
+	}
+	
+	public void setConsole(String text){
+		myMainGUI.setConsole(text);
 	}
 
 	public FileTab getFileTab(){
 		return myMainGUI.getMyFileTab();
 	}
 
-	public History getHistory(){
-		return myMainGUI.getHistory();
+	public void addToCommandHistory(String command){
+		myMainGUI.getHistory().addToCommandHistory(command);
+	}
+	
+	public void addToVariableHistory(String variable){
+		myMainGUI.getHistory().addToVariableList(variable);
+	}
+	
+	public void addToFunctionHistory(String function){
+		myMainGUI.getHistory().addToFunctionsHistory(function);
 	}
 
 	public String getCommandEntered(){
-		return myMainGUI.getConsole().getTextField().getText();
+		return myMainGUI.getCommand();
 	}
 
 	public File chooseFile(){
@@ -75,8 +88,8 @@ public class GUIController {
 		return myCommandLanguage;  
 	}
 
-	public Button getRunButton(){
-		return myMainGUI.getRunButton();
+	public void setOnRunButton(EventHandler<? super MouseEvent> handler){
+		myMainGUI.setOnRunButton(handler);
 	}
 	
 	public void updateActiveLabels(int id, FrontTurtle turtle){

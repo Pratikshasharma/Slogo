@@ -2,10 +2,8 @@ package gui;
 
 import javafx.scene.control.TextArea;
 
-/**
- * @author Pratiksha Sharma
- */
 public class Console {
+	
     private TextArea myCommandWindow;
     private boolean StartsTyping;
 
@@ -29,6 +27,18 @@ public class Console {
 
     public TextArea getTextField(){
         return myCommandWindow;
+    }
+    
+    public void setText(String text){
+    	myCommandWindow.setText(text);
+    }
+    
+    public void clear(){
+    	setText("");
+    }
+    
+    public String getText(){
+    	return myCommandWindow.getText();
     }
 }
 
