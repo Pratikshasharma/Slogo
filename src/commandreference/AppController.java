@@ -1,15 +1,12 @@
 package commandreference;
 
 import java.net.MalformedURLException;
-import java.util.Map;
-
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import gui.FrontTurtle;
 import gui.GUIController;
-import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -18,10 +15,12 @@ public class AppController {
 
 	SimulationController mySimulationController;
 	GUIController myGUIController;
+	TurtleManager myTurtleManager;
 
 	public AppController(){
 		initializeSimulationController();
 		initializeGUIController();
+		myTurtleManager = new TurtleManager();
 		setObservables();
 	}
 
@@ -29,8 +28,9 @@ public class AppController {
 		Scene mainScene = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
-//		updateFront();
-		handleNewTurtle();
+		mySimulationController.getStorage().setActive(1);
+		setNewTurtleHandler();
+		renderTurtles();
 		return mainScene;
 	}
 
@@ -42,7 +42,7 @@ public class AppController {
 		mySimulationController = new SimulationController();
 		mySimulationController.setLanguage("English");
 	}
-	
+
 	private void setObservables(){
 		setActorObserver();
 		setFunctionObserver();
@@ -69,15 +69,26 @@ public class AppController {
 
 	private void setActorObserver() {
 		mySimulationController.getStorage().getActorMap().addListener(new MapChangeListener<Integer, Actor>() {
-            @Override
-            public void onChanged(MapChangeListener.Change change) {
-            	Turtleable newTurtle = (Turtleable) change.getValueAdded();
-                updateTurtlesOnFront(newTurtle);
-            }
-        });
+			@Override
+			public void onChanged(MapChangeListener.Change change) {
+				Turtleable newTurtle = (Turtleable) change.getValueAdded();
+				int id = (int) change.getKey();
+				myTurtleManager.addTurtle(id, newTurtle);
+				newTurtle.getImageView().setOnMouseClicked(e -> {
+					mySimulationController.getStorage().setActive(id);
+				});
+				renderTurtles();
+			}
+		});
 	}
 
-	private void updateTurtlesOnFront(Turtleable turtle){
+	private void renderTurtles(){
+		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
+			updateTurtlesOnFront(turtle);
+		}
+	}
+
+	private void updateTurtlesOnFront(FrontTurtle turtle){
 		myGUIController.addToScene(turtle);
 	}
 
@@ -93,8 +104,8 @@ public class AppController {
 		}
 	}
 
-	private void handleNewTurtle(){
-		myGUIController.getMainGUI().getMyFileTab().getNewTurtleItem().setOnAction(e -> {
+	private void setNewTurtleHandler(){
+		myGUIController.getFileTab().getNewTurtleItem().setOnAction(e -> {
 			try {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
@@ -105,7 +116,7 @@ public class AppController {
 			}
 		});
 	}
-	
+
 	private int getUnusedID(){
 		int i = 0;
 		for(i = 0; i < mySimulationController.getStorage().getActorMap().keySet().size(); i++){
@@ -123,46 +134,18 @@ public class AppController {
 
 	private void work(){
 		sendCommand();
+		renderTurtles();
 	}
 
 	private void sendCommand(){
-		//mySimulationController.receive("make :distance fd sum sin 20 20");
-		//mySimulationController.receive("make :distance fd 50"); 
-		//mySimulationController.receive("fd sum 80 sin 100");
-		//mySimulationController.receive("fd sum 20 30 bk 100 left 300");
-		//mySimulationController.receive("fd sum 80 sin 100"); 
 		mySimulationController.receive(myGUIController.getCommandEntered());
 	}
 
 	public void handleKeyInput(KeyCode code){
 		switch(code) {
 		case ENTER: 
-			myGUIController.getMainGUI().getConsole().getTextField().setText("");
-			work();
+			myGUIController.getConsole().getTextField().setText(myGUIController.getConsole().getTextField().getText() + "\n");
 			break;
-
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() + 2);
-			//                updatePositions();
-			//                break;
-			//
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() - 2);
-			//                updatePositions();
-			//                break;
-			//left
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
-			//                updatePositions();
-			//                break;
-			//                //right
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
-			//                updatePositions();
-			//                break;
-			//
 		default:
 			//Do nothing
 		}

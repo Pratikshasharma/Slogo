@@ -1,4 +1,4 @@
-#Changes
+# Changes
 Our four APIs now are Display, Integration, Parser, Execution.
 The front end consists of Display and Integration and the back end consists of Parser and Execution.
 We moved the parser to backend to make it easier to work with execution and now we just pull in the input string from front end. 
@@ -13,3 +13,11 @@ Execution was originally planned to have commands in the methods which would be 
 
 
 ## Front End
+One major change in the internal front end api was the addition of the navigationtabs package which consists of classes such as Tools.java, FileTab.java, Help.java,etc.
+These classes are all menu objects which are then called in the MainGUI class to add them up to the Scene. 
+
+Another change is the use of functional interfaces for creating our own lambda expressions that fully encapsulate instance variables that would have 
+otherwise needed to be passed around.
+
+
+

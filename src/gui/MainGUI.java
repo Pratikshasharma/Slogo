@@ -1,6 +1,5 @@
 package gui;
 
-import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -72,9 +71,8 @@ public class MainGUI {
 			BackgroundChangeable p = getBackgroundChanger(m);
 			m.setOnAction(e -> {
 				p.changeBackground(myRoot);
-			})
-			;}
-
+			});
+		}
 	}
 
 	private HBox createBottom(){
@@ -95,7 +93,6 @@ public class MainGUI {
 		myCanvas = new Pane();
 		setBackgroundColorProps();
 		myCanvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
-		getLine();
 		myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
 		return myCanvas;
 	}
@@ -114,24 +111,7 @@ public class MainGUI {
 		return myHistory;
 	}
 
-	private void addTurtleOnScene(Turtleable turtle){
-		//		myFileTab.getNewTurtleItem().setOnAction(e -> {
-		//			if(isOnCanvas(turtle.getImageView())){
-		//				myCanvas.getChildren().remove(turtle.getImageView());
-		//			}
-		//			if(isOnCanvas(turtle.getLine())){
-		//				myCanvas.getChildren().remove(turtle.getLine());
-		//			}
-		//			try {
-		////                ImageView newTurtleImage = new ImageView(new Image(chooseFile().toURI().toURL().toString())); 
-		//                
-		//            }
-		//            catch (MalformedURLException error) {
-		//                // TODO Auto-generated catch block
-		//                error.printStackTrace();
-		//            }
-		//		});
-		//        addTurtleOnCanvas();
+	private void addTurtleOnScene(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getImageView())){
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
@@ -141,30 +121,21 @@ public class MainGUI {
 		return myFileTab;
 	}
 
-	private void getLine(){
-		for(MenuItem m: myTools.getPenColorSubMenu().getItems()) {
-			m.setOnAction(e-> {
-				//TODO: Send command to back
-			});
-		};
-		for(MenuItem m: myTools.getPenSizeSubMenu().getItems()) {
-			m.setOnAction(e-> {
-				//TODO: Send command to back
-			});
-		}
-		//		addLineOnCanvas();
-	}
-
-	public void addTurtleOnCanvas(Turtleable turtle){
-		turtle.getImageView().setX(turtle.getX());
-		turtle.getImageView().setY(turtle.getY());
+	public void addTurtleOnCanvas(FrontTurtle turtle){
+		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 		addTurtleOnScene(turtle);
 		addLineOnCanvas(turtle);
 	}
 
-	private void addLineOnCanvas(Turtleable turtle){
+	private void addLineOnCanvas(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getLine())){
+			turtle.getLine().setStartX(turtle.getImageView().getX());
+			turtle.getLine().setStartY(turtle.getImageView().getY());
 			myCanvas.getChildren().add(turtle.getLine());;
+		} else {
+			turtle.getLine().setEndX(turtle.getImageView().getX());
+			turtle.getLine().setEndY(turtle.getImageView().getY());
 		}
 	}
 

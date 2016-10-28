@@ -27,8 +27,6 @@ public class CommandStorage extends Storage {
         variables=FXCollections.observableMap(new HashMap<String,Double>());
         functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
-        addNewActors(1, DEFAULT_IMAGE_PATH);
-        setActive(1);
     }
     
     //adding to lists/maps

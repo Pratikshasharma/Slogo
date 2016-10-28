@@ -3,6 +3,7 @@ package Actors;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import gui.MainGUI;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
@@ -37,13 +38,13 @@ public abstract class Actor implements Turtleable {
 	}
 
 	@Override
-	public double getX(){
-		return coordinates.getX().get();
+	public DoubleProperty getX(){
+		return coordinates.getX();
 	}
 
 	@Override
-	public double getY(){
-		return coordinates.getY().get();
+	public DoubleProperty getY(){
+		return coordinates.getY();
 	}
 
 	public double getDistance(){
