@@ -21,7 +21,8 @@ public class ActiveTurtleDisplayInformation {
 		return idLabel;
 	}
 	
-	public void updateStatus(Turtleable turtle){
+	public void updateStatus(int id, Turtleable turtle){
+		setID(id);
 		setOrientation(turtle.getAngle());
 		setPenStatus(turtle.getPenStatus());
 	}

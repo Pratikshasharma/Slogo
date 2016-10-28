@@ -28,8 +28,8 @@ public class GUIController {
 		return myScene;
 	}
 	
-	public void setActiveTurtle(Turtleable turtle){
-		myMainGUI.updateActiveTurtleInfo(turtle);
+	public void setActiveTurtle(int id, Turtleable turtle){
+		myMainGUI.updateActiveTurtleInfo(id, turtle);
 	}
 
 	public Console getConsole(){
@@ -83,8 +83,8 @@ public class GUIController {
 		return myMainGUI.getRunButton();
 	}
 	
-	public void updateActiveLabels(Turtleable turtle){
-		myMainGUI.updateActiveTurtleInfo(turtle);
+	public void updateActiveLabels(int id, Turtleable turtle){
+		myMainGUI.updateActiveTurtleInfo(id, turtle);
 	}
 }
 

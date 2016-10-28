@@ -76,7 +76,7 @@ public class AppController {
 				myTurtleManager.addTurtle(id, newTurtle);
 				newTurtle.getImageView().setOnMouseClicked(e -> {
 					mySimulationController.getStorage().setActive(id);
-					myTurtleManager.setActiveTurtle(newTurtle);
+					myTurtleManager.setActiveTurtle(id, newTurtle);
 					updateActiveLabels();
 				});
 				updateTurtlesOnFront(newTurtle);
@@ -130,7 +130,7 @@ public class AppController {
 	}
 	
 	private void updateActiveLabels(){
-		myGUIController.updateActiveLabels(myTurtleManager.getActiveTurtle());
+		myGUIController.updateActiveLabels(myTurtleManager.getActiveID(), myTurtleManager.getActiveTurtle());
 	}
 
 	private void sendCommand(){
