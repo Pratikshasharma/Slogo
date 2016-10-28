@@ -1,7 +1,5 @@
 package Simulation;
 
-import java.util.ArrayList;
-import java.util.List;
 import Simulation.Node.InfoNode;
 import Simulation.parse.*;
 import commandreference.Coordinates;
@@ -25,13 +23,14 @@ public class SimulationController {
     	return myCommandStorage.getActor(1).getCoordinates();
     }
     
-    public void receive(String command) {
+    public double receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
     	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
     	
     	//test.printTree();
     	double result=myCommandProcess.executeList(myCommandStorage,test);
     	System.out.println(result);
+    	return result;
     }
     
     public CommandStorage getStorage(){

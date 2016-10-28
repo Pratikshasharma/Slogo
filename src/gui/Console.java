@@ -1,12 +1,12 @@
 package gui;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 /**
  * @author Pratiksha Sharma
  */
 public class Console {
-    private TextField myCommandWindow;
+    private TextArea myCommandWindow;
     private boolean StartsTyping;
 
     public Console(){
@@ -14,7 +14,7 @@ public class Console {
     }
 
     private void createTextField(){
-        myCommandWindow = new TextField("Enter Command");
+        myCommandWindow = new TextArea("Enter Command");
         myCommandWindow.setOnKeyTyped(e -> {
             if(!StartsTyping){
                 myCommandWindow.clear();
@@ -27,10 +27,9 @@ public class Console {
         //myCommandWindow.setMaxWidth(MainGUI.TURTLE_PANE_WIDTH);
     }
 
-    public TextField getTextField(){
+    public TextArea getTextField(){
         return myCommandWindow;
     }
-
 }
 
 
