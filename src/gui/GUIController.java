@@ -58,7 +58,7 @@ public class GUIController {
         return chosenFile;
     }
     
-    public void addToScene(Turtleable t){
+    public void addToScene(FrontTurtle t){
     	myMainGUI.addTurtleOnCanvas(t);
     }
 

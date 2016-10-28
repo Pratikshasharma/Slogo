@@ -11,7 +11,7 @@ public class YCoordinate extends ActorQuery{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
-        return actor.getY();
+        return actor.getY().get();
     }
 
 }

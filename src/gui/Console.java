@@ -14,7 +14,7 @@ public class Console {
     }
 
     private void createTextField(){
-        myCommandWindow = new TextArea("Enter Command");
+        myCommandWindow = new TextArea();
         myCommandWindow.setOnKeyTyped(e -> {
             if(!StartsTyping){
                 myCommandWindow.clear();

@@ -19,7 +19,7 @@ public class Forward extends ActorCommand{
             pixels+=segmentedpixels;
             x+=Math.cos(actor.getAngle())*segmentedpixels;
             y+=Math.sin(actor.getAngle())*segmentedpixels;
-            actor.setPos(actor.getX()+x,actor.getY()+y);
+            actor.setPos(actor.getX().get()+x,actor.getY().get()+y);
         }
         return pixels;
     }
