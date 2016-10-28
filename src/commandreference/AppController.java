@@ -53,7 +53,8 @@ public class AppController {
 		mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change) {
-				updateFunctionHistoryOnFront();
+				String name = (String) change.getKey();
+				myGUIController.getHistory().addToVariableList(name);
 			}
 		});
 	}
@@ -62,7 +63,7 @@ public class AppController {
 		mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change){
-				updateVariableHistoryOnFront();
+				myGUIController.getHistory().addToFunctionsHistory((String) change.getKey());
 			}
 		});
 	}
@@ -92,25 +93,12 @@ public class AppController {
 		myGUIController.addToScene(turtle);
 	}
 
-	private void updateFunctionHistoryOnFront(){
-		for(String description : mySimulationController.getStorage().getFunctionMap().keySet()){
-			myGUIController.getHistory().addToFunctionsHistory(description);
-		}
-	}
-
-	private void updateVariableHistoryOnFront(){
-		for(String description : mySimulationController.getStorage().getVariableMap().keySet()){
-			myGUIController.getHistory().addToVariableList(description);
-		}
-	}
-
 	private void setNewTurtleHandler(){
 		myGUIController.getFileTab().getNewTurtleItem().setOnAction(e -> {
 			try {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
 				mySimulationController.getStorage().addNewActors(id, filePath);
-				
 			}
 			catch (MalformedURLException error) {
 				error.printStackTrace();
