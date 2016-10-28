@@ -17,7 +17,7 @@ public class Backward extends ActorCommand{
             pixels+=segmentedpixels;
             x+=Math.cos(actor.getAngle())*segmentedpixels;
             y+=Math.sin(actor.getAngle())*segmentedpixels;
-            actor.setPos(actor.getX().get()-x,actor.getY().get()-y);
+            actor.setPos(setValErrorCheck(actor.getX().get()-x,actor.getX().get()),setValErrorCheck(actor.getY().get()-y,actor.getY().get()));
         }
         return pixels;
     }

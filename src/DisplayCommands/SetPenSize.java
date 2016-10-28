@@ -10,6 +10,9 @@ public class SetPenSize extends DisplayCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
          double index= myCommandProcess.executeList(myCommandStorage,args.get(0));
+      /*   if(!indexErrorCheck(index,myCommandStorage.getPenSizeMap().keySet())){
+             return Double.NaN;
+         }*/
          myCommandStorage.getActor(myCommandStorage.getActive()).setPenSizeIndex((int) index);
          return index;
     }

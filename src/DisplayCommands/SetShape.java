@@ -10,6 +10,9 @@ public class SetShape extends DisplayCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
          double index= myCommandProcess.executeList(myCommandStorage,args.get(0));
+         /*   if(!indexErrorCheck(index,myCommandStorage.getShapeMap().keySet())){
+         return Double.NaN;
+     }*/
          myCommandStorage.getActor(myCommandStorage.getActive()).setShapeIndex((int) index);
          return index;
     }

@@ -21,6 +21,13 @@ public abstract class ActorCommand implements Command{
         //return result of last command or else if result is used for other operations it wont make sense (generally used for the execution part of moving turtle)
         return result;
     }
+    
+    public double setValErrorCheck(double result,double original){
+        if(result==Double.NaN){
+            return original;
+        }
+        return result;
+    }
 
     @Override
     public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);

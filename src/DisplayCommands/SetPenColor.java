@@ -10,6 +10,9 @@ public class SetPenColor extends DisplayCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
          double index= myCommandProcess.executeList(myCommandStorage,args.get(0));
+         if(!indexErrorCheck(index,myCommandStorage.getPalette().keySet())){
+             return Double.NaN;
+         }
          myCommandStorage.getActor(myCommandStorage.getActive()).setPenColorIndex((int) index);
          return index;
     }

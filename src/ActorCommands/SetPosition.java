@@ -11,7 +11,12 @@ public class SetPosition extends ActorCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
-        actor.setPos(myCommandProcess.executeList(myCommandStorage,args.get(0)),myCommandProcess.executeList(myCommandStorage,args.get(1)));
+        double newx=myCommandProcess.executeList(myCommandStorage,args.get(0));
+        double newy=myCommandProcess.executeList(myCommandStorage,args.get(1));
+        if(newx==Double.NaN || newy==Double.NaN){
+            return Double.NaN;
+        }
+        actor.setPos(newx,newy);
         return actor.getDistance();
     }
 
