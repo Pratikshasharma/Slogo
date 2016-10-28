@@ -1,6 +1,7 @@
 package Simulation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ public class CommandStorage extends Storage {
     private ObservableMap<String,Double> variables;
     private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
+    private Map<Integer,int[]> colorMap;
+    private int backgroundindex;
+
     
     public CommandStorage () {
         actors=FXCollections.observableMap(new HashMap<Integer,Actor>());
@@ -24,6 +28,12 @@ public class CommandStorage extends Storage {
         variables=FXCollections.observableMap(new HashMap<String,Double>());
         functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
+        colorMap=new HashMap<Integer,int[]>();
+        backgroundindex=1;
+        colorMap.put(1, new int[]{256,0,0});
+        colorMap.put(2, new int[]{0,256,0});
+        colorMap.put(3, new int[]{0,0256});
+
     }
     
     //adding to lists/maps
@@ -57,6 +67,14 @@ public class CommandStorage extends Storage {
         active.add(act);
     }
     
+    public void setBackgroundIndex(int index){
+        backgroundindex=index;
+    }
+    
+    public void setPaletteVal(int index, int[] color){
+        colorMap.put(index, color);
+    }
+    
     //accessing parts of maps/lists
     
     //note index starts at 1
@@ -80,6 +98,14 @@ public class CommandStorage extends Storage {
         return active.get(0);
     }
     
+    public int getBackgroundIndex(){
+        return backgroundindex;
+    }
+    
+    public int[] getPaletteVal(int key){
+        return colorMap.get(key);
+    }
+    
     //return lists/maps
 
     public ObservableMap<Integer,Actor> getActorMap(){
@@ -101,6 +127,11 @@ public class CommandStorage extends Storage {
     public List <Integer> getActiveList(){
         return active;
     }
+    
+    private Map<Integer,int[]> getPalette(){
+        return colorMap;
+    }
+
     
     //for use in temporary variables
     public void setVariableMap(Map <String,Double> inputMap){
