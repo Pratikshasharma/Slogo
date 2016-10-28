@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.collections.MapChangeListener;
 import javafx.scene.Scene;
@@ -14,10 +15,12 @@ public class AppController {
 
 	SimulationController mySimulationController;
 	GUIController myGUIController;
-
+	TurtleManager myTurtleManager;
+	
 	public AppController(){
 		initializeSimulationController();
 		initializeGUIController();
+		myTurtleManager = new TurtleManager();
 		setObservables();
 	}
 
@@ -26,7 +29,8 @@ public class AppController {
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
 		mySimulationController.getStorage().setActive(1);
-		handleNewTurtle();
+		setNewTurtleHandler();
+		renderTurtles();
 		return mainScene;
 	}
 
@@ -68,12 +72,23 @@ public class AppController {
             @Override
             public void onChanged(MapChangeListener.Change change) {
             	Turtleable newTurtle = (Turtleable) change.getValueAdded();
-                updateTurtlesOnFront(newTurtle);
+            	int id = (int) change.getKey();
+            	myTurtleManager.addTurtle(id, newTurtle);
+            	newTurtle.getImageView().setOnMouseClicked(e -> {
+            		mySimulationController.getStorage().setActive(id);
+            	});
+            	renderTurtles();
             }
         });
 	}
+	
+	private void renderTurtles(){
+		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
+			updateTurtlesOnFront(turtle);
+		}
+	}
 
-	private void updateTurtlesOnFront(Turtleable turtle){
+	private void updateTurtlesOnFront(FrontTurtle turtle){
 		myGUIController.addToScene(turtle);
 	}
 
@@ -89,7 +104,7 @@ public class AppController {
 		}
 	}
 
-	private void handleNewTurtle(){
+	private void setNewTurtleHandler(){
 		myGUIController.getFileTab().getNewTurtleItem().setOnAction(e -> {
 			try {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
@@ -114,7 +129,12 @@ public class AppController {
 
 	private void setRunButton(){
 		Button b = myGUIController.getRunButton();
-		b.setOnAction(e -> sendCommand());
+		b.setOnAction(e -> work());
+	}
+	
+	private void work(){
+		sendCommand();
+		renderTurtles();
 	}
 
 	private void sendCommand(){
@@ -126,29 +146,6 @@ public class AppController {
 		case ENTER: 
 			myGUIController.getConsole().getTextField().setText(myGUIController.getConsole().getTextField().getText() + "\n");
 			break;
-
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() + 2);
-			//                updatePositions();
-			//                break;
-			//
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() - 2);
-			//                updatePositions();
-			//                break;
-			//left
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
-			//                updatePositions();
-			//                break;
-			//                //right
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
-			//                updatePositions();
-			//                break;
-			//
 		default:
 			//Do nothing
 		}

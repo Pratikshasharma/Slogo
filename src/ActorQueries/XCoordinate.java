@@ -11,7 +11,7 @@ public class XCoordinate extends ActorQuery{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
-        return actor.getX();
+        return actor.getX().get();
     }
 
 }

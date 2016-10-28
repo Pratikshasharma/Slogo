@@ -114,7 +114,7 @@ public class MainGUI {
 		return myHistory;
 	}
 
-	private void addTurtleOnScene(Turtleable turtle){
+	private void addTurtleOnScene(FrontTurtle turtle){
 		//		myFileTab.getNewTurtleItem().setOnAction(e -> {
 		//			if(isOnCanvas(turtle.getImageView())){
 		//				myCanvas.getChildren().remove(turtle.getImageView());
@@ -155,14 +155,14 @@ public class MainGUI {
 		//		addLineOnCanvas();
 	}
 
-	public void addTurtleOnCanvas(Turtleable turtle){
-		turtle.getImageView().setX(turtle.getX());
-		turtle.getImageView().setY(turtle.getY());
+	public void addTurtleOnCanvas(FrontTurtle turtle){
+		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 		addTurtleOnScene(turtle);
 		addLineOnCanvas(turtle);
 	}
 
-	private void addLineOnCanvas(Turtleable turtle){
+	private void addLineOnCanvas(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getLine())){
 			myCanvas.getChildren().add(turtle.getLine());;
 		}
