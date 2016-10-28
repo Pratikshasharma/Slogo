@@ -16,7 +16,7 @@ public class AppController {
 	SimulationController mySimulationController;
 	GUIController myGUIController;
 	TurtleManager myTurtleManager;
-	
+
 	public AppController(){
 		initializeSimulationController();
 		initializeGUIController();
@@ -42,7 +42,7 @@ public class AppController {
 		mySimulationController = new SimulationController();
 		mySimulationController.setLanguage("English");
 	}
-	
+
 	private void setObservables(){
 		setActorObserver();
 		setFunctionObserver();
@@ -69,19 +69,19 @@ public class AppController {
 
 	private void setActorObserver() {
 		mySimulationController.getStorage().getActorMap().addListener(new MapChangeListener<Integer, Actor>() {
-            @Override
-            public void onChanged(MapChangeListener.Change change) {
-            	Turtleable newTurtle = (Turtleable) change.getValueAdded();
-            	int id = (int) change.getKey();
-            	myTurtleManager.addTurtle(id, newTurtle);
-            	newTurtle.getImageView().setOnMouseClicked(e -> {
-            		mySimulationController.getStorage().setActive(id);
-            	});
-            	renderTurtles();
-            }
-        });
+			@Override
+			public void onChanged(MapChangeListener.Change change) {
+				Turtleable newTurtle = (Turtleable) change.getValueAdded();
+				int id = (int) change.getKey();
+				myTurtleManager.addTurtle(id, newTurtle);
+				newTurtle.getImageView().setOnMouseClicked(e -> {
+					mySimulationController.getStorage().setActive(id);
+				});
+				renderTurtles();
+			}
+		});
 	}
-	
+
 	private void renderTurtles(){
 		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
 			updateTurtlesOnFront(turtle);
@@ -116,7 +116,7 @@ public class AppController {
 			}
 		});
 	}
-	
+
 	private int getUnusedID(){
 		int i = 0;
 		for(i = 0; i < mySimulationController.getStorage().getActorMap().keySet().size(); i++){
@@ -131,7 +131,7 @@ public class AppController {
 		Button b = myGUIController.getRunButton();
 		b.setOnAction(e -> work());
 	}
-	
+
 	private void work(){
 		sendCommand();
 		renderTurtles();
