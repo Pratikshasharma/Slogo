@@ -1,8 +1,6 @@
 package ActorCommands;
 
-
 import java.util.List;
-import java.util.Map;
 import Actors.Actor;
 import Command.ActorCommand;
 import Simulation.CommandStorage;
@@ -19,7 +17,7 @@ public class Forward extends ActorCommand{
             pixels+=segmentedpixels;
             x+=Math.cos(actor.getAngle())*segmentedpixels;
             y+=Math.sin(actor.getAngle())*segmentedpixels;
-            actor.setPos(actor.getX().get()+x,actor.getY().get()+y);
+            actor.setPos(setValErrorCheck(actor.getX().get()+x,actor.getX().get()),setValErrorCheck(actor.getY().get()+y,actor.getY().get()));
         }
         return pixels;
     }

@@ -12,6 +12,13 @@ public abstract class BooleanOperation implements Command{
         myCommandProcess=new CommandProcess();
         return execute(myCommandStorage, args);
     }
+    
+    public boolean boolErrorCheck(double result){
+        if(result==Double.NaN){
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);

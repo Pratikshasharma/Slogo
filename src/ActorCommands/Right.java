@@ -10,12 +10,12 @@ public class Right extends ActorCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
-        double x=0,y=0,angle=0;
+        double angle=0;
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         for(InfoNode parameter:args){
             double segmentedangle=myCommandProcess.executeList(myCommandStorage, parameter);
             angle+=segmentedangle;
-            actor.setAngle(actor.getAngle()-segmentedangle);
+            actor.setAngle(setValErrorCheck(actor.getAngle()-segmentedangle,actor.getAngle()));
         }
         return angle;
     }

@@ -11,7 +11,11 @@ public class Or extends BooleanOperation{
                            List<InfoNode> args) {       
         double or=0;
         for(InfoNode parameter:args){
-            or=(or!=0 || myCommandProcess.executeList(myCommandStorage, parameter)!=0)?1:0;
+            double result=myCommandProcess.executeList(myCommandStorage, parameter);
+            if(boolErrorCheck(result)){
+                return Double.NaN;
+            }
+            or=(or!=0 || result!=0)?1:0;
         }
         return or;    
     }

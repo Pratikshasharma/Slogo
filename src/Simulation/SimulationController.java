@@ -28,6 +28,7 @@ public class SimulationController {
     	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
     	
     	//test.printTree();
+    	myCommandStorage.setKillCommands(false);
     	double result=myCommandProcess.executeList(myCommandStorage,test);
     	System.out.println(result);
     	return result;

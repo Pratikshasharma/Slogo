@@ -8,8 +8,13 @@ import Simulation.Node.InfoNode;
 public class Equal extends BooleanOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<InfoNode> args) {       
-         return (myCommandProcess.executeList(myCommandStorage,args.get(0))==myCommandProcess.executeList(myCommandStorage, args.get(1)))?1:0;
+                           List<InfoNode> args) {   
+        double a=myCommandProcess.executeList(myCommandStorage,args.get(0));
+        double b=myCommandProcess.executeList(myCommandStorage, args.get(1));
+        if(boolErrorCheck(a) && boolErrorCheck(b)){
+            return Double.NaN;
+        }
+         return (a==b)?1:0;
     }
 
 }

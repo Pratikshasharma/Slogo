@@ -20,6 +20,7 @@ public class CommandStorage extends Storage {
     private Map<String,List<String>> functionvariables;
     private Map<Integer,int[]> colorMap;
     private int backgroundindex;
+    private boolean killcommands;
 
     
     public CommandStorage () {
@@ -33,6 +34,7 @@ public class CommandStorage extends Storage {
         colorMap.put(1, new int[]{256,0,0});
         colorMap.put(2, new int[]{0,256,0});
         colorMap.put(3, new int[]{0,0256});
+        killcommands=false;
 
     }
     
@@ -75,6 +77,10 @@ public class CommandStorage extends Storage {
         colorMap.put(index, color);
     }
     
+    public void setKillCommands(boolean bool){
+        killcommands=bool;
+    }
+    
     //accessing parts of maps/lists
     
     //note index starts at 1
@@ -106,6 +112,10 @@ public class CommandStorage extends Storage {
         return colorMap.get(key);
     }
     
+    public boolean getKillCommands(){
+        return killcommands;
+    }
+    
     //return lists/maps
 
     public ObservableMap<Integer,Actor> getActorMap(){
@@ -128,7 +138,7 @@ public class CommandStorage extends Storage {
         return active;
     }
     
-    private Map<Integer,int[]> getPalette(){
+    public Map<Integer,int[]> getPalette(){
         return colorMap;
     }
 
