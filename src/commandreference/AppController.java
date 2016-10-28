@@ -77,18 +77,18 @@ public class AppController {
 				newTurtle.getImageView().setOnMouseClicked(e -> {
 					mySimulationController.getStorage().setActive(id);
 				});
-				renderTurtles();
+				updateTurtlesOnFront(newTurtle);
 			}
 		});
 	}
 
 	private void renderTurtles(){
-		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
+		for(Turtleable turtle : myTurtleManager.getTurtles()){
 			updateTurtlesOnFront(turtle);
 		}
 	}
 
-	private void updateTurtlesOnFront(FrontTurtle turtle){
+	private void updateTurtlesOnFront(Turtleable turtle){
 		myGUIController.addToScene(turtle);
 	}
 
@@ -110,6 +110,7 @@ public class AppController {
 				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
 				int id = getUnusedID();
 				mySimulationController.getStorage().addNewActors(id, filePath);
+				
 			}
 			catch (MalformedURLException error) {
 				error.printStackTrace();
@@ -138,7 +139,9 @@ public class AppController {
 	}
 
 	private void sendCommand(){
-		mySimulationController.receive(myGUIController.getCommandEntered());
+		if(!myGUIController.getCommandEntered().isEmpty()){
+			mySimulationController.receive(myGUIController.getCommandEntered());
+		}
 	}
 
 	public void handleKeyInput(KeyCode code){
