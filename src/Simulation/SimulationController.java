@@ -27,6 +27,7 @@ public class SimulationController {
     
     public void receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
+    	//String lines[] = string.split("\\r?\\n"); THIS ONE splits lines
     	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
     	
     	//test.printTree();
