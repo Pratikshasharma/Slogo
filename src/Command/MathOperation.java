@@ -1,6 +1,5 @@
 package Command;
 
-import java.util.ArrayList;
 import java.util.List;
 import Simulation.CommandProcess;
 import Simulation.CommandStorage;
@@ -14,6 +13,13 @@ public abstract class MathOperation implements Command{
         return execute(myCommandStorage, args);
     }
 
+    public double mathValErrorCheck(double val, double exception){
+        if(val==exception){
+            return Double.NaN;
+        }
+        return val;
+    }
+    
     @Override
     public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);
 

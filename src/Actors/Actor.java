@@ -3,21 +3,23 @@ package Actors;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import gui.MainGUI;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
 public abstract class Actor implements Turtleable {
-
 	private final static double DEGREES_CIRCLE=360.0;
 	private ImageView myImage;
 	protected Coordinates coordinates;
-	protected double distanceTraveled, degreesMoved, myAngle;
+	protected double distanceTraveled, degreesMoved;
+	protected DoubleProperty myAngle;
 	protected boolean penDown, visible;
 	private int penColorIndex;
 	private int penSizeIndex;
 	private int shapeIndex;
 	private Line myLine;
-	
+
 	public Actor (String imageFilePath) {
 		init(MainGUI.TURTLE_PANE_WIDTH / 2, MainGUI.TURTLE_PANE_HEIGHT / 2, imageFilePath);
 	}
@@ -31,19 +33,19 @@ public abstract class Actor implements Turtleable {
 		coordinates.setX(x);
 		coordinates.setY(y);
 	}
-	
+
 	public Coordinates getCoordinates(){
 		return coordinates;
 	}
 
 	@Override
-	public double getX(){
-		return coordinates.getX().get();
+	public DoubleProperty getX(){
+		return coordinates.getX();
 	}
 
 	@Override
-	public double getY(){
-		return coordinates.getY().get();
+	public DoubleProperty getY(){
+		return coordinates.getY();
 	}
 
 	public double getDistance(){
@@ -51,8 +53,12 @@ public abstract class Actor implements Turtleable {
 	}
 
 	public void setAngle(double angle){
-		degreesMoved=angle-myAngle;
-		myAngle=angle%DEGREES_CIRCLE;
+		degreesMoved=angle-myAngle.get();
+		myAngle.set(angle%DEGREES_CIRCLE);
+	}
+	
+	public double getAngle(){
+		return myAngle.get();
 	}
 
 	public double getAngleMoved(){
@@ -60,7 +66,7 @@ public abstract class Actor implements Turtleable {
 	}
 
 	@Override
-	public double getAngle(){
+	public DoubleProperty getAngleProp(){
 		return myAngle;
 	}
 
@@ -68,24 +74,22 @@ public abstract class Actor implements Turtleable {
 		penDown=pen;
 	}
 
+	@Override
+	public boolean getPenStatus(){
+		return penDown;
+	}
+
 	public void setVisibility(boolean vis){
 		visible=vis;
 	}
+
 
 	public boolean getVisibility(){
 		return visible;
 	}    
 
-	private void init(double x, double y, String imageFilePath){
-		coordinates = new Coordinates(x, y);
-		myImage = new ImageView(imageFilePath);
-		myImage.setFitWidth(40);
-		myImage.setFitHeight(40);
-		myLine = new Line();
-		distanceTraveled=0;
-		myAngle=0;
-		penDown=true;
-		visible=true;       
+	public void setPenColorIndex(int index) {
+		penColorIndex=index;
 	}
 
 	@Override
@@ -93,28 +97,44 @@ public abstract class Actor implements Turtleable {
 		return penColorIndex;
 	}
 
+	public void setPenSizeIndex(int index) {
+		penSizeIndex=index;
+	}
+
 	@Override
 	public int getPenSizeIndex() {
 		return penSizeIndex;
 	}
 
+	public void setShapeIndex(int index) {
+		shapeIndex=index;
+	}       
+
 	@Override
 	public int getShapeIndex() {
 		return shapeIndex;
-	}
-	
-	@Override
-	public boolean getPenStatus(){
-		return penDown;
-	}
-	
+	}	
+
+
 	@Override
 	public ImageView getImageView(){
 		return myImage;
 	}
-	
+
 	@Override
 	public Line getLine(){
 		return myLine;
+	}
+
+	private void init(double x, double y, String imageFilePath){
+		coordinates = new Coordinates(x, y);
+		myAngle = new SimpleDoubleProperty(0);
+		myImage = new ImageView(imageFilePath);
+		myImage.setFitWidth(40);
+		myImage.setFitHeight(40);
+		myLine = new Line();
+		distanceTraveled=0;
+		penDown=true;
+		visible=true;       
 	}
 }

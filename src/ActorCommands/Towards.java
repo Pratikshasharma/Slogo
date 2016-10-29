@@ -11,8 +11,11 @@ public class Towards extends ActorCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());        
-        double angle=Math.sin((actor.getY()-myCommandProcess.executeList(myCommandStorage,args.get(0)))/(actor.getX()-myCommandProcess.executeList(myCommandStorage,args.get(0))));
-        actor.setAngle(angle);
+        double angle=Math.sin((actor.getY().get()-myCommandProcess.executeList(myCommandStorage,args.get(0)))/(actor.getX().get()-myCommandProcess.executeList(myCommandStorage,args.get(0))));
+        actor.setAngle(setValErrorCheck(angle,actor.getAngle()));
+        if(angle==Double.NaN){
+            return angle;
+        }
         return actor.getAngleMoved();
     }
 

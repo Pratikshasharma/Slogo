@@ -9,7 +9,11 @@ public class Not extends BooleanOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
-         return (myCommandProcess.executeList(myCommandStorage, args.get(0))==0)?1:0;
+        double result=myCommandProcess.executeList(myCommandStorage, args.get(0));
+        if(boolErrorCheck(result)){
+            return Double.NaN;
+        }
+         return (result==0)?1:0;
     }
 
 }

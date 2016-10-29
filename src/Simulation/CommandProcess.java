@@ -21,14 +21,25 @@ public class CommandProcess {
     public CommandProcess(){
         myResources = ResourceBundle.getBundle(PACKAGE_NAME_FILE);
     }
-
     
     public double executeList(CommandStorage myCommandStorage, InfoNode myNode){
         double result=Double.NaN;
-        while(myNode!=null){
-            result=chooseProcess(myCommandStorage, myNode);
-            myNode=myNode.next();
-        }
+        String lastcommandname = "No command run";
+        //only run if no errors previously in same execution
+            try{
+                while(myNode!=null && !myCommandStorage.getKillCommands()){
+                    lastcommandname=myNode.getName();
+                    result=chooseProcess(myCommandStorage, myNode);
+                    if(result==Double.NaN){
+                        myCommandStorage.setKillCommands(true);
+                        throw new ExecutionException();
+                    }
+                    myNode=myNode.next();
+                }
+            }
+            catch(ExecutionException e){
+                showError(lastcommandname);
+            }
         return result;
     }
     
@@ -55,9 +66,12 @@ public class CommandProcess {
             return clsInstance.call(myCommandStorage, myNode.getParameters());
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-//            showError(myNode.getName());
+ //           e.printStackTrace();
+            showError(myNode.getName());
         }
+        //if error, will just return Double.NaN,set up error change up till top level (that way you can kind of see where error is by following path)
+        //only thing is need to make sure for all the set value commands, dont set them to Double.Nan
+        //also will kill all commands after
         return Double.NaN;
     }
     
@@ -65,8 +79,6 @@ public class CommandProcess {
         CustomCommand myCustomCommand=new CustomCommand();
         myNode.getParameters().add(0,myNode);//so can get name
         return myCustomCommand.call(myCommandStorage, myNode.getParameters());
-        
-  //      return Double.NaN;
     }
     
     // causes error to display in place of stacktrace message when exceptiosn are reached

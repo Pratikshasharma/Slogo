@@ -1,27 +1,27 @@
 package commandreference;
 
 import java.net.MalformedURLException;
-import java.util.Map;
-
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import gui.FrontTurtle;
 import gui.GUIController;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 
 public class AppController {
 
 	SimulationController mySimulationController;
 	GUIController myGUIController;
+	TurtleManager myTurtleManager;
 
 	public AppController(){
 		initializeSimulationController();
 		initializeGUIController();
+		myTurtleManager = new TurtleManager();
 		setObservables();
 	}
 
@@ -29,8 +29,9 @@ public class AppController {
 		Scene mainScene = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, "turtle.png");
-//		updateFront();
-		handleNewTurtle();
+		setActiveID(1);
+		setNewTurtleHandler();
+		renderTurtles();
 		return mainScene;
 	}
 
@@ -42,7 +43,7 @@ public class AppController {
 		mySimulationController = new SimulationController();
 		mySimulationController.setLanguage("English");
 	}
-	
+
 	private void setObservables(){
 		setActorObserver();
 		setFunctionObserver();
@@ -53,7 +54,8 @@ public class AppController {
 		mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change) {
-				updateFunctionHistoryOnFront();
+				String name = (String) change.getKey();
+				myGUIController.addToVariableHistory(name);
 			}
 		});
 	}
@@ -62,50 +64,65 @@ public class AppController {
 		mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change){
-				updateVariableHistoryOnFront();
+				myGUIController.addToFunctionHistory((String) change.getKey());
 			}
 		});
 	}
 
 	private void setActorObserver() {
 		mySimulationController.getStorage().getActorMap().addListener(new MapChangeListener<Integer, Actor>() {
-            @Override
-            public void onChanged(MapChangeListener.Change change) {
-            	Turtleable newTurtle = (Turtleable) change.getValueAdded();
-                updateTurtlesOnFront(newTurtle);
-            }
-        });
-	}
-
-	private void updateTurtlesOnFront(Turtleable turtle){
-		myGUIController.addToScene(turtle);
-	}
-
-	private void updateFunctionHistoryOnFront(){
-		for(String description : mySimulationController.getStorage().getFunctionMap().keySet()){
-			myGUIController.getHistory().addToFunctionsHistory(description);
-		}
-	}
-
-	private void updateVariableHistoryOnFront(){
-		for(String description : mySimulationController.getStorage().getVariableMap().keySet()){
-			myGUIController.getHistory().addToVariableList(description);
-		}
-	}
-
-	private void handleNewTurtle(){
-		myGUIController.getMainGUI().getMyFileTab().getNewTurtleItem().setOnAction(e -> {
-			try {
-				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
-				int id = getUnusedID();
-				mySimulationController.getStorage().addNewActors(id, filePath);
-			}
-			catch (MalformedURLException error) {
-				error.printStackTrace();
+			@Override
+			public void onChanged(MapChangeListener.Change change) {
+				Turtleable newTurtle = (Turtleable) change.getValueAdded();
+				int id = (int) change.getKey();
+				myTurtleManager.addTurtle(id, newTurtle);
+				setCoordinateListeners(id, newTurtle);
+				newTurtle.getImageView().setOnMouseClicked(e -> {
+					setActiveID(id);
+				});
+				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
 			}
 		});
 	}
 	
+	private void setActiveID(int id) {
+		mySimulationController.getStorage().setActive(id);
+		myTurtleManager.setActiveTurtle(id);
+		updateActiveLabels();
+	}
+	
+	private void setCoordinateListeners(int id, Turtleable turtle){
+		turtle.getX().addListener(new ChangeListener<Number>(){
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("changed");
+				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
+			}
+		});
+	}
+
+	private void renderTurtles(){
+		for(FrontTurtle turtle : myTurtleManager.getTurtles()){
+			updateTurtlesOnFront(turtle);
+		}
+	}
+
+	private void updateTurtlesOnFront(FrontTurtle turtle){
+		myGUIController.addToScene(turtle);
+	}
+
+	private void setNewTurtleHandler(){
+		myGUIController.getFileTab().getNewTurtleItem().setOnAction(e -> {
+			try {
+				String filePath = myGUIController.chooseFile().toURI().toURL().toString();
+				int id = getUnusedID();
+				mySimulationController.getStorage().addNewActors(id, filePath);
+			} catch (MalformedURLException error) {
+				error.printStackTrace();
+			}
+		});
+	}
+
 	private int getUnusedID(){
 		int i = 0;
 		for(i = 0; i < mySimulationController.getStorage().getActorMap().keySet().size(); i++){
@@ -113,56 +130,36 @@ public class AppController {
 				return i;
 			}
 		}
-		return i + 1;
+		return i;
 	}
 
 	private void setRunButton(){
-		Button b = myGUIController.getRunButton();
-		b.setOnAction(e -> work());
+		myGUIController.setOnRunButton(e -> work());
 	}
 
 	private void work(){
 		sendCommand();
+		renderTurtles();
+		myGUIController.clearConsole();
+		updateActiveLabels();
+	}
+	
+	private void updateActiveLabels(){
+		myGUIController.updateActiveLabels(myTurtleManager.getActiveID(), myTurtleManager.getTurtleAtIndex(myTurtleManager.getActiveID()));
 	}
 
 	private void sendCommand(){
-		//mySimulationController.receive("make :distance fd sum sin 20 20");
-		//mySimulationController.receive("make :distance fd 50"); 
-		//mySimulationController.receive("fd sum 80 sin 100");
-		//mySimulationController.receive("fd sum 20 30 bk 100 left 300");
-		//mySimulationController.receive("fd sum 80 sin 100"); 
-		mySimulationController.receive(myGUIController.getCommandEntered());
+		if(!myGUIController.getCommandEntered().isEmpty()){
+			myGUIController.addToCommandHistory(myGUIController.getCommandEntered());
+			mySimulationController.receive(myGUIController.getCommandEntered());
+		}
 	}
 
 	public void handleKeyInput(KeyCode code){
 		switch(code) {
 		case ENTER: 
-			myGUIController.getMainGUI().getConsole().getTextField().setText("");
-			work();
+			myGUIController.setConsole(myGUIController.getCommandEntered() + "\n");
 			break;
-
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() + 2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() + 2);
-			//                updatePositions();
-			//                break;
-			//
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -2);
-			//                mySimulationController.getActorCoordinates().getY().set(mySimulationController.getActorCoordinates().getY().get() - 2);
-			//                updatePositions();
-			//                break;
-			//left
-			//            case COMMAND:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() -50);
-			//                updatePositions();
-			//                break;
-			//                //right
-			//            case SHIFT:
-			//                mySimulationController.getActorCoordinates().getX().set(mySimulationController.getActorCoordinates().getX().get() +50);
-			//                updatePositions();
-			//                break;
-			//
 		default:
 			//Do nothing
 		}

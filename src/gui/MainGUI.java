@@ -1,24 +1,27 @@
 package gui;
 
-import commandreference.Turtleable;
+import javafx.event.EventHandler;
+
+import commandreference.ControlButtons;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
 import navigationTabs.Tools;
 
 public class MainGUI {
-	//    private Turtle myTurtle;
+
 	private FileTab myFileTab;
 	private Language myLanguageTab; 
 	private Tools myTools;
@@ -27,13 +30,12 @@ public class MainGUI {
 	private Help myHelpTab;
 	private BorderPane myRoot;
 	private Pane myCanvas;
-	private Button runButton;
-	private Button clearButton;
+	private ControlButtons myControlButtons;
+	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
 	public static final double TURTLE_PANE_WIDTH = 550;
 	public static final double TURTLE_PANE_HEIGHT = 450;
 
 	public MainGUI(){
-		//        myTurtle = new Turtle(true);
 		myRoot = new BorderPane();
 		myFileTab = new FileTab();
 		myTools = new Tools();
@@ -41,6 +43,8 @@ public class MainGUI {
 		myConsole = new Console();
 		myHelpTab = new Help();
 		myHistory = new History();
+		myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
+		myControlButtons = new ControlButtons();
 		setHistoryClickables();
 	}
 
@@ -72,16 +76,23 @@ public class MainGUI {
 			BackgroundChangeable p = getBackgroundChanger(m);
 			m.setOnAction(e -> {
 				p.changeBackground(myRoot);
-			})
-			;}
+			});
+		}
+	}
 
+	public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
+		myActiveTurtleInfo.updateStatus(id, turtle);
 	}
 
 	private HBox createBottom(){
 		HBox bottomBox = new HBox(20);
-		makeButton();
-		bottomBox.getChildren().addAll(myConsole.getTextField(),runButton,clearButton);
-		return  bottomBox;
+		VBox activeLabels = new VBox(20);
+		VBox controlButtons = new VBox(20);
+		setOnClearButton();
+		controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
+		activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
+		bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
+		return bottomBox;
 	}
 
 	private void setHistoryClickables(){
@@ -95,7 +106,6 @@ public class MainGUI {
 		myCanvas = new Pane();
 		setBackgroundColorProps();
 		myCanvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
-		getLine();
 		myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
 		return myCanvas;
 	}
@@ -106,32 +116,7 @@ public class MainGUI {
 		return menuBar;
 	}
 
-	public Console getConsole(){
-		return myConsole;
-	}
-
-	public History getHistory(){
-		return myHistory;
-	}
-
-	private void addTurtleOnScene(Turtleable turtle){
-		//		myFileTab.getNewTurtleItem().setOnAction(e -> {
-		//			if(isOnCanvas(turtle.getImageView())){
-		//				myCanvas.getChildren().remove(turtle.getImageView());
-		//			}
-		//			if(isOnCanvas(turtle.getLine())){
-		//				myCanvas.getChildren().remove(turtle.getLine());
-		//			}
-		//			try {
-		////                ImageView newTurtleImage = new ImageView(new Image(chooseFile().toURI().toURL().toString())); 
-		//                
-		//            }
-		//            catch (MalformedURLException error) {
-		//                // TODO Auto-generated catch block
-		//                error.printStackTrace();
-		//            }
-		//		});
-		//        addTurtleOnCanvas();
+	private void addTurtleOnScene(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getImageView())){
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
@@ -141,31 +126,22 @@ public class MainGUI {
 		return myFileTab;
 	}
 
-	private void getLine(){
-		for(MenuItem m: myTools.getPenColorSubMenu().getItems()) {
-			m.setOnAction(e-> {
-				//TODO: Send command to back
-			});
-		};
-		for(MenuItem m: myTools.getPenSizeSubMenu().getItems()) {
-			m.setOnAction(e-> {
-				//TODO: Send command to back
-			});
-		}
-		//		addLineOnCanvas();
-	}
-
-	public void addTurtleOnCanvas(Turtleable turtle){
-		turtle.getImageView().setX(turtle.getX());
-		turtle.getImageView().setY(turtle.getY());
+	public void addTurtleOnCanvas(FrontTurtle turtle){
+		Line l = new Line();
+		l.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth());
+		l.setStartY(turtle.getImageView().getY());
+		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 		addTurtleOnScene(turtle);
-		addLineOnCanvas(turtle);
+		if(turtle.isPenUp()){
+			addLineOnCanvas(turtle, l);
+		}
 	}
 
-	private void addLineOnCanvas(Turtleable turtle){
-		if(!isOnCanvas(turtle.getLine())){
-			myCanvas.getChildren().add(turtle.getLine());;
-		}
+	private void addLineOnCanvas(FrontTurtle turtle, Line l){
+		l.setEndX(turtle.getImageView().getX());
+		l.setEndY(turtle.getImageView().getY());
+		myCanvas.getChildren().add(l);
 	}
 
 	public Menu getLanguageMenu(){
@@ -186,20 +162,30 @@ public class MainGUI {
 		return backgroundChanger;
 	}
 
-	private void makeButton(){
-		runButton = setButton("RunButtonCommand",0.8*GUIController.SCENE_WIDTH, 0.9*GUIController.SCENE_HEIGHT/9);
-		clearButton = setButton("ClearButtonCommand",0.9*GUIController.SCENE_WIDTH/9, 0.9*GUIController.SCENE_HEIGHT);
-		clearButton.setOnAction(e -> myConsole.getTextField().clear());
+	public void setOnRunButton(EventHandler<? super MouseEvent> handler){
+		myControlButtons.setOnRun(handler);
 	}
-
-	private Button setButton(String property, double xPosition, double yPosition){
-		ButtonTemplate buttonCreator = new ButtonTemplate(property);
-		buttonCreator.changeButtonSettings(xPosition, yPosition);
-		return buttonCreator.getButton();
+	
+	private void setOnClearButton(){
+		myControlButtons.setOnClear(e -> {
+			myConsole.clear();
+		});
 	}
-
-	public Button getRunButton(){
-		return runButton;
+	
+	public void clearConsole(){
+		myConsole.clear();
+	}
+	
+	public void setConsole(String text){
+		myConsole.setText(text);
+	}
+	
+	public String getCommand(){
+		return myConsole.getText();
+	}
+	
+	public History getHistory(){
+		return myHistory;
 	}
 }  
 

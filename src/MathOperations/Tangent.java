@@ -8,7 +8,7 @@ import Simulation.Node.InfoNode;
 public class Tangent extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
-                           List<InfoNode> args) {       
+                           List<InfoNode> args) {
          return Math.tan(myCommandProcess.executeList(myCommandStorage, args.get(0)));
     }
 

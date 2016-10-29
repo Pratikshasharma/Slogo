@@ -1,6 +1,5 @@
 package Command;
 
-import java.util.ArrayList;
 import java.util.List;
 import Simulation.CommandProcess;
 import Simulation.CommandStorage;
@@ -20,6 +19,13 @@ public abstract class ActorCommand implements Command{
         }
         myCommandStorage.setActive(activeList);
         //return result of last command or else if result is used for other operations it wont make sense (generally used for the execution part of moving turtle)
+        return result;
+    }
+    
+    public double setValErrorCheck(double result,double original){
+        if(result==Double.NaN){
+            return original;
+        }
         return result;
     }
 

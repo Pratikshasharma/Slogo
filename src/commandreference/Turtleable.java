@@ -1,15 +1,16 @@
 package commandreference;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
 public interface Turtleable {
 	
-	public double getAngle();
+	public DoubleProperty getAngleProp();
 	
-	public double getX();
+	public DoubleProperty getX();
 	
-	public double getY();
+	public DoubleProperty getY();
 	
 	public int getPenColorIndex();
 	
