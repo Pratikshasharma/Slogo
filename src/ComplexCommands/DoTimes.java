@@ -20,7 +20,13 @@ public class DoTimes extends ComplexCommand{
             myCommandStorage.addVariable(variable, (double) i);
             result=myCommandProcess.executeList(myCommandStorage, args.get(2));
         }
-        myCommandStorage.setVariableMap(originalvariables);
+        Map<String,Double> tempmap= new HashMap<String,Double>(myCommandStorage.getVariableMap());
+        Map<String,Double> updatedvariables= new HashMap<String,Double>();
+        for(String var:originalvariables.keySet()){
+            updatedvariables.put(var,tempmap.get(var));
+        }
+        myCommandStorage.setVariableMap(updatedvariables);
+
         return result;    
     }
 }

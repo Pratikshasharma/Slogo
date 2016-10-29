@@ -22,7 +22,12 @@ public class CustomCommand extends ComplexCommand{
         }
         InfoNode commands=myCommandStorage.getFunction(commandName);
         double result = myCommandProcess.executeList(myCommandStorage,commands);
-        myCommandStorage.setVariableMap(originalvariables);
+        Map<String,Double> tempmap= new HashMap<String,Double>(myCommandStorage.getVariableMap());
+        Map<String,Double> updatedvariables= new HashMap<String,Double>();
+        for(String var:originalvariables.keySet()){
+            updatedvariables.put(var,tempmap.get(var));
+        }
+        myCommandStorage.setVariableMap(updatedvariables);
         return result;
     }
 }
