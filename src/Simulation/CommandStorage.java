@@ -32,7 +32,7 @@ public class CommandStorage extends Storage {
         backgroundindex=1;
         colorMap.put(1, new int[]{256,0,0});
         colorMap.put(2, new int[]{0,256,0});
-        colorMap.put(3, new int[]{0,0256});
+        colorMap.put(3, new int[]{0,0,256});
         killcommands=false;
 
     }
