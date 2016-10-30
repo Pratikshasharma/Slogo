@@ -19,16 +19,14 @@ public class AppController {
 	private GUIController myGUIController;
 	private TurtleManager myTurtleManager;
 	private final String DEFAULT_TURTLE = "turtle.png";
-	private final String DEFAULT_LANGUAGE = "English";
-	
 
-	public AppController(){
+	public AppController() {
 		initializeSimulationController();
 		initializeGUIController();
 		myTurtleManager = new TurtleManager();
 		setObservables();
 	}
-
+	
 	public Parent initiateApp(){
 		//Scene mainScene = myGUIController.init();
 	        Parent mainRoot = myGUIController.init();
@@ -46,7 +44,7 @@ public class AppController {
 
 	private void initializeSimulationController() {
 		mySimulationController = new SimulationController();
-		mySimulationController.setLanguage(DEFAULT_LANGUAGE);
+		mySimulationController.setLanguage(myGUIController.DEFAULT_LANGUAGE);
 	}
 
 	private void setObservables(){

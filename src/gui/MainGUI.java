@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.event.EventHandler;
-
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -36,7 +35,7 @@ public class MainGUI {
 	public static final double TURTLE_PANE_WIDTH = 550;
 	public static final double TURTLE_PANE_HEIGHT = 450;
 
-	public MainGUI(){
+	public MainGUI() {
 		myRoot = new BorderPane();
 		myFileTab = new FileTab();
 		myTools = new Tools();
@@ -127,21 +126,21 @@ public class MainGUI {
 	}
 	
 	public void addTurtleOnCanvas(FrontTurtle turtle){
-		Line l = new Line();
-		l.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth());
-		l.setStartY(turtle.getImageView().getY());
+		Line myLine = new Line();
+		myLine.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth()/2);
+		myLine.setStartY(turtle.getImageView().getY());
 		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
 		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 		addTurtleOnScene(turtle);
 		if(turtle.isPenUp()){
-			addLineOnCanvas(turtle, l);
+			addLineOnCanvas(turtle, myLine);
 		}
 	}
 
-	private void addLineOnCanvas(FrontTurtle turtle, Line l){
-		l.setEndX(turtle.getImageView().getX());
-		l.setEndY(turtle.getImageView().getY());
-		myCanvas.getChildren().add(l);
+	private void addLineOnCanvas(FrontTurtle turtle, Line line){
+		line.setEndX(turtle.getImageView().getX());
+		line.setEndY(turtle.getImageView().getY());
+		myCanvas.getChildren().add(line);
 	}
 
 	public Menu getLanguageMenu(){

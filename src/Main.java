@@ -5,16 +5,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application{
-	
 	private static final String TITLE = "SLOGO";
 	
 	@Override
-	public void start(Stage myStage) throws Exception{
+	public void start(Stage myStage) {
 	    Slogo myWindowsManager = new Slogo();
 		myStage.setTitle(TITLE);
 		Scene scene = myWindowsManager.startSlogo();
 		myStage.setScene(scene);
-		myStage.show();
+		myStage.show();	
 	}
 
 	/**

@@ -2,7 +2,7 @@ package navigationTabs;
 
 
 public class Language extends MenuCreator {
-    public Language () {
+    public Language (){
         super("LanguageCommand");
         
     }

@@ -38,7 +38,7 @@ public class Slogo {
         return randomInteger;
     }
 
-    private void addNewTab(){
+    private void addNewTab() {
         AppController myAppController = new AppController();
         myMultipleWindowMap.put(getId(),myAppController);
         Tab myTab = new Tab(TAB_TITLE + myMultipleWindowMap.size());
@@ -46,7 +46,7 @@ public class Slogo {
         myTabPane.getTabs().add(myTab);
     }
 
-    private Scene createFirstWindow(){
+    private Scene createFirstWindow() {
         addNewTab();
         root.setCenter(myTabPane);
         Scene scene = new Scene(root,GUIController.SCENE_WIDTH,GUIController.SCENE_HEIGHT);
@@ -58,7 +58,8 @@ public class Slogo {
         myMultipleWindowMap.addListener( new MapChangeListener<Integer,AppController>(){
             @Override
             public void onChanged (javafx.collections.MapChangeListener.Change<? extends Integer, ? extends AppController> change) {
-                change.getValueAdded().getNewWindowMenu().setOnAction(e -> addNewTab());
+                change.getValueAdded().getNewWindowMenu().setOnAction(e ->addNewTab());
+                
             }
         });
     }   

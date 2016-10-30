@@ -1,5 +1,6 @@
 package navigationTabs;
 
+
 public class Window extends MenuCreator {
 
     public Window () {
