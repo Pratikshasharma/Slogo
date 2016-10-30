@@ -1,4 +1,5 @@
 package navigationTabs;
+
 import commandreference.HTMLReferencePage;
 import javafx.scene.control.MenuItem;
 

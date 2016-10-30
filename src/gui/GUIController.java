@@ -15,6 +15,7 @@ public class GUIController {
 	public static final double SCENE_HEIGHT = 800;
 	public static final String DEFAULT_LANGUAGE = "English";
 	private String myCommandLanguage;
+	
 	public GUIController() {
 		myMainGUI = new MainGUI();
 	}
