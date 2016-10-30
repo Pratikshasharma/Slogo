@@ -17,7 +17,7 @@ public class CommandStorage extends Storage {
     private ObservableMap<String,Double> variables;
     private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
-    private Map<Integer,int[]> colorMap;
+    private ObservableMap<Integer,int[]> colorMap;
     private int backgroundindex;
     private boolean killcommands;
 
@@ -28,13 +28,12 @@ public class CommandStorage extends Storage {
         variables=FXCollections.observableMap(new HashMap<String,Double>());
         functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
-        colorMap=new HashMap<Integer,int[]>();
+        colorMap=FXCollections.observableMap( new HashMap<Integer,int[]>());
         backgroundindex=1;
         colorMap.put(1, new int[]{256,0,0});
         colorMap.put(2, new int[]{0,256,0});
-        colorMap.put(3, new int[]{0,0256});
+        colorMap.put(3, new int[]{0,0,256});
         killcommands=false;
-
     }
     
     //adding to lists/maps
@@ -137,11 +136,10 @@ public class CommandStorage extends Storage {
         return active;
     }
     
-    public Map<Integer,int[]> getPalette(){
+    public ObservableMap<Integer,int[]> getPalette(){
         return colorMap;
     }
 
-    
     //for use in temporary variables
     public void setVariableMap(Map <String,Double> inputMap){
         variables=FXCollections.observableMap(inputMap);

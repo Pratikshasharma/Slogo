@@ -20,11 +20,11 @@ public class ColorSetup {
         }
        String color =  colorProperties.getProperty(property);
        input.close();
-       System.out.println(" Color: " + color);
        return color;
     }
     
     public void updateColor(String key, String value){
         colorProperties.setProperty(key, value);
+        
     }
 }

@@ -17,8 +17,8 @@ import Simulation.Node.InfoNode;
 import Simulation.Node.Node;
 
 public class Parser {
-	private final static String LANG_PATH = "resources/languages/";
-	private final static String DEFAULT_LANG = "English";
+	public final static String LANG_PATH = "resources/languages/";
+	public final static String DEFAULT_LANG = "English";
 	private final static String SYNTAX_LANG = "Syntax";
 	private final static String TO = "To";
 
