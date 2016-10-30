@@ -5,6 +5,7 @@ import commandreference.Turtleable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 public class FrontTurtle {
@@ -18,6 +19,9 @@ public class FrontTurtle {
     private Line myLine;
     private ImageView myTurtleImageView;
     private int myID;
+    private Double lineWidth;
+    private Paint lineColor;
+    
 
     public FrontTurtle(int id, Turtleable turtle){
         initializeCoordinates(turtle.getX(), turtle.getY());
@@ -85,5 +89,12 @@ public class FrontTurtle {
 
     public ImageView getImageView(){
         return myTurtleImageView;
+    }
+    public void setLineColor(Paint colorValue ){
+        myLine.setStroke(colorValue);
+    }
+    
+    public void setLineWidth(Double widthVaue){
+        myLine.setStrokeWidth(widthVaue);
     }
 }
