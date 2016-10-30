@@ -1,5 +1,5 @@
 
-import commandreference.AppController;
+import gui.Slogo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,10 +10,9 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage myStage) throws Exception{
-		AppController myAppController = new AppController();
+	    Slogo myWindowsManager = new Slogo();
 		myStage.setTitle(TITLE);
-		Scene scene = myAppController.initiateApp();
-		scene.setOnKeyPressed(e -> myAppController.handleKeyInput(e.getCode()));
+		Scene scene = myWindowsManager.startSlogo();
 		myStage.setScene(scene);
 		myStage.show();
 	}
