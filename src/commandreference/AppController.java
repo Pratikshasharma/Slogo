@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import SlogoException.CommandException;
+import gui.ErrorAlert;
 import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.beans.value.ChangeListener;
@@ -26,10 +28,9 @@ public class AppController {
 		myTurtleManager = new TurtleManager();
 		setObservables();
 	}
-	
+
 	public Parent initiateApp(){
-		//Scene mainScene = myGUIController.init();
-	        Parent mainRoot = myGUIController.init();
+		Parent mainRoot = myGUIController.init();
 		setRunButton();
 		mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
 		setActiveID(1);
@@ -78,30 +79,23 @@ public class AppController {
 			public void onChanged(MapChangeListener.Change change) {
 				Turtleable newTurtle = (Turtleable) change.getValueAdded();
 				int id = (int) change.getKey();
-				myTurtleManager.addTurtle(id, newTurtle);
-				setCoordinateListeners(id, newTurtle);
-				newTurtle.getImageView().setOnMouseClicked(e -> {
-					setActiveID(id);
-				});
-				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
+				processNewTurtle(newTurtle, id);
 			}
 		});
 	}
 	
+	private void processNewTurtle(Turtleable newTurtle, int id) {
+		myTurtleManager.addTurtle(id, newTurtle);
+		newTurtle.getImageView().setOnMouseClicked(e -> {
+			setActiveID(id);
+		});
+		updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
+	}
+
 	private void setActiveID(int id) {
 		mySimulationController.getStorage().setActive(id);
 		myTurtleManager.setActiveTurtle(id);
 		updateActiveLabels();
-	}
-	
-	private void setCoordinateListeners(int id, Turtleable turtle){
-		turtle.getX().addListener(new ChangeListener<Number>(){
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println("changed");
-				updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
-			}
-		});
 	}
 
 	private void renderTurtles(){
@@ -143,19 +137,24 @@ public class AppController {
 	private void work(){
 		sendCommand();
 		renderTurtles();
-		myGUIController.clearConsole();
 		updateActiveLabels();
 	}
-	
+
 	private void updateActiveLabels(){
 		myGUIController.updateActiveLabels(myTurtleManager.getActiveID(), myTurtleManager.getTurtleAtIndex(myTurtleManager.getActiveID()));
 	}
 
-	private void sendCommand(){
+	private boolean sendCommand(){
 		if(!myGUIController.getCommandEntered().isEmpty()){
 			myGUIController.addToCommandHistory(myGUIController.getCommandEntered());
-			mySimulationController.receive(myGUIController.getCommandEntered());
+			double d = mySimulationController.receive(myGUIController.getCommandEntered());
+			if(Double.isNaN(d)){
+				ErrorAlert error = new ErrorAlert("error");
+				error.displayAlert("error");
+			}
+			return true;
 		}
+		return false;
 	}
 
 	public void handleKeyInput(KeyCode code){
@@ -167,8 +166,8 @@ public class AppController {
 			//Do nothing
 		}
 	}
-	
+
 	public MenuItem getNewWindowMenu(){
-	    return myGUIController.getNewWindowMenu();
+		return myGUIController.getNewWindowMenu();
 	}
 }

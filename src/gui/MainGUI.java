@@ -118,29 +118,40 @@ public class MainGUI {
 
 	private void addTurtleOnScene(FrontTurtle turtle){
 		if(!isOnCanvas(turtle.getImageView())){
+			turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+			turtle.getImageView().setY(turtle.getCoordinates().getY().get());
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
 	}
+	
 	public FileTab getMyFileTab(){
 		return myFileTab;
 	}
 	
-	public void addTurtleOnCanvas(FrontTurtle turtle){
-		Line myLine = new Line();
-		myLine.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth()/2);
-		myLine.setStartY(turtle.getImageView().getY());
+	public void updateTurtleLocation(FrontTurtle turtle){
+		double x = turtle.getImageView().getX();
+		double y = turtle.getImageView().getY();
+		System.out.println(x + " " + y);
 		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
 		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
-		addTurtleOnScene(turtle);
-		if(turtle.isPenUp()){
-			addLineOnCanvas(turtle, myLine);
+		if(x == 0 && y == 0){
+			addTurtleOnScene(turtle);
+			return;
 		}
+		if(turtle.isPenUp()){
+			addLineOnCanvas(turtle, x, y);
+		}
+		addTurtleOnScene(turtle);
 	}
 
-	private void addLineOnCanvas(FrontTurtle turtle, Line line){
-		line.setEndX(turtle.getImageView().getX());
-		line.setEndY(turtle.getImageView().getY());
-		myCanvas.getChildren().add(line);
+	private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
+		System.out.println("line added");
+		Line myLine = new Line();
+		myLine.setStartX(x);
+		myLine.setStartY(y);
+		myLine.setEndX(turtle.getCoordinates().getX().get());
+		myLine.setEndY(turtle.getCoordinates().getY().get());
+		myCanvas.getChildren().add(myLine);
 	}
 
 	public Menu getLanguageMenu(){

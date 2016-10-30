@@ -35,7 +35,7 @@ public class SimulationController {
     	//test.printTree();
     	myCommandStorage.setKillCommands(false);
     	double result=myCommandProcess.executeList(myCommandStorage,test);
-    	System.out.println(result);
+//    	System.out.println(result);
     	return result;
     }
     

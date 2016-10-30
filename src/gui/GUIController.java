@@ -71,7 +71,7 @@ public class GUIController {
 	}
 
 	public void addToScene(FrontTurtle t){
-		myMainGUI.addTurtleOnCanvas(t);
+		myMainGUI.updateTurtleLocation(t);
 	}
 
 	private void setLanguage(){
