@@ -9,14 +9,18 @@ import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 
 public class AppController {
 
 	SimulationController mySimulationController;
-	GUIController myGUIController;
-	TurtleManager myTurtleManager;
+	private GUIController myGUIController;
+	private TurtleManager myTurtleManager;
+	private final String DEFAULT_TURTLE = "turtle.png";
+	private final String DEFAULT_LANGUAGE = "English";
+	
 
 	public AppController(){
 		initializeSimulationController();
@@ -25,14 +29,15 @@ public class AppController {
 		setObservables();
 	}
 
-	public Scene initiateApp(){
-		Scene mainScene = myGUIController.init();
+	public Parent initiateApp(){
+		//Scene mainScene = myGUIController.init();
+	        Parent mainRoot = myGUIController.init();
 		setRunButton();
-		mySimulationController.getStorage().addNewActors(1, "turtle.png");
+		mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
 		setActiveID(1);
 		setNewTurtleHandler();
 		renderTurtles();
-		return mainScene;
+		return mainRoot;
 	}
 
 	private void initializeGUIController() {
@@ -41,7 +46,7 @@ public class AppController {
 
 	private void initializeSimulationController() {
 		mySimulationController = new SimulationController();
-		mySimulationController.setLanguage("English");
+		mySimulationController.setLanguage(DEFAULT_LANGUAGE);
 	}
 
 	private void setObservables(){
@@ -163,5 +168,9 @@ public class AppController {
 		default:
 			//Do nothing
 		}
+	}
+	
+	public MenuItem getNewWindowMenu(){
+	    return myGUIController.getNewWindowMenu();
 	}
 }

@@ -22,7 +22,6 @@ import navigationTabs.Tools;
 import navigationTabs.Window;
 
 public class MainGUI {
-
 	private FileTab myFileTab;
 	private Language myLanguageTab; 
 	private Tools myTools;
@@ -123,11 +122,10 @@ public class MainGUI {
 			myCanvas.getChildren().add(turtle.getImageView());
 		}
 	}
-
 	public FileTab getMyFileTab(){
 		return myFileTab;
 	}
-
+	
 	public void addTurtleOnCanvas(FrontTurtle turtle){
 		Line l = new Line();
 		l.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth());
@@ -188,6 +186,10 @@ public class MainGUI {
 	
 	public History getHistory(){
 		return myHistory;
+	}
+	
+	public MenuItem getMyNewWindow(){
+	   return  myWindow.getMyMenu().getItems().get(0);
 	}
 }  
 

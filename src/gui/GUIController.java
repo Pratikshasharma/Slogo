@@ -1,31 +1,28 @@
 package gui;
 
 import java.io.File;
-
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import navigationTabs.FileTab;
 
 public class GUIController {
-
 	private MainGUI myMainGUI;
 	public static final double SCENE_WIDTH = 900;
-	public static final double SCENE_HEIGHT = 650;
+	public static final double SCENE_HEIGHT = 800;
 	public static final String DEFAULT_LANGUAGE = "English";
 	private String myCommandLanguage;
-	
 	public GUIController() {
 		myMainGUI = new MainGUI();
 	}
 
-	public Scene init(){
-		Scene myScene = new Scene(myMainGUI.createRoot(),SCENE_WIDTH,SCENE_HEIGHT,Color.WHITE);
+	public Parent init(){
+		//Scene myScene = new Scene(myMainGUI.createRoot(),SCENE_WIDTH,SCENE_HEIGHT,Color.WHITE);
 		setLanguage();
-		return myScene;
+		return myMainGUI.createRoot();
 	}
 	
 	public void setActiveTurtle(int id, FrontTurtle turtle){
@@ -94,6 +91,10 @@ public class GUIController {
 	
 	public void updateActiveLabels(int id, FrontTurtle turtle){
 		myMainGUI.updateActiveTurtleInfo(id, turtle);
+	}
+	
+	public MenuItem getNewWindowMenu(){
+	   return myMainGUI.getMyNewWindow();
 	}
 }
 

@@ -2,7 +2,6 @@ package Simulation;
 
 import java.util.List;
 import java.util.Map;
-import Actors.Actor;
 import Simulation.Node.InfoNode;
 
 public abstract class Storage {
