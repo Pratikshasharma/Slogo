@@ -25,12 +25,17 @@ public class SimulationController {
     
     public double receive(String command) {
     	String[] commandArray = command.trim().split("\\s+");
+    	System.out.println("printing within receive method");
+    	for (String line : commandArray) {
+    		System.out.println(line);
+    	}
+    	//String lines[] = string.split("\\r?\\n"); THIS ONE splits lines
     	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
     	
     	//test.printTree();
     	myCommandStorage.setKillCommands(false);
     	double result=myCommandProcess.executeList(myCommandStorage,test);
-    	System.out.println(result);
+//    	System.out.println(result);
     	return result;
     }
     

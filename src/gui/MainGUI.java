@@ -201,4 +201,3 @@ public class MainGUI {
         myTools.getPenColorSubMenu().getItems().add(newOption);
     }
 }  
-
