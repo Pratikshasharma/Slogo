@@ -11,6 +11,7 @@ import java.util.Set;
 
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
+import SlogoException.CommandException;
 
 public class TreeFactory {
 	private Deque<InfoNode> myList;
@@ -49,10 +50,10 @@ public class TreeFactory {
 
 		while (!myList.isEmpty()) {
 			InfoNode nextNode = myList.pop();
-			if (nextNode.equals("ListEnd")) {
+			if (nextNode.getToken().equals("ListEnd")) {
 				return first;
 			}
-			InfoNode nextTree = createTree(myList.pop());
+			InfoNode nextTree = createTree(nextNode);
 			current.setNext(nextTree);
 			current = current.next();
 		}
@@ -113,6 +114,7 @@ public class TreeFactory {
 
 	private InfoNode makeUserDefined(InfoNode current) {
 		InfoNode commandName = myList.pop();
+		current.addParameter(commandName);
 		InfoNode nextTo = myList.pop();
 		List<InfoNode> varList = new ArrayList<InfoNode>();
 		if (nextTo.getToken().equals("ListStart")) {
@@ -161,6 +163,7 @@ public class TreeFactory {
 
 	private void checkExistence(InfoNode current) {
 		String name = current.getName();
+		System.out.println(name);
 		Set<String> mapKey;
 		if (current.getToken().equals("Variable")) {
 			mapKey = myCustom.getVariableMap().keySet();
@@ -170,9 +173,14 @@ public class TreeFactory {
 			}
 		}
 		if (current.getToken().equals("Command")) {
+			System.out.println("reach here?");
 			mapKey = myCustom.getFunctionMap().keySet();
+			for (String key : mapKey) {
+				System.out.println(key);
+				System.out.println("yes");
+			}
 			if (!mapKey.contains(name) || !myLocalFunc.keySet().contains(name)) {
-				// throw error
+				throw new CommandException("undefined function name (inside checkExistence method)");
 				// message: undefined function name
 			}
 		}

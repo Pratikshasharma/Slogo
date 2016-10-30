@@ -41,6 +41,15 @@ public class Parser {
 		this(DEFAULT_LANG);
 
 	}
+	
+	public static String readFileToString(String filename) throws FileNotFoundException {
+		final String END_OF_FILE = "\\z";
+		Scanner input = new Scanner(new File(filename));
+		input.useDelimiter(END_OF_FILE);
+		String result = input.next();
+		input.close();
+		return result;
+	}
 
 	// given some text, prints results of parsing it using the given language
 	public InfoNode parseText(String[] text, CommandStorage custom) {
