@@ -19,6 +19,7 @@ import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
 import navigationTabs.Tools;
+import navigationTabs.Window;
 
 public class MainGUI {
 
@@ -30,6 +31,7 @@ public class MainGUI {
 	private Help myHelpTab;
 	private BorderPane myRoot;
 	private Pane myCanvas;
+	private Window myWindow;
 	private ControlButtons myControlButtons;
 	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
 	public static final double TURTLE_PANE_WIDTH = 550;
@@ -43,6 +45,7 @@ public class MainGUI {
 		myConsole = new Console();
 		myHelpTab = new Help();
 		myHistory = new History();
+		myWindow = new Window();
 		myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
 		myControlButtons = new ControlButtons();
 		setHistoryClickables();
@@ -58,8 +61,7 @@ public class MainGUI {
 	}
 
 	private VBox createLeft(){
-		VBox left = new VBox();
-		left.setPadding(new Insets(20));   
+		VBox left = new VBox();   
 		setBackgroundColorProps();     
 		left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
 		return left;
@@ -112,7 +114,7 @@ public class MainGUI {
 
 	private MenuBar addItemsInMenuBar(){
 		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu());
+		menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu(), myWindow.getMyMenu());
 		return menuBar;
 	}
 
