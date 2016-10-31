@@ -219,12 +219,33 @@ public class MainGUI {
     public Menu getPenSizeMenu(){
         return myTools.getPenSizeSubMenu();
     }
-    
+
     public Menu getPenColorMenu(){
         return myTools.getPenColorSubMenu();
     }
     public void addColorOption(String key){
         MenuItem newOption = new MenuItem(key);
         myTools.getPenColorSubMenu().getItems().add(newOption);
+    }
+
+    public void setBackgroundColor(String backgroundRGB){
+        backgroundColor = backgroundRGB;
+        BackgroundChangeable p = getBackgroundChanger();
+        p.changeBackground(myRoot);
+    }
+
+    private BackgroundChangeable getBackgroundChanger(){
+        BackgroundChangeable backgroundChanger = (root) -> {  
+            System.out.println(" Color " + backgroundColor.toString());
+            VBox pane = (VBox) root.getLeft();
+            Pane p = (Pane) pane.getChildren().get(0);
+            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
+            root.setLeft(pane);
+        };
+        return backgroundChanger;
+    }
+
+    public Menu getBackgroundMenu(){
+        return myTools.getBackgroundColorMenu();
     }
 }  

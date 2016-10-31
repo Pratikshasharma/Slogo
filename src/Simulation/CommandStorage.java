@@ -30,9 +30,9 @@ public class CommandStorage extends Storage {
         functionvariables=new HashMap<String,List<String>>();
         colorMap=FXCollections.observableMap( new HashMap<Integer,int[]>());
         backgroundindex=1;
-        colorMap.put(1, new int[]{256,0,0});
-        colorMap.put(2, new int[]{0,256,0});
-        colorMap.put(3, new int[]{0,0,256});
+        colorMap.put(1, new int[]{255,0,0});
+        colorMap.put(2, new int[]{0,255,0});
+        colorMap.put(3, new int[]{0,0,255});
         killcommands=false;
     }
     

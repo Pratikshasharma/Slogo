@@ -23,15 +23,10 @@ public class Tools extends MenuCreator {
         addColorOptions(colorSubMenu);
         addColorOptions(backgroundColorMenu);
         addPenSizeOptions();
-        addSizeColorListeners();
         myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);	
     }
 
     private void addColorOptions(Menu menu){ 
-//        menu.getItems().add(createMenuItem("RedPenColor"));
-//        menu.getItems().add(createMenuItem("BluePenColor"));
-//        menu.getItems().add(createMenuItem("PinkPenColor"));
-//        menu.getItems().add(createMenuItem("BlackPenColor"));
         menu.getItems().add(new MenuItem("1"));
         menu.getItems().add(new MenuItem("2"));
         menu.getItems().add(new MenuItem("3"));
@@ -54,17 +49,5 @@ public class Tools extends MenuCreator {
         return this.colorSubMenu;
     }
 
-    private void addSizeColorListeners (){
-        penSizeSubMenu.getItems().stream().forEach(size -> size.setOnAction(e-> penSizeIndex = size.getText()));
-        colorSubMenu.getItems().stream().forEach(color ->color.setOnAction( e-> penColorIndex = color.getText()));      
-    }
-
-    public String getPenSizeIndex(){
-        return this.penSizeIndex;
-    }
-    
-    public String getPenColorIndex(){
-        return this.penColorIndex;
-    }
 
 }
