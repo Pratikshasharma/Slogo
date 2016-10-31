@@ -6,7 +6,7 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
-public class To extends ComplexCommand{
+public class MakeUserInstruction extends ComplexCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
