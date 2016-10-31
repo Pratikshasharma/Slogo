@@ -8,7 +8,6 @@ import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
 import gui.FrontTurtle;
 import gui.GUIController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
