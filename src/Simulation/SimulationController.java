@@ -24,13 +24,13 @@ public class SimulationController {
     }
     
     public double receive(String command) {
-    	String[] commandArray = command.trim().split("\\s+");
-    	System.out.println("printing within receive method");
-    	for (String line : commandArray) {
-    		System.out.println(line);
-    	}
-    	//String lines[] = string.split("\\r?\\n"); THIS ONE splits lines
-    	InfoNode test=simParser.parseText(commandArray, myCommandStorage);
+    	String[] lines = command.split("\\r?\\n+"); //THIS ONE splits lines
+
+//    	System.out.println("printing within receive method");
+//    	for (String line : lines) {
+//    		System.out.println(line);
+//    	}
+    	InfoNode test=simParser.parseText(lines, myCommandStorage);
     	
     	//test.printTree();
     	myCommandStorage.setKillCommands(false);

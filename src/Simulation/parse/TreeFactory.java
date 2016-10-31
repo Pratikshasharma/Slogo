@@ -80,19 +80,19 @@ public class TreeFactory {
 	                checkExistence(current);
 	            	stringParam = Integer.toString((myCustom.getFunctionVariables(name).size()));
 	            	break;
-	            case("GroupBegin"):
+	            case("GroupStart"):
 	            	nextItem = myList.pop();
 	            	List<InfoNode> grouping = loopList(false, false);
 					current = appendList(nextItem, grouping);
 	            	return current;
-	            case("ListBegin"):
+	            case("ListStart"):
 					nextItem = produceTree();
 	            	break;
 	            default:
 	            	stringParam = inputResource.getString(token);
 	                break;
 	        }
-
+	        
 			intParam = Integer.parseInt(stringParam);
 			List<InfoNode> currentParameter = new ArrayList<InfoNode>();
 			while (intParam > 0) {
@@ -100,18 +100,17 @@ public class TreeFactory {
 				if (token.equals("MakeVariable")) {
 					myLocalVar.add(nextItem.getName());
 				}
-				// TO method
 				if (token.equals("MakeUserInstruction")) {
 					current = makeUserDefined(current, nextItem);
 					return current;
 				}
+				//NEED TO INCLUDE GROUP HERE
 				if (nextItem.getToken().equals("ListStart")) {
 					boolean addLoopVariable = false;
 					if (mySpecialList.containsKey(token)) {
 						List<InfoNode> toAdd = loopList(mySpecialList.get(token), false);
 						
 						current = appendList(current, toAdd);
-						
 
 					} else {
 						nextItem = produceTree();
