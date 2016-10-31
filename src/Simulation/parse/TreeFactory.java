@@ -102,7 +102,9 @@ public class TreeFactory {
 				}
 				// TO method
 				if (token.equals("MakeUserInstruction")) {
-
+					System.out.println("ENTERED INSTRUFTION");
+					System.out.println("current: " + current.getName());
+					System.out.println("next: " + nextItem.getName());
 					current = makeUserDefined(current, nextItem);
 					return current;
 				}
@@ -145,6 +147,7 @@ public class TreeFactory {
 				myLocalVar.add(e.getName());
 			}
 		}
+		System.out.println("par size: " + varList.size());
 		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
 
