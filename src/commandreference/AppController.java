@@ -207,6 +207,7 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double sizeIndex = mySimulationController.receive(newValue.toString());
+                System.out.println( " Comes here ");
                 updateLineSize(sizeIndex);
             }
         });   
@@ -236,6 +237,7 @@ public class AppController {
     }
     
     private void updateLineSize(Double lineSize){
+        System.out.println( " Comes here ?? ");
         FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
         activeTurtle.setLineWidth(lineSize);
     }
