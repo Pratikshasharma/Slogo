@@ -78,7 +78,7 @@ public class TreeFactory {
 	            	return current;
 	            case("Command"):
 	                checkExistence(current);
-	            	stringParam = myLocalFunc.get(name);
+	            	stringParam = Integer.toString((myCustom.getFunctionVariables(name).size()));
 	            	break;
 	            case("GroupBegin"):
 	            	nextItem = myList.pop();
@@ -102,9 +102,6 @@ public class TreeFactory {
 				}
 				// TO method
 				if (token.equals("MakeUserInstruction")) {
-					System.out.println("ENTERED INSTRUFTION");
-					System.out.println("current: " + current.getName());
-					System.out.println("next: " + nextItem.getName());
 					current = makeUserDefined(current, nextItem);
 					return current;
 				}
@@ -147,7 +144,6 @@ public class TreeFactory {
 				myLocalVar.add(e.getName());
 			}
 		}
-		System.out.println("par size: " + varList.size());
 		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
 

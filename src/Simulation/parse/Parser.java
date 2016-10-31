@@ -79,8 +79,8 @@ public class Parser {
 			toSend = new InfoNode("0","Constant");
 			e.showError(e.getMessage());
 		}
-		System.out.println("Printing Tree");
-		printTree(toSend);
+		//System.out.println("Printing Tree");
+		//printTree(toSend);
 		
 		return toSend;
 	}
