@@ -161,19 +161,11 @@ public class MainGUI {
 		if(turtle.isPenUp()){
 			addLineOnCanvas(turtle, x, y);
 		}
-		addTurtleOnScene(turtle);
 	}
 
 	private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
 		System.out.println("line added");
-		Line myLine = new Line();
-		myLine.setStyle("-fx-stroke: " + myPrefs.getPenColor("black").toLowerCase() + "; -fx-stroke-width: " + myPrefs.getPenWidth(1));
-		myLine.setStartX(x);
-		myLine.setStartY(y);
-		myLine.setEndX(turtle.getCoordinates().getX().get());
-		myLine.setEndY(turtle.getCoordinates().getY().get());
-		turtle.addLine(myLine);
-		myCanvas.getChildren().add(myLine);
+		myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
 	}
 
 	public Menu getLanguageMenu(){
@@ -223,24 +215,6 @@ public class MainGUI {
 	public MenuItem getMyNewWindow(){
 		return myWindow.getMyMenu().getItems().get(0);
 	}
-    
-    public void addTurtleOnCanvas(FrontTurtle turtle){
-        Line myLine = new Line();
-        myLine.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth()/2);
-        myLine.setStartY(turtle.getImageView().getY());
-        turtle.getImageView().setX(turtle.getCoordinates().getX().get());
-        turtle.getImageView().setY(turtle.getCoordinates().getY().get());
-        addTurtleOnScene(turtle);
-        if(turtle.isPenUp()){
-            addLineOnCanvas(turtle, myLine);
-        }
-    }
-
-    private void addLineOnCanvas(FrontTurtle turtle, Line line){
-        line.setEndX(turtle.getImageView().getX());
-        line.setEndY(turtle.getImageView().getY());
-        myCanvas.getChildren().add(line);
-    }
     
     public Menu getPenSizeMenu(){
         return myTools.getPenSizeSubMenu();
