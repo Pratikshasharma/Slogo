@@ -9,7 +9,7 @@ public class Sine extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
-         return Math.sin(myCommandProcess.executeList(myCommandStorage, args.get(0)));
+         return Math.sin(myCommandProcess.executeList(myCommandStorage, args.get(0))/180*Math.PI);
     }
 
 }
