@@ -106,10 +106,12 @@ public class FrontTurtle {
     }
     
     public void setLineColor(Paint colorValue ){
+        System.out.println(" Line Color " + colorValue);
         lineColor = colorValue;
     }
     
     public void setLineWidth(Double widthValue){
+        System.out.println( " Line Width " + widthValue);
         lineWidth = widthValue;
     }
 }

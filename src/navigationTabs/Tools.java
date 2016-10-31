@@ -8,8 +8,7 @@ public class Tools extends MenuCreator {
     private Menu colorSubMenu;
     private Menu penSizeSubMenu;
     private Menu backgroundColorMenu;
-    private String penSizeIndex="1";
-    private String penColorIndex="1";
+
 
     public Tools () {
         super("ToolsCommand");
@@ -27,10 +26,7 @@ public class Tools extends MenuCreator {
     }
 
     private void addColorOptions(Menu menu){ 
-        menu.getItems().add(new MenuItem("1"));
-        menu.getItems().add(new MenuItem("2"));
-        menu.getItems().add(new MenuItem("3"));
-        
+        menu.getItems().addAll(new MenuItem("1"),new MenuItem("2"),new MenuItem("3"),new MenuItem("4"),new MenuItem("5"),new MenuItem("6")); 
     }
 
     private void addPenSizeOptions(){
