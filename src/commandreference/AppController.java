@@ -2,10 +2,10 @@ package commandreference;
 
 import java.net.MalformedURLException;
 import java.util.Observer;
-
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
+import gui.ErrorAlert;
 import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.beans.value.ChangeListener;
@@ -33,6 +33,7 @@ public class AppController {
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
     private final String DEFAULT_TURTLE = "turtle.png";
+    private String myLanguage;
 
     public AppController() {
         initializeGUIController();
@@ -44,7 +45,6 @@ public class AppController {
     public Parent initiateApp(){
         Parent mainRoot = myGUIController.init();
         setRunButton();
-
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
@@ -137,7 +137,7 @@ public class AppController {
                 int id = getUnusedID();
                 mySimulationController.getStorage().addNewActors(id, filePath);
             } catch (MalformedURLException error) {
-                error.printStackTrace();
+               ErrorAlert alert = new ErrorAlert("Image File not Loaded");
             }
         });
     }
@@ -168,6 +168,7 @@ public class AppController {
     }
 
     private void sendCommand(){
+        mySimulationController.setLanguage(myGUIController.getLanguage());
         if(!myGUIController.getCommandEntered().isEmpty()){
             myGUIController.addToCommandHistory(myGUIController.getCommandEntered());
             mySimulationController.receive(myGUIController.getCommandEntered());
@@ -212,7 +213,7 @@ public class AppController {
             }
         });   
     }
-
+    
     private void addColorMapListener(){
         mySimulationController.getStorage().getPalette().addListener(new MapChangeListener<Integer, int[]>() {
             @Override

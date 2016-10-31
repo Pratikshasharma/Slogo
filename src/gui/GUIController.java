@@ -89,14 +89,15 @@ public class GUIController {
     private void setLanguage(){
         myMainGUI.getLanguageMenu().getItems().stream().forEach((menuItem) -> {
             menuItem.setOnAction( e -> {
-                myCommandLanguage.set(menuItem.getText());   
+                myCommandLanguage.set(menuItem.getText()); 
+                System.out.println(" Language Chosen " + myCommandLanguage.get());
                 return;
             }); 
         });
     }
 
     public String getLanguage(){
-        return this.myCommandLanguage.get();
+        return myCommandLanguage.get();
     }
 
     public void setOnRunButton(EventHandler<? super MouseEvent> handler){
