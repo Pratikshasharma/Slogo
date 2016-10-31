@@ -30,8 +30,7 @@ public abstract class Actor implements Turtleable {
 
 	public void setPos(double x, double y){
 		distanceTraveled=Math.sqrt(Math.pow((coordinates.getX().get()-x),2)+Math.pow((coordinates.getY().get()-y),2));
-		coordinates.setX(x);
-		coordinates.setY(y);
+		coordinates.setCoordinates(x, y);
 	}
 
 	public Coordinates getCoordinates(){
@@ -136,5 +135,13 @@ public abstract class Actor implements Turtleable {
 		distanceTraveled=0;
 		penDown=true;
 		visible=true;       
+	}
+	
+	public boolean isReadyForChange(){
+		return coordinates.isReadyForChange();
+	}
+	
+	public void setReadyForChange(boolean b){
+		coordinates.setReadForChange(b);
 	}
 }

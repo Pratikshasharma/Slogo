@@ -1,10 +1,13 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
@@ -16,18 +19,18 @@ public class FrontTurtle {
     private boolean isVisible;
     private int penColorIndex;
     private int penSizeIndex;
-    private Line myLine;
+    private List<Line> myLines;
     private ImageView myTurtleImageView;
     private int myID;
-    private Double lineWidth;
-    private Paint lineColor;
+    private Double lineWidth = 1.0;
+    private Paint lineColor = Color.BLACK;
     
 
     public FrontTurtle(int id, Turtleable turtle){
         initializeCoordinates(turtle.getX(), turtle.getY());
         bindAngle(turtle);
         intializePenProperties(turtle);
-        myLine = new Line();
+        myLines = new ArrayList<Line>();
         myTurtleImageView = turtle.getImageView();
         myID = id;
     }
@@ -54,11 +57,6 @@ public class FrontTurtle {
         return myCoordinates;
     }
 
-    public void setCoordinates(double x, double y){
-        myCoordinates.setX(x);
-        myCoordinates.setY(y);
-    }
-
     public int getID(){
         return myID;
     }
@@ -83,18 +81,35 @@ public class FrontTurtle {
         return penSizeIndex;
     }
 
-    public Line getLine(){
-        return myLine;
+    public List<Line> getLine(){
+        return myLines;
+    }
+    
+    public void addLine(Line l){
+    	myLines.add(l);
     }
 
     public ImageView getImageView(){
         return myTurtleImageView;
     }
-    public void setLineColor(Paint colorValue ){
-        myLine.setStroke(colorValue);
+    
+    public Line drawLine(double x, double y, double x1, double y1){
+    	Line newLine = new Line();
+    	newLine.setStartX(x);
+    	newLine.setEndX(x1);
+    	newLine.setStartY(y);
+    	newLine.setEndY(y1);
+    	newLine.setFill(lineColor);
+    	newLine.setStrokeWidth(lineWidth);
+    	myLines.add(newLine);
+    	return newLine;
     }
     
-    public void setLineWidth(Double widthVaue){
-        myLine.setStrokeWidth(widthVaue);
+    public void setLineColor(Paint colorValue ){
+        lineColor = colorValue;
+    }
+    
+    public void setLineWidth(Double widthValue){
+        lineWidth = widthValue;
     }
 }

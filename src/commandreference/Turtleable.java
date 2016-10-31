@@ -12,6 +12,12 @@ public interface Turtleable {
 	
 	public DoubleProperty getY();
 	
+	public boolean isReadyForChange();
+	
+	public void setReadyForChange(boolean b);
+	
+	public Coordinates getCoordinates();
+	
 	public int getPenColorIndex();
 	
 	public int getPenSizeIndex();
