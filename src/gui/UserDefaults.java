@@ -3,7 +3,6 @@ package gui;
 import java.util.prefs.Preferences;
 
 public class UserDefaults {
-
 	Preferences myPrefs;
 	private static final String BACKGROUND_COLOR = "backgroundcolor";
 	private static final String PEN_COLOR = "pencolor";

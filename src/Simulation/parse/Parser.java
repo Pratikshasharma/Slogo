@@ -79,7 +79,7 @@ public class Parser {
 			toSend = new InfoNode("0","Constant");
 			e.showError(e.getMessage());
 		}
-		
+		//System.out.println("Printing Tree");
 		//printTree(toSend);
 		
 		return toSend;
@@ -92,12 +92,12 @@ public class Parser {
 			// text should represent the lines of code,
 			// so splitting would divide them by token
 			String[] tokens = s.trim().split("\\s+");
+			if (tokens[0].equals("#")) {
+				continue;
+			}
 			for (String t : tokens) {
 				String token = lang.getSymbol(t);
-				if (token.equals("COMMENT")) {
-					break;
-				}
-				list.add(new InfoNode(s, token));
+				list.add(new InfoNode(t, token));
 			}
 
 		}

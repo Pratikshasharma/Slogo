@@ -1,4 +1,10 @@
 package gui;
+import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
@@ -12,6 +18,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.HLineTo;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -125,7 +137,8 @@ public class MainGUI {
     private Pane createTurtlePane(){
         myCanvas = new Pane();
         //setBackgroundColorProps();
-        myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 4px");
+        System.out.println(" PREFS " + myPrefs.getBackground("white"));
+        myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 2px");
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
         return myCanvas;
     }
@@ -163,6 +176,9 @@ public class MainGUI {
         }
     }
 
+    
+
+
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
         System.out.println("line added");
         myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
@@ -180,7 +196,7 @@ public class MainGUI {
         BackgroundChangeable backgroundChanger = (root) ->{
             VBox pane = (VBox) root.getLeft();
             Pane p = (Pane) pane.getChildren().get(0);
-            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
+            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:2px");
             root.setLeft(pane);
         };
         return backgroundChanger;

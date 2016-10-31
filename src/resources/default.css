@@ -1,0 +1,67 @@
+
+.root {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Courier New";
+    -fx-base: rgb(132, 145, 47);
+    -fx-background: rgb(225, 228, 203);
+}
+
+.button {
+    -fx-background-color: #DFB951;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 8;
+}
+
+.button:hover {
+    -fx-background-color: #078967;
+}
+
+.menu-button .label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #080109;
+}
+
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #230939;
+}
+
+.text-area {
+  -fx-font-family: Consolas;
+  -fx-highlight-fill: #14e4ae;
+}
+
+.text-area .content {
+    -fx-background-color: #11ecae;
+    -fx-text-box-border: black;
+}
+
+.menu-button{
+	-fx-font-size: 14pt;
+    -fx-font-family:"Comic Sans Frans";
+}
+
+.menu-item .label {
+    -fx-text-fill: Black;
+    -fx-border-radius: 20;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#333 0%, #777 25%, #aaa 75%, #eee 100%);
+    -fx-text-fill: white; 
+}
+.list-cell { -fx-text-fill: black;  }
+.list-cell:odd { -fx-background-color: #15ffa3; }
+.list-cell:even { -fx-background-color: #e5feeb; }
+
+.list-cell:filled:hover { 
+    -fx-background-color: #00f; 
+    -fx-text-fill: white; 
+}
+
+
+
+

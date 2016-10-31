@@ -22,7 +22,6 @@ public class Console {
         myCommandWindow.setLayoutX(0.02*GUIController.SCENE_WIDTH);
         myCommandWindow.setPrefHeight(MainGUI.TURTLE_PANE_HEIGHT/4);
         myCommandWindow.setPrefSize(MainGUI.TURTLE_PANE_WIDTH, MainGUI.TURTLE_PANE_HEIGHT/4);
-        //myCommandWindow.setMaxWidth(MainGUI.TURTLE_PANE_WIDTH);
     }
 
     public TextArea getTextField(){
