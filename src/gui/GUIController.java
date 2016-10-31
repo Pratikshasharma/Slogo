@@ -15,7 +15,7 @@ public class GUIController {
     public static final double SCENE_WIDTH = 900;
     public static final double SCENE_HEIGHT = 800;
     public static final String DEFAULT_LANGUAGE = "English";
-    private static final String BACKGROUND_COMMAND = "SetBackground";
+    private static final String BACKGROUND_COMMAND = "SETBACKGROUND";
     private static final String PEN_COLOR_COMMAND = "SetPenColor" ;
     //private static final String SET_PALETTE_COMMAND = "SetPalette";
     private static final String PEN_SIZE_COMMAND = "SetPenSize";
@@ -23,6 +23,7 @@ public class GUIController {
     private SimpleStringProperty myCommandLanguage = new SimpleStringProperty(DEFAULT_LANGUAGE);
     private SimpleStringProperty penSizeCommand = new SimpleStringProperty();
     private SimpleStringProperty penColorCommand = new SimpleStringProperty();
+    private SimpleStringProperty backgroundColorCommand = new SimpleStringProperty();
 
 
     public GUIController() {
@@ -32,7 +33,8 @@ public class GUIController {
     public Parent init(){
         //Scene myScene = new Scene(myMainGUI.createRoot(),SCENE_WIDTH,SCENE_HEIGHT,Color.WHITE);
         setLanguage();
-        addSizeColorListeners();
+        addPenSizeAndColorListeners();
+        addBackGroundListeners();
         return myMainGUI.createRoot();
     }
 
@@ -109,18 +111,19 @@ public class GUIController {
         return myMainGUI.getMyNewWindow();
     }
 
-    private void addSizeColorListeners (){
-       // penColorCommand.set( PEN_COLOR_COMMAND + "1"); 
-        //penSizeCommand.set(PEN_SIZE_COMMAND + "1");
+    private void addPenSizeAndColorListeners (){
         myMainGUI.getPenSizeMenu().getItems().stream().forEach(size -> size.setOnAction(e-> {
-            String penSizeIndex = size.getText();
-            penSizeCommand.set( PEN_SIZE_COMMAND + " " + penSizeIndex);
+            penSizeCommand.set( PEN_SIZE_COMMAND + " " + size.getText());
         }));
-        
         myMainGUI.getPenColorMenu().getItems().stream().forEach(color ->color.setOnAction( e-> {
-            String penColorIndex = color.getText();
-            penColorCommand.set(PEN_COLOR_COMMAND + " " + penColorIndex);
+            penColorCommand.set(PEN_COLOR_COMMAND + " " + color.getText());
         }));  
+    }
+    
+    private void addBackGroundListeners(){
+        myMainGUI.getBackgroundMenu().getItems().stream().forEach(item -> item.setOnAction( e->{
+            backgroundColorCommand.set(BACKGROUND_COMMAND + " " + item.getText());
+        }));
     }
 
     public SimpleStringProperty getPenColorCommand(){
@@ -132,5 +135,13 @@ public class GUIController {
     }
     public void addColorOption(String index){
         myMainGUI.addColorOption(index);
+    }
+  
+    public SimpleStringProperty getBackGroundColorCommand(){
+        return  this.backgroundColorCommand;
+    }
+    
+    public void setBackgroundColor(String rgb){
+        myMainGUI.setBackgroundColor(rgb);
     }
 }
