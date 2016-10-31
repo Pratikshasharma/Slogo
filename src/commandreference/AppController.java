@@ -44,9 +44,7 @@ public class AppController {
     public Parent initiateApp(){
         Parent mainRoot = myGUIController.init();
         setRunButton();
-        addPenColorListener();
-        addPenSizeListener();
-        addColorMapListener();
+
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
@@ -67,6 +65,10 @@ public class AppController {
         setActorObserver();
         setFunctionObserver();
         setVariableListObserver();
+        addBackgroundColorListener();
+        addPenColorListener();
+        addPenSizeListener();
+        addColorMapListener();
     }
 
     private void setVariableListObserver() {
@@ -179,8 +181,21 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double colorIndex = mySimulationController.receive(newValue.toString());
-                updateLineColor(colorIndex);
+                updateLineColor(colorIndex.intValue());
                 
+            }
+        });
+    }
+    
+    private void addBackgroundColorListener(){
+        myGUIController.getBackGroundColorCommand().addListener(new ChangeListener <String>(){
+            @Override
+            public void changed (ObservableValue<? extends String> observable,
+                                 String oldValue,
+                                 String newValue) {
+                Double colorIndex = mySimulationController.receive(newValue.toString());
+                System.out.println(" STring " + colorIndex);
+                updateBackgroundColor(colorIndex.intValue());  
             }
         });
     }
@@ -192,6 +207,7 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double sizeIndex = mySimulationController.receive(newValue.toString());
+                System.out.println( " Comes here ");
                 updateLineSize(sizeIndex);
             }
         });   
@@ -201,30 +217,38 @@ public class AppController {
         mySimulationController.getStorage().getPalette().addListener(new MapChangeListener<Integer, int[]>() {
             @Override
             public void onChanged (javafx.collections.MapChangeListener.Change<? extends Integer, ? extends int[]> change) {
-                myGUIController.addColorOption(change.getKey().toString());
-                
+                myGUIController.addColorOption(change.getKey().toString());   
             }
         });
     }
-    
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
     }
     
-    private void updateLineColor(Double colorIndex){
-        int[] colorValues = mySimulationController.getStorage().getPalette().get(colorIndex.intValue());
-//        String hex = String.format( "#%02X%02X%02X",
-//                    (int)( colorValues[0]* 255 ),(int)( colorValues[1] * 255 ),(int)( colorValues[2] * 255 ) );   
-        double red = colorValues[0];
-        double green = colorValues[1];
-        double blue = colorValues[2];
-        Paint myColor = new Color(red, green, blue, 1.0);
+    private void updateLineColor(Integer colorIndex){
         FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
-        activeTurtle.setLineColor(myColor);
+        activeTurtle.setLineColor(getColor(colorIndex));
+    }
+    
+    private Paint getColor(Integer Index){
+        int[] colorValues = mySimulationController.getStorage().getPalette().get(Index);
+        Color color = Color.rgb(colorValues[0], colorValues[1], colorValues[2]); 
+        return color;
     }
     
     private void updateLineSize(Double lineSize){
+        System.out.println( " Comes here ?? ");
         FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
         activeTurtle.setLineWidth(lineSize);
+    }
+    
+    private void updateBackgroundColor(Integer colorIndex){
+        myGUIController.setBackgroundColor(getRGBString(colorIndex));
+    }   
+    
+    private String getRGBString(Integer index){
+        int [] rgb = mySimulationController.getStorage().getPalette().get(index);
+        String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
+        return myString;
     }
 }

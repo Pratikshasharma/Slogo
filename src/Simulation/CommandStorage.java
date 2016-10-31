@@ -30,9 +30,7 @@ public class CommandStorage extends Storage {
         functionvariables=new HashMap<String,List<String>>();
         colorMap=FXCollections.observableMap( new HashMap<Integer,int[]>());
         backgroundindex=1;
-        colorMap.put(1, new int[]{256,0,0});
-        colorMap.put(2, new int[]{0,256,0});
-        colorMap.put(3, new int[]{0,0,256});
+        addColorValues();
         killcommands=false;
     }
     
@@ -148,5 +146,14 @@ public class CommandStorage extends Storage {
     public void removeFunction(String key){
         functions.remove(key);
         functionvariables.remove(key);
+    }
+    
+    private void addColorValues(){
+        colorMap.put(1, new int[]{255,0,0});
+        colorMap.put(2, new int[]{0,255,0});
+        colorMap.put(3, new int[]{0,0,255});
+        colorMap.put(4, new int[]{128,0,128});
+        colorMap.put(5,  new int[]{255, 128,0});
+        colorMap.put(6, new int[]{128,128,128});
     }
 }

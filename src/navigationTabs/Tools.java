@@ -8,8 +8,7 @@ public class Tools extends MenuCreator {
     private Menu colorSubMenu;
     private Menu penSizeSubMenu;
     private Menu backgroundColorMenu;
-    private String penSizeIndex="1";
-    private String penColorIndex="1";
+
 
     public Tools () {
         super("ToolsCommand");
@@ -23,19 +22,11 @@ public class Tools extends MenuCreator {
         addColorOptions(colorSubMenu);
         addColorOptions(backgroundColorMenu);
         addPenSizeOptions();
-        addSizeColorListeners();
         myMenu.getItems().addAll(colorSubMenu, penSizeSubMenu, backgroundColorMenu);	
     }
 
     private void addColorOptions(Menu menu){ 
-//        menu.getItems().add(createMenuItem("RedPenColor"));
-//        menu.getItems().add(createMenuItem("BluePenColor"));
-//        menu.getItems().add(createMenuItem("PinkPenColor"));
-//        menu.getItems().add(createMenuItem("BlackPenColor"));
-        menu.getItems().add(new MenuItem("1"));
-        menu.getItems().add(new MenuItem("2"));
-        menu.getItems().add(new MenuItem("3"));
-        
+        menu.getItems().addAll(new MenuItem("1"),new MenuItem("2"),new MenuItem("3"),new MenuItem("4"),new MenuItem("5"),new MenuItem("6")); 
     }
 
     private void addPenSizeOptions(){
@@ -54,17 +45,5 @@ public class Tools extends MenuCreator {
         return this.colorSubMenu;
     }
 
-    private void addSizeColorListeners (){
-        penSizeSubMenu.getItems().stream().forEach(size -> size.setOnAction(e-> penSizeIndex = size.getText()));
-        colorSubMenu.getItems().stream().forEach(color ->color.setOnAction( e-> penColorIndex = color.getText()));      
-    }
-
-    public String getPenSizeIndex(){
-        return this.penSizeIndex;
-    }
-    
-    public String getPenColorIndex(){
-        return this.penColorIndex;
-    }
 
 }
