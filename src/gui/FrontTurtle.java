@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import javafx.beans.property.DoubleProperty;
@@ -15,7 +18,7 @@ public class FrontTurtle {
     private boolean isVisible;
     private int penColorIndex;
     private int penSizeIndex;
-    private Line myLine;
+    private List<Line> myLines;
     private ImageView myTurtleImageView;
     private int myID;
 
@@ -23,7 +26,7 @@ public class FrontTurtle {
         initializeCoordinates(turtle.getX(), turtle.getY());
         bindAngle(turtle);
         intializePenProperties(turtle);
-        myLine = new Line();
+        myLines = new ArrayList<Line>();
         myTurtleImageView = turtle.getImageView();
         myID = id;
     }
@@ -79,8 +82,12 @@ public class FrontTurtle {
         return penSizeIndex;
     }
 
-    public Line getLine(){
-        return myLine;
+    public List<Line> getLine(){
+        return myLines;
+    }
+    
+    public void addLine(Line l){
+    	myLines.add(l);
     }
 
     public ImageView getImageView(){
