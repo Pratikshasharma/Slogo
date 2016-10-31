@@ -12,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -34,6 +33,7 @@ public class MainGUI {
 	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
 	public static final double TURTLE_PANE_WIDTH = 550;
 	public static final double TURTLE_PANE_HEIGHT = 450;
+	private String backgroundColor;
 
 	public MainGUI() {
 		myRoot = new BorderPane();
@@ -61,7 +61,7 @@ public class MainGUI {
 
 	private VBox createLeft(){
 		VBox left = new VBox();   
-		setBackgroundColorProps();    
+		//setBackgroundColorProps();    
 		setPenColorProps();
 		setPenWidthProps();
 		left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
@@ -74,15 +74,15 @@ public class MainGUI {
 		return top;
 	}
 
-	private void setBackgroundColorProps(){
-		for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-			BackgroundChangeable p = getBackgroundChanger(m);
-			m.setOnAction(e -> {
-				p.changeBackground(myRoot);
-				myPrefs.setBackground(m.getText().toLowerCase());
-			});
-		}
-	}
+//	private void setBackgroundColorProps(){
+//		for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
+//			BackgroundChangeable p = getBackgroundChanger(m);
+//			m.setOnAction(e -> {
+//				p.changeBackground(myRoot);
+//				myPrefs.setBackground(m.getText().toLowerCase());
+//			});
+//		}
+//	}
 	
 	private void setPenColorProps(){
 		for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
@@ -124,7 +124,7 @@ public class MainGUI {
 
 	private Pane createTurtlePane(){
 		myCanvas = new Pane();
-		setBackgroundColorProps();
+		//setBackgroundColorProps();
 		myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 4px");
 		myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
 		return myCanvas;
@@ -176,11 +176,12 @@ public class MainGUI {
 		return myCanvas.getChildren().contains(myNode);
 	}
 
-	public BackgroundChangeable getBackgroundChanger(MenuItem m){
+	public BackgroundChangeable getBackgroundChanger(){
 		BackgroundChangeable backgroundChanger = (root) -> {
+		    System.out.println(" Color " + backgroundColor.toString());
 			VBox pane = (VBox) root.getLeft();
 			Pane p = (Pane) pane.getChildren().get(0);
-			p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
+			p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
 			root.setLeft(pane);
 		};
 		return backgroundChanger;
@@ -234,17 +235,17 @@ public class MainGUI {
         p.changeBackground(myRoot);
     }
 
-    private BackgroundChangeable getBackgroundChanger(){
-        BackgroundChangeable backgroundChanger = (root) -> {  
-            System.out.println(" Color " + backgroundColor.toString());
-            VBox pane = (VBox) root.getLeft();
-            Pane p = (Pane) pane.getChildren().get(0);
-            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
-            root.setLeft(pane);
-        };
-        return backgroundChanger;
-    }
-
+//    private BackgroundChangeable getBackgroundChanger(){
+//        BackgroundChangeable backgroundChanger = (root) -> {  
+//            System.out.println(" Color " + backgroundColor.toString());
+//            VBox pane = (VBox) root.getLeft();
+//            Pane p = (Pane) pane.getChildren().get(0);
+//            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
+//            root.setLeft(pane);
+//        };
+//        return backgroundChanger;
+//    }
+    
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
