@@ -1,5 +1,4 @@
 package gui;
-
 import javafx.event.EventHandler;
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
@@ -224,5 +223,34 @@ public class MainGUI {
 	public MenuItem getMyNewWindow(){
 		return myWindow.getMyMenu().getItems().get(0);
 	}
-}
+    
+    public void addTurtleOnCanvas(FrontTurtle turtle){
+        Line myLine = new Line();
+        myLine.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth()/2);
+        myLine.setStartY(turtle.getImageView().getY());
+        turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+        turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+        addTurtleOnScene(turtle);
+        if(turtle.isPenUp()){
+            addLineOnCanvas(turtle, myLine);
+        }
+    }
 
+    private void addLineOnCanvas(FrontTurtle turtle, Line line){
+        line.setEndX(turtle.getImageView().getX());
+        line.setEndY(turtle.getImageView().getY());
+        myCanvas.getChildren().add(line);
+    }
+    
+    public Menu getPenSizeMenu(){
+        return myTools.getPenSizeSubMenu();
+    }
+    
+    public Menu getPenColorMenu(){
+        return myTools.getPenColorSubMenu();
+    }
+    public void addColorOption(String key){
+        MenuItem newOption = new MenuItem(key);
+        myTools.getPenColorSubMenu().getItems().add(newOption);
+    }
+}  
