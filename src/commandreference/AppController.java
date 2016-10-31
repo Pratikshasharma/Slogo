@@ -2,7 +2,6 @@ package commandreference;
 
 import java.net.MalformedURLException;
 import java.util.Observer;
-
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
@@ -18,7 +17,7 @@ import javafx.scene.paint.Paint;
 
 public class AppController {
 	
-	class CoordinateObserver implements Observer {
+	private class CoordinateObserver implements Observer {
 		private int myID;
 		CoordinateObserver(int id){
 			myID = id;
@@ -33,7 +32,7 @@ public class AppController {
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
     private final String DEFAULT_TURTLE = "turtle.png";
-
+    
     public AppController() {
         initializeGUIController();
         initializeSimulationController();
@@ -44,7 +43,6 @@ public class AppController {
     public Parent initiateApp(){
         Parent mainRoot = myGUIController.init();
         setRunButton();
-
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
@@ -72,7 +70,7 @@ public class AppController {
     }
 
     private void setVariableListObserver() {
-        mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
+        mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
             @Override
             public void onChanged(MapChangeListener.Change change) {
                 String name = (String) change.getKey();
@@ -82,7 +80,7 @@ public class AppController {
     }
 
     private void setFunctionObserver() {
-        mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
+        mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
             @Override
             public void onChanged(MapChangeListener.Change change){
                 myGUIController.addToFunctionHistory((String) change.getKey());
@@ -125,8 +123,17 @@ public class AppController {
             updateTurtlesOnFront(turtle);
         }
     }
+    
+//    private Animatable prepareAnimation(){
+//    	Animatable a = (turtle) -> {
+//    		myGUIController.addToScene(turtle);
+//    	};
+//    	return a;
+//    }
 
     private void updateTurtlesOnFront(FrontTurtle turtle){
+//    	AnimationManager a = new AnimationManager(prepareAnimation(), turtle);
+//    	a.startAnimation();
         myGUIController.addToScene(turtle);
     }
 
@@ -244,7 +251,7 @@ public class AppController {
     
     private void updateBackgroundColor(Integer colorIndex){
         myGUIController.setBackgroundColor(getRGBString(colorIndex));
-    }   
+    }
     
     private String getRGBString(Integer index){
         int [] rgb = mySimulationController.getStorage().getPalette().get(index);
