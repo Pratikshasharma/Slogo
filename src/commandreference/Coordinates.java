@@ -1,14 +1,17 @@
 package commandreference;
 
+import java.util.Observable;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 
-public class Coordinates {
+public class Coordinates extends Observable {
 
 	private DoubleProperty myX;
 	private DoubleProperty myY;
-
+	private boolean isReadyForChange = false;;
+	
 	public Coordinates(){
 		this(0, 0);
 	}
@@ -18,12 +21,20 @@ public class Coordinates {
 		myY = new SimpleDoubleProperty(y);
 	}
 	
-	public void setX(double x){
-		myX.set(x);
-	}
+//	public void setX(double x){
+//		myX.set(x);
+//	}
+//	
+//	public void setY(double y){
+//		myY.set(y);
+//	}
 	
-	public void setY(double y){
+	public void setCoordinates(double x, double y){
 		myY.set(y);
+		myX.set(x);
+		setChanged();
+		notifyObservers();
+		clearChanged();
 	}
 	
 	public DoubleProperty getX(){
@@ -32,5 +43,13 @@ public class Coordinates {
 	
 	public DoubleProperty getY(){
 		return myY;
+	}
+
+	public boolean isReadyForChange(){
+		return isReadyForChange;
+	}
+	
+	public void setReadForChange(boolean b){
+		isReadyForChange = b;
 	}
 }

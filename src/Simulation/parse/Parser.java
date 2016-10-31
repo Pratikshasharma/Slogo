@@ -15,6 +15,9 @@ import java.util.Deque;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import Simulation.Node.Node;
+import SlogoException.ParserException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * 
@@ -25,7 +28,6 @@ public class Parser {
 	public final static String LANG_PATH = "resources/languages/";
 	public final static String DEFAULT_LANG = "English";
 	private final static String SYNTAX_LANG = "Syntax";
-	private final static String TO = "To";
 
 
 	private static TypeDictionary lang;
@@ -42,6 +44,20 @@ public class Parser {
 
 	}
 	
+	private void printTree(InfoNode print) {
+		InfoNode current = print;
+		List<InfoNode> parameters;
+		while (current != null) {
+			System.out.println("Node name: " + current.getName());
+			parameters = current.getParameters();
+			for (InfoNode n : parameters) {
+				System.out.println("Parameter in " + current.getName());
+				printTree(n);
+			}
+			current = current.next();
+		}
+	}
+	
 	public static String readFileToString(String filename) throws FileNotFoundException {
 		final String END_OF_FILE = "\\z";
 		Scanner input = new Scanner(new File(filename));
@@ -54,10 +70,17 @@ public class Parser {
 	// given some text, prints results of parsing it using the given language
 	public InfoNode parseText(String[] text, CommandStorage custom) {
 		Deque<InfoNode> nodeList = createNodeList(text);
-		
-		TreeFactory myFactory = new TreeFactory(custom, nodeList);
+		InfoNode toSend;
+		try {
+			TreeFactory myFactory = new TreeFactory(custom, nodeList);
 
-		InfoNode toSend = myFactory.produceTree();
+			toSend = myFactory.produceTree();
+		} catch (ParserException e) {
+			toSend = new InfoNode("0","Constant");
+			e.showError(e.getMessage());
+		}
+		
+		//printTree(toSend);
 		
 		return toSend;
 	}
@@ -80,6 +103,7 @@ public class Parser {
 		}
 		return list;
 	}
+
 
 
 

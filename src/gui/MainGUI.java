@@ -20,166 +20,202 @@ import navigationTabs.Tools;
 import navigationTabs.Window;
 
 public class MainGUI {
-    private FileTab myFileTab;
-    private Language myLanguageTab; 
-    private Tools myTools;
-    private Console myConsole;
-    private History myHistory;
-    private Help myHelpTab;
-    private BorderPane myRoot;
-    private Pane myCanvas;
-    private Window myWindow;
-    //private MenuItem backgroundColorIndex;
-    private ControlButtons myControlButtons;
-    private ActiveTurtleDisplayInformation myActiveTurtleInfo;
-    public static final double TURTLE_PANE_WIDTH = 550;
-    public static final double TURTLE_PANE_HEIGHT = 450;
-    private String backgroundColor;
+	private FileTab myFileTab;
+	private Language myLanguageTab; 
+	private Tools myTools;
+	private Console myConsole;
+	private History myHistory;
+	private Help myHelpTab;
+	private BorderPane myRoot;
+	private Pane myCanvas;
+	private Window myWindow;
+	private ControlButtons myControlButtons;
+	private UserDefaults myPrefs;
+	private ActiveTurtleDisplayInformation myActiveTurtleInfo;
+	public static final double TURTLE_PANE_WIDTH = 550;
+	public static final double TURTLE_PANE_HEIGHT = 450;
 
-    public MainGUI() {
-        myRoot = new BorderPane();
-        myFileTab = new FileTab();
-        myTools = new Tools();
-        myLanguageTab = new Language();
-        myConsole = new Console();
-        myHelpTab = new Help();
-        myHistory = new History();
-        myWindow = new Window();
-        myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
-        myControlButtons = new ControlButtons();
-        setHistoryClickables();
-    }
+	public MainGUI() {
+		myRoot = new BorderPane();
+		myFileTab = new FileTab();
+		myTools = new Tools();
+		myLanguageTab = new Language();
+		myConsole = new Console();
+		myHelpTab = new Help();
+		myHistory = new History();
+		myWindow = new Window();
+		myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
+		myControlButtons = new ControlButtons();
+		myPrefs = new UserDefaults(this.getClass().toString());
+		setHistoryClickables();
+	}
 
-    public Parent createRoot(){
-        myRoot.setTop(createTop());
-        myRoot.setLeft(createLeft());
-        myRoot.setBottom(createBottom());
-        myRoot.setRight(myHistory.getMyHistoryVBox());
-        myRoot.setPadding(new Insets(20));
-        return myRoot;
-    }
+	public Parent createRoot(){
+		myRoot.setTop(createTop());
+		myRoot.setLeft(createLeft());
+		myRoot.setBottom(createBottom());
+		myRoot.setRight(myHistory.getMyHistoryVBox());
+		myRoot.setPadding(new Insets(20));
+		return myRoot;
+	}
 
-    private VBox createLeft(){
-        VBox left = new VBox();       
-        left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
-        return left;
-    }
+	private VBox createLeft(){
+		VBox left = new VBox();   
+		setBackgroundColorProps();    
+		setPenColorProps();
+		setPenWidthProps();
+		left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
+		return left;
+	}
 
-    private HBox createTop(){
-        HBox top = new HBox(20);
-        top.getChildren().addAll(addItemsInMenuBar());
-        return top;
-    }
+	private HBox createTop(){
+		HBox top = new HBox(20);
+		top.getChildren().addAll(addItemsInMenuBar());
+		return top;
+	}
 
-//    private void setBackgroundColorProps(){
-//        for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-//            BackgroundChangeable p = getBackgroundChanger();
-//            m.setOnAction(e -> {
-//                backgroundColorIndex = m;
-//                p.changeBackground(myRoot);
-//            });
-//        }
-//    }
+	private void setBackgroundColorProps(){
+		for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
+			BackgroundChangeable p = getBackgroundChanger(m);
+			m.setOnAction(e -> {
+				p.changeBackground(myRoot);
+				myPrefs.setBackground(m.getText().toLowerCase());
+			});
+		}
+	}
+	
+	private void setPenColorProps(){
+		for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
+			m.setOnAction(e -> {
+				myPrefs.setPenColor(m.getText().toLowerCase());
+			});
+		}
+	}
+	
+	private void setPenWidthProps(){
+		for(MenuItem m : myTools.getPenSizeSubMenu().getItems()){
+			m.setOnAction(e -> {
+				myPrefs.setPenWidth(Integer.valueOf(m.getText().toLowerCase()));
+			});
+		}
+	}
 
-    public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
-        myActiveTurtleInfo.updateStatus(id, turtle);
-    }
+	public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
+		myActiveTurtleInfo.updateStatus(id, turtle);
+	}
 
-    private HBox createBottom(){
-        HBox bottomBox = new HBox(20);
-        VBox activeLabels = new VBox(20);
-        VBox controlButtons = new VBox(20);
-        setOnClearButton();
-        controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
-        activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
-        bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
-        return bottomBox;
-    }
+	private HBox createBottom(){
+		HBox bottomBox = new HBox(20);
+		VBox activeLabels = new VBox(20);
+		VBox controlButtons = new VBox(20);
+		setOnClearButton();
+		controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
+		activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
+		bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
+		return bottomBox;
+	}
 
-    private void setHistoryClickables(){
-        HistoryClickable historyClickable = myHistory.getHistoryClickable();
-        myHistory.getCommandsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getCommandsList()));
-        myHistory.getFunctionsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getFunctionsList()));
-        myHistory.getVariableList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getVariableList()));
-    }
+	private void setHistoryClickables(){
+		HistoryClickable historyClickable = myHistory.getHistoryClickable();
+		myHistory.getCommandsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getCommandsList()));
+		myHistory.getFunctionsList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getFunctionsList()));
+		myHistory.getVariableList().setOnMouseClicked(e -> historyClickable.updateConsole(myConsole, myHistory.getVariableList()));
+	}
 
-    private Pane createTurtlePane(){
-        myCanvas = new Pane();
-        myCanvas.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width:4px");
-        myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
-        return myCanvas;
-    }
+	private Pane createTurtlePane(){
+		myCanvas = new Pane();
+		setBackgroundColorProps();
+		myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 4px");
+		myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
+		return myCanvas;
+	}
 
-    private MenuBar addItemsInMenuBar(){
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu(), myWindow.getMyMenu());
-        return menuBar;
-    }
+	private MenuBar addItemsInMenuBar(){
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu(), myWindow.getMyMenu());
+		return menuBar;
+	}
 
-    private void addTurtleOnScene(FrontTurtle turtle){
-        if(!isOnCanvas(turtle.getImageView())){
-            myCanvas.getChildren().add(turtle.getImageView());
-        }
-    }
-    public FileTab getMyFileTab(){
-        return myFileTab;
-    }
+	private void addTurtleOnScene(FrontTurtle turtle){
+		if(!isOnCanvas(turtle.getImageView())){
+			turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+			turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+			myCanvas.getChildren().add(turtle.getImageView());
+		}
+	}
 
-    public void addTurtleOnCanvas(FrontTurtle turtle){
-        Line myLine = new Line();
-        myLine.setStartX(turtle.getImageView().getX() + turtle.getImageView().getFitWidth()/2);
-        myLine.setStartY(turtle.getImageView().getY());
-        turtle.getImageView().setX(turtle.getCoordinates().getX().get());
-        turtle.getImageView().setY(turtle.getCoordinates().getY().get());
-        addTurtleOnScene(turtle);
-        if(turtle.isPenUp()){
-            addLineOnCanvas(turtle, myLine);
-        }
-    }
+	public FileTab getMyFileTab(){
+		return myFileTab;
+	}
 
-    private void addLineOnCanvas(FrontTurtle turtle, Line line){
-        line.setEndX(turtle.getImageView().getX());
-        line.setEndY(turtle.getImageView().getY());
-        myCanvas.getChildren().add(line);
-    }
+	public void updateTurtleLocation(FrontTurtle turtle){
+		double x = turtle.getImageView().getX();
+		double y = turtle.getImageView().getY();
+		System.out.println(x + " " + y);
+		turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+		turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+		if(x == 0 && y == 0){
+			addTurtleOnScene(turtle);
+			return;
+		}
+		if(turtle.isPenUp()){
+			addLineOnCanvas(turtle, x, y);
+		}
+	}
 
-    public Menu getLanguageMenu(){
-        return myLanguageTab.getMyMenu();
-    }
+	private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
+		System.out.println("line added");
+		myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+	}
 
-    private boolean isOnCanvas(Node myNode){
-        return myCanvas.getChildren().contains(myNode);
-    }
+	public Menu getLanguageMenu(){
+		return myLanguageTab.getMyMenu();
+	}
 
-    public void setOnRunButton(EventHandler<? super MouseEvent> handler){
-        myControlButtons.setOnRun(handler);
-    }
+	private boolean isOnCanvas(Node myNode){
+		return myCanvas.getChildren().contains(myNode);
+	}
 
-    private void setOnClearButton(){
-        myControlButtons.setOnClear(e -> {
-            myConsole.clear();
-        });
-    }
+	public BackgroundChangeable getBackgroundChanger(MenuItem m){
+		BackgroundChangeable backgroundChanger = (root) -> {
+			VBox pane = (VBox) root.getLeft();
+			Pane p = (Pane) pane.getChildren().get(0);
+			p.setStyle("-fx-background-color: " + m.getText().toLowerCase() + "; -fx-border-color: black; -fx-border-width:4px");
+			root.setLeft(pane);
+		};
+		return backgroundChanger;
+	}
 
-    public void clearConsole(){
-        myConsole.clear();
-    }
+	public void setOnRunButton(EventHandler<? super MouseEvent> handler){
+		myControlButtons.setOnRun(handler);
+	}
 
-    public void setConsole(String text){
-        myConsole.setText(text);
-    }
+	private void setOnClearButton(){
+		myControlButtons.setOnClear(e -> {
+			myConsole.clear();
+		});
+	}
 
-    public String getCommand(){
-        return myConsole.getText();
-    }
+	public void clearConsole(){
+		myConsole.clear();
+	}
 
-    public History getHistory(){
-        return myHistory;
-    }	
-    public MenuItem getMyNewWindow(){
-        return  myWindow.getMyMenu().getItems().get(0);
-    }	
+	public void setConsole(String text){
+		myConsole.setText(text);
+	}
 
+	public String getCommand(){
+		return myConsole.getText();
+	}
+
+	public History getHistory(){
+		return myHistory;
+	}
+
+	public MenuItem getMyNewWindow(){
+		return myWindow.getMyMenu().getItems().get(0);
+	}
+    
     public Menu getPenSizeMenu(){
         return myTools.getPenSizeSubMenu();
     }

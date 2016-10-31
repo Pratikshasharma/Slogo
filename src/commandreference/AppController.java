@@ -1,31 +1,39 @@
 package commandreference;
 
 import java.net.MalformedURLException;
+import java.util.Observer;
+
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
-import gui.BackgroundChangeable;
 import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class AppController {
-    SimulationController mySimulationController;
+	
+	class CoordinateObserver implements Observer {
+		private int myID;
+		CoordinateObserver(int id){
+			myID = id;
+		}
+		@Override
+		public void update(java.util.Observable o, Object arg) {
+			updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
+		}
+	}
+	
+    private SimulationController mySimulationController;
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
     private final String DEFAULT_TURTLE = "turtle.png";
-
 
     public AppController() {
         initializeGUIController();
@@ -89,13 +97,17 @@ public class AppController {
             public void onChanged(MapChangeListener.Change change) {
                 Turtleable newTurtle = (Turtleable) change.getValueAdded();
                 int id = (int) change.getKey();
-                myTurtleManager.addTurtle(id, newTurtle);
+                processNewTurtle(newTurtle, id);
+                updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
+            }
+
+			private void processNewTurtle(Turtleable newTurtle, int id) {
+				myTurtleManager.addTurtle(id, newTurtle);
                 setCoordinateListeners(id, newTurtle);
                 newTurtle.getImageView().setOnMouseClicked(e -> {
                     setActiveID(id);
                 });
-                updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
-            }
+			}
         });
     }
 
@@ -106,13 +118,7 @@ public class AppController {
     }
 
     private void setCoordinateListeners(int id, Turtleable turtle){
-        turtle.getX().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("changed");
-                updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
-            }
-        });
+        turtle.getCoordinates().addObserver(new CoordinateObserver(id));
     }
 
     private void renderTurtles(){
