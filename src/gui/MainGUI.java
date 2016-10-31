@@ -239,6 +239,7 @@ public class MainGUI {
     public Menu getPenColorMenu(){
         return myTools.getPenColorSubMenu();
     }
+    
     public void addColorOption(String key){
         MenuItem newOption = new MenuItem(key);
         myTools.getPenColorSubMenu().getItems().add(newOption);

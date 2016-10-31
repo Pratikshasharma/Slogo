@@ -136,12 +136,4 @@ public abstract class Actor implements Turtleable {
 		penDown=true;
 		visible=true;       
 	}
-	
-	public boolean isReadyForChange(){
-		return coordinates.isReadyForChange();
-	}
-	
-	public void setReadyForChange(boolean b){
-		coordinates.setReadForChange(b);
-	}
 }
