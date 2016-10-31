@@ -11,14 +11,16 @@ import java.util.Set;
 
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
-import SlogoException.CommandException;
+import SlogoException.ParserException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class TreeFactory {
 	private Deque<InfoNode> myList;
 	private CommandStorage myCustom;
 	private List<String> myLocalVar;
-	private Map<String, Integer> myLocalFunc;
-	private List<String> mySpecialList;
+	private Map<String, String> myLocalFunc;
+	private Map<String, Boolean> mySpecialList;
 	private Map<String, Boolean> myActiveMethods;
 
 	private ResourceBundle inputResource = ResourceBundle.getBundle("resources/CommandInputs");
@@ -28,7 +30,7 @@ public class TreeFactory {
 		myCustom = custom;
 		myLocalVar = new ArrayList<String>();
 		myLocalVar.add(":repcount");
-		myLocalFunc = new HashMap<String, Integer>();
+		myLocalFunc = new HashMap<String, String>();
 		initializeSpecialList();
 	}
 
@@ -37,15 +39,16 @@ public class TreeFactory {
 	}
 
 	private void initializeSpecialList() {
-		mySpecialList = new ArrayList<String>();
-		mySpecialList.add("DoTimes");
-		mySpecialList.add("For");
-		mySpecialList.add("Tell");
-		mySpecialList.add("Ask");
+		mySpecialList = new HashMap<String, Boolean>();
+		mySpecialList.put("DoTimes", true);
+		mySpecialList.put("For", true);
+		mySpecialList.put("Tell", false);
+		mySpecialList.put("Ask", false);
 	}
 
 	public InfoNode produceTree() {
 		InfoNode first = createTree(myList.pop());
+		System.out.println("produceTree first node: " + first.getName());
 		InfoNode current = first;
 
 		while (!myList.isEmpty()) {
@@ -54,6 +57,7 @@ public class TreeFactory {
 				return first;
 			}
 			InfoNode nextTree = createTree(nextNode);
+			System.out.println("nextTree node: " + nextTree.getName());
 			current.setNext(nextTree);
 			current = current.next();
 		}
@@ -64,64 +68,104 @@ public class TreeFactory {
 		InfoNode nextItem;
 		int intParam;
 		String token = current.getToken();
+		System.out.println("Current Token: " + token);
 		String name = current.getName();
+		String stringParam = "0";
 
 		try {
-			if (token.equals("Constant")) {
-				return current;
-			}
+	        switch(token){
+	            case ("Constant"):
+	                return current;
+	            case ("Variable"):
+	                checkExistence(current);
+	            	return current;
+	            case("Command"):
+	                checkExistence(current);
+	            	stringParam = myLocalFunc.get(name);
+	            	break;
+	            case("GroupBegin"):
+	            	nextItem = myList.pop();
+	            	List<InfoNode> grouping = loopList(false, false);
+					current = appendList(nextItem, grouping);
+	            	return current;
+	            case("ListBegin"):
+					nextItem = produceTree();
+	            	break;
+	            default:
+	            	stringParam = inputResource.getString(token);
+	                break;
+	        }
 
-			if (token.equals("GroupBegin")) {
-				List<InfoNode> grouping = loopList();
-				current = appendList(current, grouping);
-			}
-
-			checkExistence(current);
-
-			String stringParam = inputResource.getString(token);
 			intParam = Integer.parseInt(stringParam);
-
+			List<InfoNode> currentParameter = new ArrayList<InfoNode>();
 			while (intParam > 0) {
 				nextItem = myList.pop();
+				System.out.println("Parameter nextItem " + nextItem.getName());
 				if (token.equals("MakeVariable")) {
 					myLocalVar.add(nextItem.getName());
 				}
 				// TO method
 				if (token.equals("MakeUserInstruction")) {
-					current = makeUserDefined(current);
+					System.out.println("TROOF");
+
+					current = makeUserDefined(current, nextItem);
 					return current;
 				}
 				if (nextItem.getToken().equals("ListStart")) {
-					if (mySpecialList.contains(token)) {
-						List<InfoNode> toAdd = loopList();
+					boolean addLoopVariable = false;
+					if (mySpecialList.containsKey(token)) {
+						System.out.println("Entered for TELL");
+						List<InfoNode> toAdd = loopList(mySpecialList.get(token), false);
+						System.out.println(toAdd.size());
+						
 						current = appendList(current, toAdd);
+						for (InfoNode e : current.getParameters()) {
+							System.out.println("parameter inside tell: " + e.getName());
+						}
+						
 
 					} else {
-						produceTree();
+						nextItem = produceTree();
+						current.addParameter(nextItem);
+						
+						System.out.println("after ListStart current: " + nextItem.getName());
 					}
+				} else {
+					nextItem = createTree(nextItem);
+					current.addParameter(nextItem);
+
 				}
-				current.addParameter(createTree(nextItem));
 				intParam--;
 			}
 
 		} catch (NoSuchElementException e) {
-			// throw new compileException(message: incorrect number of
-			// parameter)
+			throw new ParserException("error in createTree: possibly not enough parameters?");
 		}
 
 		return current;
 	}
 
-	private InfoNode makeUserDefined(InfoNode current) {
-		InfoNode commandName = myList.pop();
+	private InfoNode makeUserDefined(InfoNode current, InfoNode command) {
+		InfoNode commandName = command;
+		System.out.println("CommandName: " + commandName.getName());
 		current.addParameter(commandName);
 		InfoNode nextTo = myList.pop();
 		List<InfoNode> varList = new ArrayList<InfoNode>();
 		if (nextTo.getToken().equals("ListStart")) {
-			varList = loopList();
+			varList = loopList(false, true);
+			System.out.println("before list");
+			for (InfoNode e : varList) {
+				System.out.println("inside varLIst: " + e.getName());
+				myLocalVar.add(e.getName());
+			}
+			System.out.println("after list");
 		}
-		myLocalFunc.put(commandName.getName(), varList.size());
+		System.out.println("varlist size: " + varList.size());
+		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
+		for (InfoNode e : current.getParameters()) {
+			System.out.println("parameter 2: " + e.getName());
+		}
 
 		nextTo = myList.pop();
 		if (nextTo.getToken().equals("ListStart")) {
@@ -146,17 +190,25 @@ public class TreeFactory {
 		return current;
 	}
 
-	private List<InfoNode> loopList() {
+	private List<InfoNode> loopList(boolean variableBool, boolean userBool) {
 		List<InfoNode> list = new ArrayList<InfoNode>();
 		try {
 			InfoNode current = myList.pop();
-			while (!current.getToken().equals("ListEnd") || !current.getToken().equals("GroupEnd")) {
+			if (variableBool) {
+				myLocalVar.add(current.getName());
+			}
+			System.out.println("loopList current: " + current.getName());
+			while (!current.getToken().equals("ListEnd") && !current.getToken().equals("GroupEnd")) {
+				System.out.println("entered List");
+				if (userBool) {
+					myLocalVar.add(current.getName());
+				}
 				list.add(createTree(current));
 				current = myList.pop();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("error inside looplist");
+			System.out.println("finished list");
+		} catch (ParserException e) {
+			e.showError("error caught within loopList: " + e.getMessage());
 		}
 		return list;
 	}
@@ -167,9 +219,8 @@ public class TreeFactory {
 		Set<String> mapKey;
 		if (current.getToken().equals("Variable")) {
 			mapKey = myCustom.getVariableMap().keySet();
-			if (!mapKey.contains(name) || !myLocalVar.contains(name)) {
-				// throw error
-				// undefined variable name
+			if (!mapKey.contains(name) && !myLocalVar.contains(name)) {
+				throw new ParserException("undefined variable name (inside checkExistence): " + name);
 			}
 		}
 		if (current.getToken().equals("Command")) {
@@ -179,11 +230,14 @@ public class TreeFactory {
 				System.out.println(key);
 				System.out.println("yes");
 			}
-			if (!mapKey.contains(name) || !myLocalFunc.keySet().contains(name)) {
-				throw new CommandException("undefined function name (inside checkExistence method)");
+			if (!mapKey.contains(name) && !myLocalFunc.keySet().contains(name)) {
+				throw new ParserException("undefined function name (inside checkExistence method): " + name);
 				// message: undefined function name
 			}
 		}
 	}
+	
+	
+
 
 }
