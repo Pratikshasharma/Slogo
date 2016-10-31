@@ -48,7 +48,6 @@ public class TreeFactory {
 
 	public InfoNode produceTree() {
 		InfoNode first = createTree(myList.pop());
-		System.out.println("produceTree first node: " + first.getName());
 		InfoNode current = first;
 
 		while (!myList.isEmpty()) {
@@ -57,7 +56,6 @@ public class TreeFactory {
 				return first;
 			}
 			InfoNode nextTree = createTree(nextNode);
-			System.out.println("nextTree node: " + nextTree.getName());
 			current.setNext(nextTree);
 			current = current.next();
 		}
@@ -68,7 +66,6 @@ public class TreeFactory {
 		InfoNode nextItem;
 		int intParam;
 		String token = current.getToken();
-		System.out.println("Current Token: " + token);
 		String name = current.getName();
 		String stringParam = "0";
 
@@ -100,13 +97,11 @@ public class TreeFactory {
 			List<InfoNode> currentParameter = new ArrayList<InfoNode>();
 			while (intParam > 0) {
 				nextItem = myList.pop();
-				System.out.println("Parameter nextItem " + nextItem.getName());
 				if (token.equals("MakeVariable")) {
 					myLocalVar.add(nextItem.getName());
 				}
 				// TO method
 				if (token.equals("MakeUserInstruction")) {
-					System.out.println("TROOF");
 
 					current = makeUserDefined(current, nextItem);
 					return current;
@@ -114,21 +109,15 @@ public class TreeFactory {
 				if (nextItem.getToken().equals("ListStart")) {
 					boolean addLoopVariable = false;
 					if (mySpecialList.containsKey(token)) {
-						System.out.println("Entered for TELL");
 						List<InfoNode> toAdd = loopList(mySpecialList.get(token), false);
-						System.out.println(toAdd.size());
 						
 						current = appendList(current, toAdd);
-						for (InfoNode e : current.getParameters()) {
-							System.out.println("parameter inside tell: " + e.getName());
-						}
 						
 
 					} else {
 						nextItem = produceTree();
 						current.addParameter(nextItem);
 						
-						System.out.println("after ListStart current: " + nextItem.getName());
 					}
 				} else {
 					nextItem = createTree(nextItem);
@@ -147,25 +136,17 @@ public class TreeFactory {
 
 	private InfoNode makeUserDefined(InfoNode current, InfoNode command) {
 		InfoNode commandName = command;
-		System.out.println("CommandName: " + commandName.getName());
 		current.addParameter(commandName);
 		InfoNode nextTo = myList.pop();
 		List<InfoNode> varList = new ArrayList<InfoNode>();
 		if (nextTo.getToken().equals("ListStart")) {
 			varList = loopList(false, true);
-			System.out.println("before list");
 			for (InfoNode e : varList) {
-				System.out.println("inside varLIst: " + e.getName());
 				myLocalVar.add(e.getName());
 			}
-			System.out.println("after list");
 		}
-		System.out.println("varlist size: " + varList.size());
 		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
-		for (InfoNode e : current.getParameters()) {
-			System.out.println("parameter 2: " + e.getName());
-		}
 
 		nextTo = myList.pop();
 		if (nextTo.getToken().equals("ListStart")) {
@@ -197,16 +178,13 @@ public class TreeFactory {
 			if (variableBool) {
 				myLocalVar.add(current.getName());
 			}
-			System.out.println("loopList current: " + current.getName());
 			while (!current.getToken().equals("ListEnd") && !current.getToken().equals("GroupEnd")) {
-				System.out.println("entered List");
 				if (userBool) {
 					myLocalVar.add(current.getName());
 				}
 				list.add(createTree(current));
 				current = myList.pop();
 			}
-			System.out.println("finished list");
 		} catch (ParserException e) {
 			e.showError("error caught within loopList: " + e.getMessage());
 		}
@@ -215,7 +193,6 @@ public class TreeFactory {
 
 	private void checkExistence(InfoNode current) {
 		String name = current.getName();
-		System.out.println(name);
 		Set<String> mapKey;
 		if (current.getToken().equals("Variable")) {
 			mapKey = myCustom.getVariableMap().keySet();
@@ -224,12 +201,7 @@ public class TreeFactory {
 			}
 		}
 		if (current.getToken().equals("Command")) {
-			System.out.println("reach here?");
 			mapKey = myCustom.getFunctionMap().keySet();
-			for (String key : mapKey) {
-				System.out.println(key);
-				System.out.println("yes");
-			}
 			if (!mapKey.contains(name) && !myLocalFunc.keySet().contains(name)) {
 				throw new ParserException("undefined function name (inside checkExistence method): " + name);
 				// message: undefined function name
