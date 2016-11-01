@@ -96,7 +96,7 @@ public class MainGUI {
     private HBox createBottom(){
         HBox bottomBox = new HBox(20);
         VBox activeLabels = new VBox(20);
-        VBox controlButtons = new VBox(20);
+        VBox controlButtons = new VBox();
         setOnClearButton();
         controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton(), myControlButtons.getSaveButton(), myControlButtons.getLoadButton());
         activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
