@@ -21,7 +21,6 @@ public class CommandStorage extends Storage {
     private int backgroundindex;
     private boolean killcommands;
 
-    
     public CommandStorage () {
         actors=FXCollections.observableMap(new HashMap<Integer,Actor>());
         active=new ArrayList<Integer>();
