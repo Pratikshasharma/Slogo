@@ -7,6 +7,8 @@ import java.util.Map;
 import Actors.Actor;
 import Actors.Turtle;
 import Simulation.Node.InfoNode;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
@@ -18,7 +20,7 @@ public class CommandStorage extends Storage {
     private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
     private ObservableMap<Integer,int[]> colorMap;
-    private int backgroundindex;
+    private DoubleProperty backgroundindex ;
     private boolean killcommands;
 
     public CommandStorage () {
@@ -28,7 +30,8 @@ public class CommandStorage extends Storage {
         functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
         colorMap=FXCollections.observableMap( new HashMap<Integer,int[]>());
-        backgroundindex=1;
+        backgroundindex = new SimpleDoubleProperty(0);
+        backgroundindex.set(1);
         addColorValues();
         killcommands=false;
     }
@@ -65,7 +68,7 @@ public class CommandStorage extends Storage {
     }
     
     public void setBackgroundIndex(int index){
-        backgroundindex=index;
+        backgroundindex.set(index);
     }
     
     public void setPaletteVal(int index, int[] color){
@@ -99,7 +102,7 @@ public class CommandStorage extends Storage {
         return active.get(0);
     }
     
-    public int getBackgroundIndex(){
+    public DoubleProperty getBackgroundIndex(){
         return backgroundindex;
     }
     

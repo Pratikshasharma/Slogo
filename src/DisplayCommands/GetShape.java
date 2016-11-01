@@ -9,7 +9,7 @@ public class GetShape extends DisplayCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
-         return myCommandStorage.getActor(myCommandStorage.getActive()).getShapeIndex();
+         return myCommandStorage.getActor(myCommandStorage.getActive()).getShapeIndex().get();
     }
 
 }
