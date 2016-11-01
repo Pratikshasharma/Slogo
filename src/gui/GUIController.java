@@ -19,12 +19,10 @@ public class GUIController {
     private static final String PEN_COLOR_COMMAND = "SetPenColor" ;
     //private static final String SET_PALETTE_COMMAND = "SetPalette";
     private static final String PEN_SIZE_COMMAND = "SetPenSize";
-
     private SimpleStringProperty myCommandLanguage = new SimpleStringProperty(DEFAULT_LANGUAGE);
     private SimpleStringProperty penSizeCommand = new SimpleStringProperty();
     private SimpleStringProperty penColorCommand = new SimpleStringProperty();
     private SimpleStringProperty backgroundColorCommand = new SimpleStringProperty();
-
 
     public GUIController() {
         myMainGUI = new MainGUI();
@@ -124,6 +122,7 @@ public class GUIController {
     private void addBackGroundListeners(){
         myMainGUI.getBackgroundMenu().getItems().stream().forEach(item -> item.setOnAction( e->{
             backgroundColorCommand.set(BACKGROUND_COMMAND + " " + item.getText());
+            myMainGUI.setBackgroundPreference(item.getText());
         }));
     }
 
@@ -134,15 +133,24 @@ public class GUIController {
     public SimpleStringProperty getPenSizeCommand(){
         return this.penSizeCommand;
     }
+    
     public void addColorOption(String index){
         myMainGUI.addColorOption(index);
     }
   
     public SimpleStringProperty getBackGroundColorCommand(){
-        return  this.backgroundColorCommand;
+        return backgroundColorCommand;
     }
     
     public void setBackgroundColor(String rgb){
         myMainGUI.setBackgroundColor(rgb);
+    }
+    
+    public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
+    	myMainGUI.setOnSaveButtonClicked(handler);
+    }
+    
+    public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
+    	myMainGUI.setOnLoadButtonClicked(handler);
     }
 }

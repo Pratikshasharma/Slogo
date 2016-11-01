@@ -11,8 +11,10 @@ import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -204,7 +206,7 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double colorIndex = mySimulationController.receive(newValue.toString());
-                System.out.println(" STring " + colorIndex);
+                System.out.println(" String " + colorIndex);
                 updateBackgroundColor(colorIndex.intValue());  
             }
         });
@@ -231,6 +233,7 @@ public class AppController {
             }
         });
     }
+    
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
     }
@@ -260,5 +263,17 @@ public class AppController {
         int [] rgb = mySimulationController.getStorage().getPalette().get(index);
         String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
         return myString;
+    }
+   
+    private void setOnSaveButtonClicked(){
+    	myGUIController.setOnSaveButtonClicked(e -> {
+    		//TODO:
+    	});
+    }
+    
+    private void setOnLoadButtonClicked(){
+    	myGUIController.setOnLoadButtonClicked(e -> {
+    		//TODO:
+    	});
     }
 }

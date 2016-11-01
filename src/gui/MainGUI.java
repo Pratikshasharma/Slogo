@@ -1,10 +1,4 @@
 package gui;
-import javafx.animation.Animation;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
@@ -18,12 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.HLineTo;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -45,7 +33,6 @@ public class MainGUI {
     private ActiveTurtleDisplayInformation myActiveTurtleInfo;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
-    private String backgroundColor;
 
     public MainGUI() {
         myRoot = new BorderPane();
@@ -74,8 +61,8 @@ public class MainGUI {
     private VBox createLeft(){
         VBox left = new VBox();   
         //setBackgroundColorProps();    
-        setPenColorProps();
-        setPenWidthProps();
+//        setPenColorProps();
+//        setPenWidthProps();
         left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
         return left;
     }
@@ -86,31 +73,21 @@ public class MainGUI {
         return top;
     }
 
-    //	private void setBackgroundColorProps(){
-    //		for(MenuItem m : myTools.getBackgroundColorMenu().getItems()){
-    //			BackgroundChangeable p = getBackgroundChanger(m);
-    //			m.setOnAction(e -> {
-    //				p.changeBackground(myRoot);
-    //				myPrefs.setBackground(m.getText().toLowerCase());
-    //			});
-    //		}
-    //	}
-
-    private void setPenColorProps(){
-        for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
-            m.setOnAction(e -> {
-                myPrefs.setPenColor(m.getText().toLowerCase());
-            });
-        }
-    }
-
-    private void setPenWidthProps(){
-        for(MenuItem m : myTools.getPenSizeSubMenu().getItems()){
-            m.setOnAction(e -> {
-                myPrefs.setPenWidth(Integer.valueOf(m.getText().toLowerCase()));
-            });
-        }
-    }
+//    private void setPenColorProps(){
+//        for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
+//            m.setOnAction(e -> {
+//                myPrefs.setPenColor(m.getText().toLowerCase());
+//            });
+//        }
+//    }
+//
+//    private void setPenWidthProps(){
+//        for(MenuItem m : myTools.getPenSizeSubMenu().getItems()){
+//            m.setOnAction(e -> {
+//                myPrefs.setPenWidth(Integer.valueOf(m.getText().toLowerCase()));
+//            });
+//        }
+//    }
 
     public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
@@ -121,7 +98,7 @@ public class MainGUI {
         VBox activeLabels = new VBox(20);
         VBox controlButtons = new VBox(20);
         setOnClearButton();
-        controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton());
+        controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton(), myControlButtons.getSaveButton(), myControlButtons.getLoadButton());
         activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
         bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
         return bottomBox;
@@ -176,9 +153,6 @@ public class MainGUI {
         }
     }
 
-    
-
-
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
         System.out.println("line added");
         myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
@@ -193,7 +167,7 @@ public class MainGUI {
     }
 
     public BackgroundChangeable getBackgroundChanger(){
-        BackgroundChangeable backgroundChanger = (root) ->{
+        BackgroundChangeable backgroundChanger = (root, backgroundColor) ->{
             VBox pane = (VBox) root.getLeft();
             Pane p = (Pane) pane.getChildren().get(0);
             p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:2px");
@@ -246,23 +220,24 @@ public class MainGUI {
     }
 
     public void setBackgroundColor(String backgroundRGB){
-        backgroundColor = backgroundRGB;
+        String backgroundColor = backgroundRGB;
         BackgroundChangeable p = getBackgroundChanger();
-        p.changeBackground(myRoot);    
+        p.changeBackground(myRoot, backgroundColor);    
     }
-
-    //    private BackgroundChangeable getBackgroundChanger(){
-    //        BackgroundChangeable backgroundChanger = (root) -> {  
-    //            System.out.println(" Color " + backgroundColor.toString());
-    //            VBox pane = (VBox) root.getLeft();
-    //            Pane p = (Pane) pane.getChildren().get(0);
-    //            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
-    //            root.setLeft(pane);
-    //        };
-    //        return backgroundChanger;
-    //    }
 
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
+    }
+    
+    public void setBackgroundPreference(String color){
+    	myPrefs.setBackground(color);
+    }
+    
+    public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
+    	myControlButtons.setOnSave(handler);
+    }
+    
+    public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
+    	myControlButtons.setOnLoad(handler);
     }
 }  
