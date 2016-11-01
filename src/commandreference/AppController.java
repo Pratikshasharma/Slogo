@@ -1,8 +1,12 @@
 package commandreference;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
+import java.util.Scanner;
 import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
@@ -11,8 +15,16 @@ import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AppController {
 	
@@ -35,17 +47,21 @@ public class AppController {
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
     private final String DEFAULT_TURTLE = "turtle.png";
+    FileChooser fileChooser;
+
 
     public AppController() {
         initializeGUIController();
         initializeSimulationController();
         myTurtleManager = new TurtleManager();
+        fileChooser = new FileChooser();
         setObservables();
     }
 
     public Parent initiateApp(){
         Parent mainRoot = myGUIController.init();
         setRunButton();
+        setOnLoadButtonClicked();
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
@@ -248,9 +264,25 @@ public class AppController {
     }
 
     private void setOnLoadButtonClicked(){
-        myGUIController.setOnLoadButtonClicked(e -> {
-            //TODO:
-        });
+    	myGUIController.setOnLoadButtonClicked(e -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();    
+        	 fileChooser.setTitle("Open Logo Files");
+        	 fileChooser.getExtensionFilters().add(
+        	         new ExtensionFilter("SLogo Files", "*.logo"));
+    
+        	 File selectedFile = fileChooser.showOpenDialog(stage);
+             if(selectedFile!=null){
+                 try {
+                     myGUIController.addToCommandHistory("Load " + selectedFile.toString());
+                    String content = new Scanner(selectedFile).useDelimiter("\\Z").next();
+                    myGUIController.setConsole(content);
+                    mySimulationController.receive(myGUIController.getCommandEntered());
+                    myGUIController.clearConsole();
+                }
+                catch (FileNotFoundException e1) {
+                }
+             }
+    	});
     }
 
 }
