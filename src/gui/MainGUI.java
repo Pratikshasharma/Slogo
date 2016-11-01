@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -169,12 +170,12 @@ public class MainGUI {
 
     private void setOnClearButton(){
         myControlButtons.setOnClear(e -> {
-            myConsole.clear();
+            clearConsole();
         });
     }
 
     public void clearConsole(){
-        myConsole.clear();
+        setConsole("");
     }
 
     public void setConsole(String text){
@@ -206,8 +207,7 @@ public class MainGUI {
     }
 
     public void setBackgroundColor(String backgroundRGB){
-        BackgroundChangeable p = getBackgroundChanger();
-        p.changeBackground(myRoot, backgroundRGB); 
+        getBackgroundChanger().changeBackground(myRoot, backgroundRGB); 
         setBackgroundPreference(backgroundRGB);
     }
 
@@ -226,4 +226,10 @@ public class MainGUI {
     public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
     	myControlButtons.setOnLoad(handler);
     }
+
+	public void clearTurtleLines(FrontTurtle turtle) {
+		for(Line l : turtle.getLine()){
+			myCanvas.getChildren().remove(l);
+		}
+	}
 }  

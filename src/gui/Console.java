@@ -32,10 +32,6 @@ public class Console {
     	myCommandWindow.setText(text);
     }
     
-    public void clear(){
-    	setText("");
-    }
-    
     public String getText(){
     	return myCommandWindow.getText();
     }

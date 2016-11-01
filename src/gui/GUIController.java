@@ -160,4 +160,8 @@ public class GUIController {
     public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
     	myMainGUI.setOnLoadButtonClicked(handler);
     }
+
+	public void clearTurtleLines(FrontTurtle turtle) {
+		myMainGUI.clearTurtleLines(turtle);
+	}
 }
