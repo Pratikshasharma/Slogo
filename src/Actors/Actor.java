@@ -19,6 +19,7 @@ public abstract class Actor implements Turtleable {
 	private int penSizeIndex;
 	private int shapeIndex;
 	private Line myLine;
+	private DoubleProperty reset;
 
 	public Actor (String imageFilePath) {
 		init(MainGUI.TURTLE_PANE_WIDTH / 2, MainGUI.TURTLE_PANE_HEIGHT / 2, imageFilePath);
@@ -125,17 +126,6 @@ public abstract class Actor implements Turtleable {
 		return myLine;
 	}
 
-	private void init(double x, double y, String imageFilePath){
-		coordinates = new Coordinates(x, y);
-		myAngle = new SimpleDoubleProperty(0);
-		myImage = new ImageView(imageFilePath);
-		myImage.setFitWidth(40);
-		myImage.setFitHeight(40);
-		myLine = new Line();
-		distanceTraveled=0;
-		penDown=true;
-		visible=true;       
-	}
 	
 	public boolean isReadyForChange(){
 		return coordinates.isReadyForChange();
@@ -144,4 +134,21 @@ public abstract class Actor implements Turtleable {
 	public void setReadyForChange(boolean b){
 		coordinates.setReadForChange(b);
 	}
+	
+	public void setReset(){
+	    reset.set(reset.get()+1);
+	}	
+
+        private void init(double x, double y, String imageFilePath){
+                coordinates = new Coordinates(x, y);
+                myAngle = new SimpleDoubleProperty(0);
+                myImage = new ImageView(imageFilePath);
+                myImage.setFitWidth(40);
+                myImage.setFitHeight(40);
+                myLine = new Line();
+                distanceTraveled=0;
+                penDown=true;
+                visible=true;       
+                reset.set(0);
+        }
 }

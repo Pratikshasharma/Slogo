@@ -13,6 +13,7 @@ public class ClearScreen extends ActorCommand{
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
         //set to clear screen in front end
         actor.setPos(0,0);
+        actor.setReset();
         return actor.getDistance();
     }
 
