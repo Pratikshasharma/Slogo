@@ -25,24 +25,23 @@ public class FrontTurtle {
     private Double lineWidth = 1.0;
     private Paint lineColor = Color.BLACK;
     
-
     public FrontTurtle(int id, Turtleable turtle){
-        initializeCoordinates(turtle.getX(), turtle.getY());
+        bindCoordinates(turtle.getX(), turtle.getY());
         bindAngle(turtle);
-        intializePenProperties(turtle);
+        initializePenProperties(turtle);
         myLines = new ArrayList<Line>();
         myTurtleImageView = turtle.getImageView();
         myID = id;
     }
 
-    private void intializePenProperties(Turtleable turtle) {
+    private void initializePenProperties(Turtleable turtle) {
         isPenUp = turtle.getPenStatus();
         isVisible = true;
         penColorIndex = turtle.getPenColorIndex();
         penSizeIndex = turtle.getPenSizeIndex();
     }
 
-    private void initializeCoordinates(DoubleProperty x, DoubleProperty y) {
+    private void bindCoordinates(DoubleProperty x, DoubleProperty y) {
         myCoordinates = new Coordinates(x.get(), y.get());
         myCoordinates.getX().bind(x);
         myCoordinates.getY().bind(y);
