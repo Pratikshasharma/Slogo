@@ -11,7 +11,7 @@ public class IsPenDown extends ActorQuery{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
-        return (actor.getPenStatus())?1:0;
+        return (actor.getPenStatus().get())?1:0;
     }
 
 }

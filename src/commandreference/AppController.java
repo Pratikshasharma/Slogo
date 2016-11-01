@@ -106,6 +106,7 @@ public class AppController {
             private void processNewTurtle(Turtleable newTurtle, int id) {
                 myTurtleManager.addTurtle(id, newTurtle);
                 setCoordinateListeners(id, newTurtle);
+                setResetListener(id, newTurtle);
                 newTurtle.getImageView().setOnMouseClicked(e -> {
                     setActiveID(id);
                 });
@@ -120,6 +121,18 @@ public class AppController {
 
     private void setCoordinateListeners(int id, Turtleable turtle){
         turtle.getCoordinates().addObserver(new CoordinateObserver(id));
+    }
+    
+    private void setResetListener(int id, Turtleable turtle){
+    	turtle.getReset().addListener(new ChangeListener<Number>(){
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				myGUIController.clearTurtleLines(myTurtleManager.getTurtleAtIndex(id));
+				myTurtleManager.getTurtleAtIndex(id).clearLines();
+			}
+    		
+    	});
     }
 
     private void renderTurtles(){

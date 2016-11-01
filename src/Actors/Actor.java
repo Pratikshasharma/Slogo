@@ -3,7 +3,9 @@ package Actors;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import gui.MainGUI;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
@@ -14,7 +16,8 @@ public abstract class Actor implements Turtleable {
 	protected Coordinates coordinates;
 	protected double distanceTraveled, degreesMoved;
 	protected DoubleProperty myAngle;
-	protected boolean penDown, visible;
+	protected BooleanProperty penDown; 
+	protected boolean visible;
 	private int penColorIndex;
 	private int penSizeIndex;
 	private int shapeIndex;
@@ -71,11 +74,11 @@ public abstract class Actor implements Turtleable {
 	}
 
 	public void setPenStatus(boolean pen){
-		penDown=pen;
+		penDown.set(pen);
 	}
 
 	@Override
-	public boolean getPenStatus(){
+	public BooleanProperty getPenStatus(){
 		return penDown;
 	}
 
@@ -129,6 +132,10 @@ public abstract class Actor implements Turtleable {
 	public void setReset(){
 		reset.set(reset.get()+1);
 	}	
+	
+	public DoubleProperty getReset(){
+		return reset;
+	}
 
 	private void init(double x, double y, String imageFilePath){
 		coordinates = new Coordinates(x, y);
@@ -138,7 +145,7 @@ public abstract class Actor implements Turtleable {
 		myImage.setFitHeight(40);
 		myLine = new Line();
 		distanceTraveled=0;
-		penDown=true;
+		penDown = new SimpleBooleanProperty(true);
 		visible=true;   
 		reset = new SimpleDoubleProperty(0);
 	}

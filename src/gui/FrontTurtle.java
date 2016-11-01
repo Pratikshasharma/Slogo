@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import commandreference.Coordinates;
 import commandreference.Turtleable;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -15,7 +17,7 @@ public class FrontTurtle {
 
     private Coordinates myCoordinates;
     private DoubleProperty myAngle;
-    private boolean isPenUp;
+    private BooleanProperty isPenUp;
     private boolean isVisible;
     private int penColorIndex;
     private int penSizeIndex;
@@ -35,7 +37,8 @@ public class FrontTurtle {
     }
 
     private void initializePenProperties(Turtleable turtle) {
-        isPenUp = turtle.getPenStatus();
+        isPenUp = new SimpleBooleanProperty(turtle.getPenStatus().get());
+        isPenUp.bind(turtle.getPenStatus());
         isVisible = true;
         penColorIndex = turtle.getPenColorIndex();
         penSizeIndex = turtle.getPenSizeIndex();
@@ -65,7 +68,7 @@ public class FrontTurtle {
     }
 
     public boolean isPenUp(){
-        return isPenUp;
+        return isPenUp.get();
     }
 
     public boolean getVisibility(){
@@ -112,5 +115,9 @@ public class FrontTurtle {
     public void setLineWidth(Double widthValue){
         System.out.println( " Line Width " + widthValue);
         lineWidth = widthValue;
+    }
+    
+    public void clearLines(){
+    	myLines.clear();
     }
 }
