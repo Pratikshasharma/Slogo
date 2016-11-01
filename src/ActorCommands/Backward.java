@@ -15,8 +15,8 @@ public class Backward extends ActorCommand{
         for(InfoNode parameter:args){
             double segmentedpixels=myCommandProcess.executeList(myCommandStorage, parameter);
             pixels+=segmentedpixels;
-            x+=Math.cos(actor.getAngle())*segmentedpixels;
-            y+=Math.sin(actor.getAngle())*segmentedpixels;
+            x+=Math.cos(actor.getAngle()/180*Math.PI)*segmentedpixels;
+            y+=Math.sin(actor.getAngle()/180*Math.PI)*segmentedpixels;
             actor.setPos(setValErrorCheck(actor.getX().get()-x,actor.getX().get()),setValErrorCheck(actor.getY().get()-y,actor.getY().get()));
         }
         return pixels;
