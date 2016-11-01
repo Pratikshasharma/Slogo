@@ -60,9 +60,6 @@ public class MainGUI {
 
     private VBox createLeft(){
         VBox left = new VBox();   
-        //setBackgroundColorProps();    
-//        setPenColorProps();
-//        setPenWidthProps();
         left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
         return left;
     }
@@ -72,22 +69,6 @@ public class MainGUI {
         top.getChildren().addAll(addItemsInMenuBar());
         return top;
     }
-
-//    private void setPenColorProps(){
-//        for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
-//            m.setOnAction(e -> {
-//                myPrefs.setPenColor(m.getText().toLowerCase());
-//            });
-//        }
-//    }
-//
-//    private void setPenWidthProps(){
-//        for(MenuItem m : myTools.getPenSizeSubMenu().getItems()){
-//            m.setOnAction(e -> {
-//                myPrefs.setPenWidth(Integer.valueOf(m.getText().toLowerCase()));
-//            });
-//        }
-//    }
 
     public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
@@ -113,8 +94,6 @@ public class MainGUI {
 
     private Pane createTurtlePane(){
         myCanvas = new Pane();
-        //setBackgroundColorProps();
-        System.out.println(" PREFS " + myPrefs.getBackground("white"));
         myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 2px");
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
         return myCanvas;
@@ -141,7 +120,6 @@ public class MainGUI {
     public void updateTurtleLocation(FrontTurtle turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
-        System.out.println(x + " " + y);
         turtle.getImageView().setX(turtle.getCoordinates().getX().get());
         turtle.getImageView().setY(turtle.getCoordinates().getY().get());
         if(x == 0 && y == 0){
@@ -154,7 +132,6 @@ public class MainGUI {
     }
 
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
-        System.out.println("line added");
         myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
     }
 
@@ -222,15 +199,17 @@ public class MainGUI {
     public void setBackgroundColor(String backgroundRGB){
         String backgroundColor = backgroundRGB;
         BackgroundChangeable p = getBackgroundChanger();
-        p.changeBackground(myRoot, backgroundColor);    
+        p.changeBackground(myRoot, backgroundColor); 
+        setBackgroundPreference(backgroundRGB);
     }
 
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
     
-    public void setBackgroundPreference(String color){
+    private void setBackgroundPreference(String color){
     	myPrefs.setBackground(color);
+    	System.out.println("here");
     }
     
     public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){

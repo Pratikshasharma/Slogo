@@ -122,7 +122,6 @@ public class GUIController {
     private void addBackGroundListeners(){
         myMainGUI.getBackgroundMenu().getItems().stream().forEach(item -> item.setOnAction( e->{
             backgroundColorCommand.set(BACKGROUND_COMMAND + " " + item.getText());
-            myMainGUI.setBackgroundPreference(item.getText());
         }));
     }
 
