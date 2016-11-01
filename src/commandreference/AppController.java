@@ -15,7 +15,6 @@ import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
 import gui.ErrorAlert;
-import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +32,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AppController {
 	
+    private static final String BACKGROUND_COMMAND = "SETBACKGROUND ";
+    private static final String PEN_COLOR_COMMAND = "setpencolor " ;
+    private static final String PEN_SIZE_COMMAND = "setpensize ";
+    
 	private class CoordinateObserver implements Observer {
 		private int myID;
 		CoordinateObserver(int id){
@@ -43,7 +46,7 @@ public class AppController {
 			updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
 		}
 	}
-	
+
     private SimulationController mySimulationController;
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
@@ -67,7 +70,7 @@ public class AppController {
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
-        renderTurtles();
+        updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(1));
         return mainRoot;
     }
 
@@ -85,8 +88,9 @@ public class AppController {
         setFunctionObserver();
         setVariableListObserver();
         addBackgroundColorListener();
-        addPenColorListener();
-        addPenSizeListener();
+        setBackgroundColorMenuHandler();
+        setPenColorMenuHandler();
+        setPenSizeMenuHandler();
         addColorMapListener();
     }
 
@@ -118,43 +122,42 @@ public class AppController {
                 processNewTurtle(newTurtle, id);
                 updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
             }
-
-            private void processNewTurtle(Turtleable newTurtle, int id) {
-                myTurtleManager.addTurtle(id, newTurtle);
-                setCoordinateListeners(id, newTurtle);
-                newTurtle.getImageView().setOnMouseClicked(e -> {
-                    setActiveID(id);
-                });
-            }
         });
     }
+    
     private void setActiveID(int id) {
         mySimulationController.getStorage().setActive(id);
         myTurtleManager.setActiveTurtle(id);
         updateActiveLabels();
+    }
+    
+    private void processNewTurtle(Turtleable newTurtle, int id) {
+        myTurtleManager.addTurtle(id, newTurtle);
+        setCoordinateListeners(id, newTurtle);
+        setResetListener(id, newTurtle);
+        newTurtle.getImageView().setOnMouseClicked(e -> {
+            setActiveID(id);
+        });
     }
 
     private void setCoordinateListeners(int id, Turtleable turtle){
         turtle.getCoordinates().addObserver(new CoordinateObserver(id));
     }
 
-    private void renderTurtles(){
-        for(FrontTurtle turtle : myTurtleManager.getTurtles()){
-            updateTurtlesOnFront(turtle);
-        }
+    private void setResetListener(int id, Turtleable turtle){
+        turtle.getReset().addListener(new ChangeListener<Number>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                myGUIController.clearTurtleLines(myTurtleManager.getTurtleAtIndex(id));
+                myTurtleManager.getTurtleAtIndex(id).clearLines();
+            }
+
+        });
     }
     
-//    private Animatable prepareAnimation(){
-//    	Animatable a = (turtle) -> {
-//    		myGUIController.addToScene(turtle);
-//    	};
-//    	return a;
-//    }
-
-    private void updateTurtlesOnFront(FrontTurtle turtle){
-//    	AnimationManager a = new AnimationManager(prepareAnimation(), turtle);
-//    	a.startAnimation();
-        myGUIController.addToScene(turtle);
+    private void updateTurtlesOnFront(Turtleable turtle){
+    	myGUIController.addToScene(turtle);
     }
 
     private void setNewTurtleHandler(){
@@ -185,7 +188,6 @@ public class AppController {
 
     private void work(){
         sendCommand();
-        renderTurtles();
         myGUIController.clearConsole();
         updateActiveLabels();
     }
@@ -201,43 +203,38 @@ public class AppController {
             mySimulationController.receive(myGUIController.getCommandEntered());
         }    
     }
-
-    private void addPenColorListener(){
-        myGUIController.getPenColorCommand().addListener(new ChangeListener <String>(){
-            @Override
-            public void changed (ObservableValue<? extends String> observable,
-                                 String oldValue,
-                                 String newValue) {
-                Double colorIndex = mySimulationController.receive(newValue.toString());
-                updateLineColor(colorIndex.intValue());
-
-            }
-        });
+    
+    private void setPenColorMenuHandler(){
+    	myGUIController.getPenColorMenu().getItems().stream().forEach(item -> {
+    		item.setOnAction(e -> {
+    			mySimulationController.receive(PEN_COLOR_COMMAND + item.getText());
+    		});
+    	});
+    }
+    
+    private void setPenSizeMenuHandler(){
+    	myGUIController.getPenSizeMenu().getItems().stream().forEach(item -> {
+    		item.setOnAction(e -> {
+    			mySimulationController.receive(PEN_SIZE_COMMAND + item.getText());
+    		});
+    	});
+    }
+    
+    private void setBackgroundColorMenuHandler(){
+    	myGUIController.getBackgroundMenu().getItems().stream().forEach(item -> {
+    		item.setOnAction(e -> {
+    			mySimulationController.receive(BACKGROUND_COMMAND + item.getText());
+    		});
+    	});
     }
 
     private void addBackgroundColorListener(){
-        myGUIController.getBackGroundColorCommand().addListener(new ChangeListener <String>(){
-            @Override
-            public void changed (ObservableValue<? extends String> observable,
-                                 String oldValue,
-                                 String newValue) {
-                Double colorIndex = mySimulationController.receive(newValue.toString());
-                
-                updateBackgroundColor(colorIndex.intValue());  
-            }
-        });
-    }
-
-    private void addPenSizeListener(){
-        myGUIController.getPenSizeCommand().addListener( new ChangeListener <String>(){
-            @Override
-            public void changed (ObservableValue<? extends String> observable,
-                                 String oldValue,
-                                 String newValue) {
-                Double sizeIndex = mySimulationController.receive(newValue.toString());
-                updateLineSize(sizeIndex);
-            }
-        });   
+    	mySimulationController.getStorage().getBackgroundIndex().addListener(new ChangeListener<Number>(){
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				updateBackgroundColor(newValue.intValue());
+			}
+    	});
     }
 
     private void addColorMapListener(){
@@ -248,26 +245,9 @@ public class AppController {
             }
         });
     }
-    
+
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
-    }
-
-    private void updateLineColor(Integer colorIndex){
-        FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
-        activeTurtle.setLineColor(getColor(colorIndex));
-    }
-
-    private Paint getColor(Integer Index){
-        int[] colorValues = mySimulationController.getStorage().getPalette().get(Index);
-
-        Color color = Color.rgb(colorValues[0], colorValues[1], colorValues[2]); 
-        return color;
-    }
-
-    private void updateLineSize(Double lineSize){
-        FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
-        activeTurtle.setLineWidth(lineSize);
     }
 
     private void updateBackgroundColor(Integer colorIndex){
@@ -279,8 +259,9 @@ public class AppController {
         String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
         return myString;
     }
-   
+
     private void setOnSaveButtonClicked(){
+<<<<<<< HEAD
     	myGUIController.setOnSaveButtonClicked(e -> {
     	    Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
     	    Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
@@ -331,6 +312,15 @@ public class AppController {
         }
     }
     
+=======
+        myGUIController.setOnSaveButtonClicked(e -> {
+            Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
+            Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
+            Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();  
+        });
+    }
+
+>>>>>>> af080ed6f58b503608ceffb47b67a39e9eea6dca
     private void setOnLoadButtonClicked(){
     	myGUIController.setOnLoadButtonClicked(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();    
@@ -353,4 +343,5 @@ public class AppController {
              }
     	});
     }
+
 }
