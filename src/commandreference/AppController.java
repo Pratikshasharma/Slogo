@@ -261,7 +261,6 @@ public class AppController {
     }
 
     private void setOnSaveButtonClicked(){
-<<<<<<< HEAD
     	myGUIController.setOnSaveButtonClicked(e -> {
     	    Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
     	    Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
@@ -312,15 +311,7 @@ public class AppController {
         }
     }
     
-=======
-        myGUIController.setOnSaveButtonClicked(e -> {
-            Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
-            Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
-            Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();  
-        });
-    }
 
->>>>>>> af080ed6f58b503608ceffb47b67a39e9eea6dca
     private void setOnLoadButtonClicked(){
     	myGUIController.setOnLoadButtonClicked(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();    
