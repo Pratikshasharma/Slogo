@@ -15,7 +15,7 @@ public class Left extends ActorCommand{
         for(InfoNode parameter:args){
             double segmentedangle=myCommandProcess.executeList(myCommandStorage, parameter);
             angle+=segmentedangle;
-            actor.setAngle(setValErrorCheck(actor.getAngle()+segmentedangle,actor.getAngle()));
+            actor.setAngle(setValErrorCheck(actor.getAngle()-segmentedangle,actor.getAngle()));
 
         }
         return angle;

@@ -54,7 +54,11 @@ public abstract class Actor implements Turtleable {
 
 	public void setAngle(double angle){
 		degreesMoved=angle-myAngle.get();
-		myAngle.set(angle%DEGREES_CIRCLE);
+		double newangle=angle%DEGREES_CIRCLE;
+		if(newangle<0){
+		    newangle+=360;
+		}
+		myAngle.set(newangle);
 	}
 
 	public double getAngle(){
