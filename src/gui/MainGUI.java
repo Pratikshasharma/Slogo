@@ -1,8 +1,9 @@
 package gui;
 import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
-import java.nio.file.Path;
+
 import commandreference.ControlButtons;
+import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,7 +15,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -73,7 +76,11 @@ public class MainGUI {
         return top;
     }
 
-    public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
+//    public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
+//        myActiveTurtleInfo.updateStatus(id, turtle);
+//    }
+    
+    public void updateActiveTurtleInfo(int id, Turtleable turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
     }
 
@@ -108,7 +115,15 @@ public class MainGUI {
         return menuBar;
     }
 
-    private void addTurtleOnScene(FrontTurtle turtle){
+//    private void addTurtleOnScene(FrontTurtle turtle){
+//        if(!isOnCanvas(turtle.getImageView())){
+//            turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+//            turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+//            myCanvas.getChildren().add(turtle.getImageView());
+//        }
+//    }
+    
+    private void addTurtleOnScene(Turtleable turtle){
         if(!isOnCanvas(turtle.getImageView())){
             turtle.getImageView().setX(turtle.getCoordinates().getX().get());
             turtle.getImageView().setY(turtle.getCoordinates().getY().get());
@@ -120,7 +135,22 @@ public class MainGUI {
         return myFileTab;
     }
     
-    public void updateTurtleLocation(FrontTurtle turtle){
+//    public void updateTurtleLocation(FrontTurtle turtle){
+//        double x = turtle.getImageView().getX();
+//        double y = turtle.getImageView().getY();
+//        turtle.getImageView().setX(turtle.getCoordinates().getX().get());
+//        turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+//        if(x == 0 && y == 0){
+//            addTurtleOnScene(turtle);
+//            return;
+//        }
+//        // animate 
+//        if(turtle.isPenUp()){
+//            addLineOnCanvas(turtle, x, y);
+//        }
+//    }
+    
+    public void updateTurtleLocation(Turtleable turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
         turtle.getImageView().setX(turtle.getCoordinates().getX().get());
@@ -129,24 +159,36 @@ public class MainGUI {
             addTurtleOnScene(turtle);
             return;
         }
-        
-        // clear screen remove the lines and set the commands
-        
         // animate 
-        if(turtle.isPenUp()){
+        if(turtle.getPenStatus().get()){
             addLineOnCanvas(turtle, x, y);
         }
     }
 
+//    private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
+//        if(turtle.getLine().size()<1){
+//            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+//        }else{
+//            myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+//        }
+//    }
     
-
-    
-    private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
-        System.out.println("line added");
+    private void addLineOnCanvas(Turtleable turtle, double x, double y){
+    	double red = turtle.getColorArray()[0];
+    	double green = turtle.getColorArray()[1];
+    	double blue = turtle.getColorArray()[2];
         if(turtle.getLine().size()<1){
-            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get()+ turtle.getImageView().getBoundsInLocal().getWidth()/2, turtle.getCoordinates().getY().get()));
-        }else{
-            myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        	Line l = turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
+        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+        	l.setStyle("-fx-stroke: " + myString);
+        	myCanvas.getChildren().add(l);
+        	System.out.println(l.getFill().toString());
+        } else {
+        	Line l = turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
+        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+        	l.setStyle("-fx-stroke: " + myString);
+        	myCanvas.getChildren().add(l);
+        	System.out.println(l.getFill());
         }
     }
 
@@ -231,7 +273,13 @@ public class MainGUI {
     	myControlButtons.setOnLoad(handler);
     }
 
-	public void clearTurtleLines(FrontTurtle turtle) {
+//	public void clearTurtleLines(FrontTurtle turtle) {
+//		for(Line l : turtle.getLine()){
+//			myCanvas.getChildren().remove(l);
+//		}
+//	}
+    
+	public void clearTurtleLines(Turtleable turtle) {
 		for(Line l : turtle.getLine()){
 			myCanvas.getChildren().remove(l);
 		}

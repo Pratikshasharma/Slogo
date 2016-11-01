@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.File;
+
+import commandreference.Turtleable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -39,7 +41,11 @@ public class GUIController {
         return myMainGUI.createRoot();
     }
 
-    public void setActiveTurtle(int id, FrontTurtle turtle){
+//    public void setActiveTurtle(int id, FrontTurtle turtle){
+//        myMainGUI.updateActiveTurtleInfo(id, turtle);
+//    }
+    
+    public void setActiveTurtle(int id, Turtleable turtle){
         myMainGUI.updateActiveTurtleInfo(id, turtle);
     }
 
@@ -83,7 +89,11 @@ public class GUIController {
         return chosenFile;
     }
 
-    public void addToScene(FrontTurtle t){
+//    public void addToScene(FrontTurtle t){
+//        myMainGUI.updateTurtleLocation(t);
+//    }
+    
+    public void addToScene(Turtleable t){
         myMainGUI.updateTurtleLocation(t);
     }
 
@@ -104,7 +114,11 @@ public class GUIController {
         myMainGUI.setOnRunButton(handler);
     }
 
-    public void updateActiveLabels(int id, FrontTurtle turtle){
+//    public void updateActiveLabels(int id, FrontTurtle turtle){
+//        myMainGUI.updateActiveTurtleInfo(id, turtle);
+//    }
+    
+    public void updateActiveLabels(int id, Turtleable turtle){
         myMainGUI.updateActiveTurtleInfo(id, turtle);
     }
 
@@ -122,7 +136,7 @@ public class GUIController {
         public void addPenColorListeners(){
         myMainGUI.getPenColorMenu().getItems().stream().forEach(color ->color.setOnAction( e-> {
             penColorCommand.set(PEN_COLOR_COMMAND + " " + color.getText());
-        }));  
+        }));
     }
     
     public void addBackGroundListeners(){
@@ -161,11 +175,12 @@ public class GUIController {
     	myMainGUI.setOnLoadButtonClicked(handler);
     }
 
-	public void clearTurtleLines(FrontTurtle turtle) {
-		myMainGUI.clearTurtleLines(turtle);
-	}
-
-
-
-            
+//	public void clearTurtleLines(FrontTurtle turtle) {
+//		myMainGUI.clearTurtleLines(turtle);
+//	}
+    
+    public void clearTurtleLines(Turtleable turtle){
+    	myMainGUI.clearTurtleLines(turtle);
+    }
+    
 }
