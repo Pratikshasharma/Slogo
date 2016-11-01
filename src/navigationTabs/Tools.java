@@ -44,6 +44,10 @@ public class Tools extends MenuCreator {
     public Menu getPenColorSubMenu(){
         return this.colorSubMenu;
     }
-
+    public void addColorOption(String key){
+        //MenuItem newColor = new MenuItem(key);
+        backgroundColorMenu.getItems().add(new MenuItem(key));
+        colorSubMenu.getItems().add(new MenuItem(key));
+    }
 
 }

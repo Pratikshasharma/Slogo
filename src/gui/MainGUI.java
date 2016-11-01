@@ -112,11 +112,11 @@ public class MainGUI {
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
-
+    
     public FileTab getMyFileTab(){
         return myFileTab;
     }
-
+    
     public void updateTurtleLocation(FrontTurtle turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
@@ -126,13 +126,23 @@ public class MainGUI {
             addTurtleOnScene(turtle);
             return;
         }
+        
+        // clear screen remove the lines and set the commands
+        
+        // animate 
         if(turtle.isPenUp()){
             addLineOnCanvas(turtle, x, y);
         }
     }
 
+
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
-        myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        System.out.println("line added");
+        if(turtle.getLine().size()<1){
+            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }else{
+            myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }
     }
 
     public Menu getLanguageMenu(){
@@ -192,8 +202,7 @@ public class MainGUI {
     }
     
     public void addColorOption(String key){
-        MenuItem newOption = new MenuItem(key);
-        myTools.getPenColorSubMenu().getItems().add(newOption);
+        myTools.addColorOption(key);
     }
 
     public void setBackgroundColor(String backgroundRGB){
