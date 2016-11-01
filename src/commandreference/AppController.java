@@ -8,13 +8,11 @@ import Actors.Actor;
 import Simulation.SimulationController;
 import Simulation.Node.InfoNode;
 import gui.ErrorAlert;
-import gui.FrontTurtle;
+//import gui.FrontTurtle;
 import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
@@ -51,7 +49,7 @@ public class AppController {
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
         setNewTurtleHandler();
-        renderTurtles();
+        updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(1));
         return mainRoot;
     }
 
@@ -102,21 +100,22 @@ public class AppController {
                 processNewTurtle(newTurtle, id);
                 updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
             }
-
-            private void processNewTurtle(Turtleable newTurtle, int id) {
-                myTurtleManager.addTurtle(id, newTurtle);
-                setCoordinateListeners(id, newTurtle);
-                setResetListener(id, newTurtle);
-                newTurtle.getImageView().setOnMouseClicked(e -> {
-                    setActiveID(id);
-                });
-            }
         });
     }
+    
     private void setActiveID(int id) {
         mySimulationController.getStorage().setActive(id);
         myTurtleManager.setActiveTurtle(id);
         updateActiveLabels();
+    }
+    
+    private void processNewTurtle(Turtleable newTurtle, int id) {
+        myTurtleManager.addTurtle(id, newTurtle);
+        setCoordinateListeners(id, newTurtle);
+        setResetListener(id, newTurtle);
+        newTurtle.getImageView().setOnMouseClicked(e -> {
+            setActiveID(id);
+        });
     }
 
     private void setCoordinateListeners(int id, Turtleable turtle){
@@ -134,12 +133,6 @@ public class AppController {
     		
     	});
     }
-
-    private void renderTurtles(){
-        for(FrontTurtle turtle : myTurtleManager.getTurtles()){
-            updateTurtlesOnFront(turtle);
-        }
-    }
     
 //    private Animatable prepareAnimation(){
 //    	Animatable a = (turtle) -> {
@@ -148,10 +141,14 @@ public class AppController {
 //    	return a;
 //    }
 
-    private void updateTurtlesOnFront(FrontTurtle turtle){
-//    	AnimationManager a = new AnimationManager(prepareAnimation(), turtle);
-//    	a.startAnimation();
-        myGUIController.addToScene(turtle);
+//    private void updateTurtlesOnFront(FrontTurtle turtle){
+////    	AnimationManager a = new AnimationManager(prepareAnimation(), turtle);
+////    	a.startAnimation();
+//        myGUIController.addToScene(turtle);
+//    }
+    
+    private void updateTurtlesOnFront(Turtleable turtle){
+    	myGUIController.addToScene(turtle);
     }
 
     private void setNewTurtleHandler(){
@@ -182,7 +179,6 @@ public class AppController {
 
     private void work(){
         sendCommand();
-        renderTurtles();
         myGUIController.clearConsole();
         updateActiveLabels();
     }
@@ -251,20 +247,19 @@ public class AppController {
     }
 
     private void updateLineColor(Integer colorIndex){
-        FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
-        activeTurtle.setLineColor(getColor(colorIndex));
+        Turtleable activeTurtle = myTurtleManager.getActiveTurtle();
+//        activeTurtle.setLineColor(getColor(colorIndex));
     }
 
     private Paint getColor(Integer Index){
         int[] colorValues = mySimulationController.getStorage().getPalette().get(Index);
-
         Color color = Color.rgb(colorValues[0], colorValues[1], colorValues[2]); 
         return color;
     }
 
     private void updateLineSize(Double lineSize){
-        FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
-        activeTurtle.setLineWidth(lineSize);
+//        FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
+//        activeTurtle.setLineWidth(lineSize);
     }
 
     private void updateBackgroundColor(Integer colorIndex){

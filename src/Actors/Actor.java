@@ -1,5 +1,8 @@
 package Actors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commandreference.Coordinates;
 import commandreference.Turtleable;
 import gui.MainGUI;
@@ -8,6 +11,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 public abstract class Actor implements Turtleable {
@@ -19,9 +24,10 @@ public abstract class Actor implements Turtleable {
 	protected BooleanProperty penDown; 
 	protected boolean visible;
 	private int penColorIndex;
+	private double[] penColorArray;
 	private int penSizeIndex;
 	private int shapeIndex;
-	private Line myLine;
+	private List<Line> myLines;
 	private DoubleProperty reset;
 
 	public Actor (String imageFilePath) {
@@ -41,12 +47,10 @@ public abstract class Actor implements Turtleable {
 		return coordinates;
 	}
 
-	@Override
 	public DoubleProperty getX(){
 		return coordinates.getX();
 	}
 
-	@Override
 	public DoubleProperty getY(){
 		return coordinates.getY();
 	}
@@ -125,8 +129,26 @@ public abstract class Actor implements Turtleable {
 	}
 
 	@Override
-	public Line getLine(){
-		return myLine;
+	public List<Line> getLine(){
+		return myLines;
+	}
+	
+	@Override
+    public Line drawLine(double x, double y, double x1, double y1){
+    	Line newLine = new Line();
+    	newLine.setStartX(x);
+    	newLine.setEndX(x1);
+    	newLine.setStartY(y);
+    	newLine.setEndY(y1);
+    	newLine.setFill(Color.rgb(((int)penColorArray[0]), ((int)penColorArray[1]), ((int) penColorArray[2])));
+    	newLine.setStrokeWidth(penSizeIndex);
+    	myLines.add(newLine);
+    	return newLine;
+    }
+	
+	@Override
+	public void clearLines(){
+		myLines.clear();
 	}
 	
 	public void setReset(){
@@ -143,10 +165,25 @@ public abstract class Actor implements Turtleable {
 		myImage = new ImageView(imageFilePath);
 		myImage.setFitWidth(40);
 		myImage.setFitHeight(40);
-		myLine = new Line();
+		myLines = new ArrayList<Line>();
 		distanceTraveled=0;
 		penDown = new SimpleBooleanProperty(true);
+		penSizeIndex = 1;
 		visible=true;   
 		reset = new SimpleDoubleProperty(0);
+		penColorArray = new double[3];
+		penColorArray[0] = 255/255;
+		penColorArray[1] = 255/255;
+		penColorArray[2] = 255/255;
+	}
+
+	public void setPenColor(int[] paletteVal) {
+		penColorArray[0] = paletteVal[0];
+		penColorArray[1] = paletteVal[1];
+		penColorArray[2] = paletteVal[2];
+	}
+	
+	public double[] getColorArray(){
+		return penColorArray;
 	}
 }
