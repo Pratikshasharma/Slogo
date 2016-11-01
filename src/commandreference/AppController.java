@@ -1,5 +1,4 @@
 package commandreference;
-
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class AppController {
 			updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
 		}
 	}
-	
+
     private SimulationController mySimulationController;
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
@@ -71,8 +70,6 @@ public class AppController {
         setBackgroundColorMenuHandler();
         setPenColorMenuHandler();
         setPenSizeMenuHandler();
-//        addPenColorListener();
-//        addPenSizeListener();
         addColorMapListener();
     }
 
@@ -125,17 +122,17 @@ public class AppController {
     private void setCoordinateListeners(int id, Turtleable turtle){
         turtle.getCoordinates().addObserver(new CoordinateObserver(id));
     }
-    
-    private void setResetListener(int id, Turtleable turtle){
-    	turtle.getReset().addListener(new ChangeListener<Number>(){
 
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				myGUIController.clearTurtleLines(myTurtleManager.getTurtleAtIndex(id));
-				myTurtleManager.getTurtleAtIndex(id).clearLines();
-			}
-    		
-    	});
+    private void setResetListener(int id, Turtleable turtle){
+        turtle.getReset().addListener(new ChangeListener<Number>(){
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                myGUIController.clearTurtleLines(myTurtleManager.getTurtleAtIndex(id));
+                myTurtleManager.getTurtleAtIndex(id).clearLines();
+            }
+
+        });
     }
     
     private void updateTurtlesOnFront(Turtleable turtle){
@@ -227,7 +224,7 @@ public class AppController {
             }
         });
     }
-    
+
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
     }
@@ -241,19 +238,19 @@ public class AppController {
         String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
         return myString;
     }
-   
+
     private void setOnSaveButtonClicked(){
-    	myGUIController.setOnSaveButtonClicked(e -> {
-    	    Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
-    	    Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
-    	    Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();
-    	    
-    	});
+        myGUIController.setOnSaveButtonClicked(e -> {
+            Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
+            Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
+            Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();  
+        });
     }
-    
+
     private void setOnLoadButtonClicked(){
-    	myGUIController.setOnLoadButtonClicked(e -> {
-    		//TODO:
-    	});
+        myGUIController.setOnLoadButtonClicked(e -> {
+            //TODO:
+        });
     }
+
 }

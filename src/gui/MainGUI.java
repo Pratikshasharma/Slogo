@@ -1,4 +1,5 @@
 package gui;
+import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
 import commandreference.ControlButtons;
 import commandreference.Turtleable;

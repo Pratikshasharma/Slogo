@@ -101,6 +101,36 @@ public class GUIController {
     public MenuItem getNewWindowMenu(){
         return myMainGUI.getMyNewWindow();
     }
+<<<<<<< HEAD
+=======
+
+    
+    public void addPenSizeListeners (){
+        myMainGUI.getPenSizeMenu().getItems().stream().forEach(size -> size.setOnAction(e-> {
+           penSizeCommand.set( PEN_SIZE_COMMAND + " " + size.getText());    
+        }));
+    }
+        
+        public void addPenColorListeners(){
+        myMainGUI.getPenColorMenu().getItems().stream().forEach(color ->color.setOnAction( e-> {
+            penColorCommand.set(PEN_COLOR_COMMAND + " " + color.getText());
+        }));
+    }
+    
+    public void addBackGroundListeners(){
+        myMainGUI.getBackgroundMenu().getItems().stream().forEach(item -> item.setOnAction( e->{
+            backgroundColorCommand.set(BACKGROUND_COMMAND + " " + item.getText());
+        }));
+    }
+    
+    public SimpleStringProperty getPenColorCommand(){
+        return this.penColorCommand;
+    }
+
+    public SimpleStringProperty getPenSizeCommand(){
+        return this.penSizeCommand;
+    }
+>>>>>>> d5a8f642dae57ee3f100611eb802a80a72e58689
     
     public void addColorOption(String index){
         myMainGUI.addColorOption(index);
