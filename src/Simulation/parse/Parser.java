@@ -44,7 +44,7 @@ public class Parser {
 
 	}
 	
-	private void printTree(InfoNode print) {
+	public void printTree(InfoNode print) {
 		InfoNode current = print;
 		List<InfoNode> parameters;
 		while (current != null) {
