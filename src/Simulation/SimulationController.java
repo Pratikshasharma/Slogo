@@ -14,7 +14,6 @@ public class SimulationController {
     public SimulationController () {
     	myCommandStorage=new CommandStorage();
     	myCommandProcess=new CommandProcess();
-  //  	CommandStorage myCommandStorage1=new CommandStorage(myCommand);
     }
     
     public void setLanguage(String language) {
