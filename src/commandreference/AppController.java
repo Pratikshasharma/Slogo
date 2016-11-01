@@ -273,12 +273,16 @@ public class AppController {
 						bw.newLine();
 					}
 					for(String func: functions.keySet()){
-						bw.write("to " + func + " [ " + functionvariables.get(func) + " ] [ ");
-						writeNode(bw,func,functions.get(func));
+						bw.write("to " + func + " [ ");
+						for(String funcvar: functionvariables.get(func)){
+						    bw.write(funcvar + " ");
+						}
+						
+						bw.write("] [ ");
+						writeNode(bw,functions.get(func));
 						bw.write(" ]");
 						bw.newLine();
 					}
-
 					bw.close();
 				}
 				catch (IOException e1) {
@@ -288,20 +292,85 @@ public class AppController {
 		});
 	}
 
-	private void writeNode(BufferedWriter bw, String function, InfoNode currentNode){
+	private void writeNode(BufferedWriter bw, InfoNode currentNode){
 		try {
 			if(currentNode!=null){
-				bw.write(currentNode.getName() + " ");
-				for(InfoNode paramNode:currentNode.getParameters()){
-					writeNode(bw, function, paramNode);
+				switch(currentNode.getToken()){
+				    case "Tell":
+		                        bw.write(currentNode.getName() + " ");
+				        bw.write("[ ");
+				        writeBasic(bw,currentNode);
+	                                bw.write(" ] ");
+				        break;
+				    case "Ask":case "AskWith": case "DoTimes":
+				    case "For":case "Command":
+		                        bw.write(currentNode.getName() + " ");
+				        writeTwoSections(bw,currentNode);
+				        break;
+                                    case "Repeat":case "If":
+                                        bw.write(currentNode.getName() + " ");
+                                        writeExprCommand(bw,currentNode);
+                                        break;
+                                    case "IfElse":case "To":
+                                        bw.write(currentNode.getName() + " ");
+                                        writeExprTwoSections(bw,currentNode);
+                                        break; 
+                                    case "Backward": case "Forward": case "Left": case "Right":
+                                    case "Sum": case "Difference": case "Product":
+                                    case "And": case "Or":
+                                        bw.write("( ");
+                                        bw.write(currentNode.getName() + " ");
+                                        writeBasic(bw,currentNode);
+                                        bw.write(" ) ");
+                                        break;
+				    default:
+		                        bw.write(currentNode.getName() + " ");
+		                        writeBasic(bw,currentNode);
+		                        break;
 				}
-				writeNode(bw,function,currentNode.next());
+				writeNode(bw,currentNode.next());
 			}
 		}
 		catch (IOException e) {
 			//do nothing
 		}
 	}
+	
+	private void writeBasic(BufferedWriter bw, InfoNode currentNode){
+            for(InfoNode paramNode:currentNode.getParameters()){
+                writeNode(bw, paramNode);
+            }
+	}
+	
+        private void writeTwoSections(BufferedWriter bw, InfoNode currentNode) throws IOException{
+            bw.write("[ ");
+            for(int i=0;i<currentNode.getParameters().size()-1;i++){
+                InfoNode paramNode=currentNode.getParameters().get(i);
+                writeNode(bw, paramNode);
+            }
+            bw.write(" ] [ ");   
+            writeNode(bw,currentNode.getParameters().get(currentNode.getParameters().size()-1));
+            bw.write(" ] ");   
+        }
+        
+        private void writeExprCommand(BufferedWriter bw, InfoNode currentNode) throws IOException{
+            writeNode(bw,currentNode.getParameters().get(0));
+            bw.write(" [ ");   
+            writeNode(bw,currentNode.getParameters().get(1));
+            bw.write(" ] ");   
+        }
+        
+        private void writeExprTwoSections(BufferedWriter bw, InfoNode currentNode) throws IOException{
+            writeNode(bw,currentNode.getParameters().get(0));
+            bw.write(" [ ");
+            for(int i=1;i<currentNode.getParameters().size()-1;i++){
+                InfoNode paramNode=currentNode.getParameters().get(i);
+                writeNode(bw, paramNode);
+            }
+            bw.write(" ] [ ");   
+            writeNode(bw,currentNode.getParameters().get(currentNode.getParameters().size()-1));
+            bw.write(" ] ");    
+        }
 
 
 	private void setOnLoadButtonClicked(){
