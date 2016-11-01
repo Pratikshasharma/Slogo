@@ -16,6 +16,7 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import Simulation.Node.Node;
 import SlogoException.ParserException;
+import SlogoException.UserDefinitionException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -28,6 +29,8 @@ public class Parser {
 	public final static String LANG_PATH = "resources/languages/";
 	public final static String DEFAULT_LANG = "English";
 	private final static String SYNTAX_LANG = "Syntax";
+	private CommandStorage myCommands;
+	private boolean killParse;
 
 
 	private static TypeDictionary lang;
@@ -69,14 +72,23 @@ public class Parser {
 
 	// given some text, prints results of parsing it using the given language
 	public InfoNode parseText(String[] text, CommandStorage custom) {
+		myCommands = custom;
+		killParse = false;
+		InfoNode toSend = null;
 		Deque<InfoNode> nodeList = createNodeList(text);
-		InfoNode toSend;
+		if (killParse) {
+			custom.setKillCommands(true);
+			return toSend;
+		}
 		try {
 			TreeFactory myFactory = new TreeFactory(custom, nodeList);
-
 			toSend = myFactory.produceTree();
+		} catch (UserDefinitionException e) {
+			e.showError(e.getMessage());
+			toSend = new InfoNode("0", "Constant");
 		} catch (ParserException e) {
-			toSend = new InfoNode("0","Constant");
+			custom.setKillCommands(true);
+			toSend = null;
 			e.showError(e.getMessage());
 		}
 		//System.out.println("Printing Tree");
@@ -97,6 +109,11 @@ public class Parser {
 			}
 			for (String t : tokens) {
 				String token = lang.getSymbol(t);
+				//Semantics check
+				if (token.equals("NO MATCH")) {
+					killParse = true;
+					return list;
+				}
 				list.add(new InfoNode(t, token));
 			}
 
