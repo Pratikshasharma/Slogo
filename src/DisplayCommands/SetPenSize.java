@@ -9,12 +9,12 @@ public class SetPenSize extends DisplayCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
-         double index= myCommandProcess.executeList(myCommandStorage,args.get(0));
-      /*   if(!indexErrorCheck(index,myCommandStorage.getPenSizeMap().keySet())){
+         double size= myCommandProcess.executeList(myCommandStorage,args.get(0));
+         if(size<=0){
              return Double.NaN;
-         }*/
-         myCommandStorage.getActor(myCommandStorage.getActive()).setPenSizeIndex((int) index);
-         return index;
+         }
+         myCommandStorage.getActor(myCommandStorage.getActive()).setPenSizeIndex((int) size);
+         return size;
     }
 
 }

@@ -9,7 +9,7 @@ public class ArcTangent extends MathOperation{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
-         return Math.atan(myCommandProcess.executeList(myCommandStorage, args.get(0)));
+         return Math.atan(myCommandProcess.executeList(myCommandStorage, args.get(0)))*180*Math.PI;
     }
 
 }

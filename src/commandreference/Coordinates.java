@@ -10,7 +10,6 @@ public class Coordinates extends Observable {
 
 	private DoubleProperty myX;
 	private DoubleProperty myY;
-	private boolean isReadyForChange = false;;
 	
 	public Coordinates(){
 		this(0, 0);
@@ -21,17 +20,13 @@ public class Coordinates extends Observable {
 		myY = new SimpleDoubleProperty(y);
 	}
 	
-//	public void setX(double x){
-//		myX.set(x);
-//	}
-//	
-//	public void setY(double y){
-//		myY.set(y);
-//	}
-	
 	public void setCoordinates(double x, double y){
 		myY.set(y);
 		myX.set(x);
+		handleNotifications();
+	}
+
+	private void handleNotifications() {
 		setChanged();
 		notifyObservers();
 		clearChanged();
@@ -43,13 +38,5 @@ public class Coordinates extends Observable {
 	
 	public DoubleProperty getY(){
 		return myY;
-	}
-
-	public boolean isReadyForChange(){
-		return isReadyForChange;
-	}
-	
-	public void setReadForChange(boolean b){
-		isReadyForChange = b;
 	}
 }

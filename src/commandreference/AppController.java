@@ -17,18 +17,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class AppController {
-
-    class CoordinateObserver implements Observer {
-        private int myID;
-        CoordinateObserver(int id){
-            myID = id;
-        }
-        @Override
-        public void update(java.util.Observable o, Object arg) {
-            updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
-        }
-    }
-
+	
+	private class CoordinateObserver implements Observer {
+		private int myID;
+		CoordinateObserver(int id){
+			myID = id;
+		}
+		@Override
+		public void update(java.util.Observable o, Object arg) {
+			updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
+		}
+	}
+	
     private SimulationController mySimulationController;
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
@@ -71,7 +71,7 @@ public class AppController {
     }
 
     private void setVariableListObserver() {
-        mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
+        mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
             @Override
             public void onChanged(MapChangeListener.Change change) {
                 String name = (String) change.getKey();
@@ -81,7 +81,7 @@ public class AppController {
     }
 
     private void setFunctionObserver() {
-        mySimulationController.getStorage().getVariableMap().addListener(new MapChangeListener<String, Double>(){
+        mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
             @Override
             public void onChanged(MapChangeListener.Change change){
                 myGUIController.addToFunctionHistory((String) change.getKey());
@@ -123,8 +123,17 @@ public class AppController {
             updateTurtlesOnFront(turtle);
         }
     }
+    
+//    private Animatable prepareAnimation(){
+//    	Animatable a = (turtle) -> {
+//    		myGUIController.addToScene(turtle);
+//    	};
+//    	return a;
+//    }
 
     private void updateTurtlesOnFront(FrontTurtle turtle){
+//    	AnimationManager a = new AnimationManager(prepareAnimation(), turtle);
+//    	a.startAnimation();
         myGUIController.addToScene(turtle);
     }
 
@@ -219,6 +228,7 @@ public class AppController {
             }
         });
     }
+    
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
     }
@@ -248,5 +258,17 @@ public class AppController {
         int [] rgb = mySimulationController.getStorage().getPalette().get(index);
         String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
         return myString;
+    }
+   
+    private void setOnSaveButtonClicked(){
+    	myGUIController.setOnSaveButtonClicked(e -> {
+    		//TODO:
+    	});
+    }
+    
+    private void setOnLoadButtonClicked(){
+    	myGUIController.setOnLoadButtonClicked(e -> {
+    		//TODO:
+    	});
     }
 }

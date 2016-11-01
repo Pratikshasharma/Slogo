@@ -8,5 +8,5 @@ import javafx.scene.layout.BorderPane;
  */
 public interface BackgroundChangeable {
 	
-	public void changeBackground(BorderPane root);
+	public void changeBackground(BorderPane root, String color);
 }
