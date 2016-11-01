@@ -1,7 +1,11 @@
 package commandreference;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +62,7 @@ public class AppController {
     public Parent initiateApp(){
         Parent mainRoot = myGUIController.init();
         setRunButton();
+        setOnSaveButtonClicked();
         setOnLoadButtonClicked();
         mySimulationController.getStorage().addNewActors(1, DEFAULT_TURTLE);
         setActiveID(1);
@@ -281,7 +286,49 @@ public class AppController {
     	    Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
     	    Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();
     	    
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();    
+            fileChooser.setTitle("Save Logo Files");
+            fileChooser.getExtensionFilters().add(
+                    new ExtensionFilter("SLogo Files", "*.logo"));
+
+            File selectedFile = fileChooser.showSaveDialog(stage);
+            if(selectedFile!=null){
+            try {
+                FileOutputStream fos=new FileOutputStream(selectedFile);
+                BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(fos));
+                for(String var: variables.keySet()){
+                    bw.write("make " + var + " " + variables.get(var));
+                    bw.newLine();
+                }
+                for(String func: functions.keySet()){
+                    bw.write("to " + func + " [ " + functionvariables.get(func) + " ] [ ");
+                    writeNode(bw,func,functions.get(func));
+                    bw.write(" ]");
+                    bw.newLine();
+                }
+                
+                bw.close();
+           }
+           catch (IOException e1) {
+               //do nothing
+           }
+        }
     	});
+    }
+    
+    private void writeNode(BufferedWriter bw, String function, InfoNode currentNode){
+        try {
+            if(currentNode!=null){
+                bw.write(currentNode.getName() + " ");
+                for(InfoNode paramNode:currentNode.getParameters()){
+                    writeNode(bw, function, paramNode);
+                }
+                writeNode(bw,function,currentNode.next());
+            }
+        }
+        catch (IOException e) {
+            //do nothing
+        }
     }
     
     private void setOnLoadButtonClicked(){
@@ -294,13 +341,14 @@ public class AppController {
         	 File selectedFile = fileChooser.showOpenDialog(stage);
              if(selectedFile!=null){
                  try {
-                     myGUIController.addToCommandHistory("Load " + selectedFile.toString());
+                    myGUIController.addToCommandHistory("Load " + selectedFile.toString());
                     String content = new Scanner(selectedFile).useDelimiter("\\Z").next();
                     myGUIController.setConsole(content);
                     mySimulationController.receive(myGUIController.getCommandEntered());
                     myGUIController.clearConsole();
                 }
                 catch (FileNotFoundException e1) {
+                    //do nothing
                 }
              }
     	});
