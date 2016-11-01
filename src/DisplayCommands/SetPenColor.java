@@ -14,6 +14,7 @@ public class SetPenColor extends DisplayCommand{
              return Double.NaN;
          }
          myCommandStorage.getActor(myCommandStorage.getActive()).setPenColorIndex((int) index);
+         myCommandStorage.getActor(myCommandStorage.getActive()).setPenColor(myCommandStorage.getPaletteVal((int) index));
          return index;
     }
 
