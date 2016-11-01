@@ -14,7 +14,7 @@ public class AskWith extends MultipleActorCommand{
         List<Integer> askActive=new ArrayList<Integer>();
         for(int i: myCommandStorage.getActiveList()){
             myCommandStorage.setActive(i);
-            if(myCommandProcess.executeList(myCommandStorage,args.get(0))==1){
+            if(myCommandProcess.executeList(myCommandStorage,args.get(0))!=0){
                 askActive.add(i);
             }
         }
