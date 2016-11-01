@@ -1,5 +1,7 @@
 package gui;
+import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
+import java.nio.file.Path;
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -136,11 +138,13 @@ public class MainGUI {
         }
     }
 
+    
 
+    
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
         System.out.println("line added");
         if(turtle.getLine().size()<1){
-            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get()+ turtle.getImageView().getBoundsInLocal().getWidth()/2, turtle.getCoordinates().getY().get()));
         }else{
             myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
         }

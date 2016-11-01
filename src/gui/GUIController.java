@@ -113,19 +113,19 @@ public class GUIController {
     }
 
     
-    private void addPenSizeListeners (){
+    public void addPenSizeListeners (){
         myMainGUI.getPenSizeMenu().getItems().stream().forEach(size -> size.setOnAction(e-> {
            penSizeCommand.set( PEN_SIZE_COMMAND + " " + size.getText());    
         }));
     }
         
-        private void addPenColorListeners(){
+        public void addPenColorListeners(){
         myMainGUI.getPenColorMenu().getItems().stream().forEach(color ->color.setOnAction( e-> {
             penColorCommand.set(PEN_COLOR_COMMAND + " " + color.getText());
         }));  
     }
     
-    private void addBackGroundListeners(){
+    public void addBackGroundListeners(){
         myMainGUI.getBackgroundMenu().getItems().stream().forEach(item -> item.setOnAction( e->{
             backgroundColorCommand.set(BACKGROUND_COMMAND + " " + item.getText());
         }));
@@ -164,4 +164,8 @@ public class GUIController {
 	public void clearTurtleLines(FrontTurtle turtle) {
 		myMainGUI.clearTurtleLines(turtle);
 	}
+
+
+
+            
 }

@@ -18,9 +18,9 @@ public abstract class Actor implements Turtleable {
 	protected DoubleProperty myAngle;
 	protected BooleanProperty penDown; 
 	protected boolean visible;
-	private int penColorIndex;
-	private int penSizeIndex;
-	private int shapeIndex;
+	private DoubleProperty penColorIndex;
+	private DoubleProperty penSizeIndex;
+	private DoubleProperty shapeIndex;
 	private Line myLine;
 	private DoubleProperty reset;
 
@@ -92,29 +92,29 @@ public abstract class Actor implements Turtleable {
 	}    
 
 	public void setPenColorIndex(int index) {
-		penColorIndex=index;
+		penColorIndex.set(index);
 	}
 
 	@Override
-	public int getPenColorIndex() {
+	public DoubleProperty getPenColorIndex() {
 		return penColorIndex;
 	}
 
 	public void setPenSizeIndex(int index) {
-		penSizeIndex=index;
+		penSizeIndex.set(index);
 	}
 
 	@Override
-	public int getPenSizeIndex() {
+	public DoubleProperty getPenSizeIndex() {
 		return penSizeIndex;
 	}
 
 	public void setShapeIndex(int index) {
-		shapeIndex=index;
+		shapeIndex.set(index);
 	}       
 
 	@Override
-	public int getShapeIndex() {
+	public DoubleProperty getShapeIndex() {
 		return shapeIndex;
 	}	
 
@@ -148,5 +148,8 @@ public abstract class Actor implements Turtleable {
 		penDown = new SimpleBooleanProperty(true);
 		visible=true;   
 		reset = new SimpleDoubleProperty(0);
+		shapeIndex = new SimpleDoubleProperty(0);
+		penSizeIndex = new SimpleDoubleProperty(0);
+		penColorIndex = new SimpleDoubleProperty(0);
 	}
 }

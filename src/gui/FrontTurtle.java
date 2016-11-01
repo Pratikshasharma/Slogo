@@ -40,8 +40,8 @@ public class FrontTurtle {
         isPenUp = new SimpleBooleanProperty(turtle.getPenStatus().get());
         isPenUp.bind(turtle.getPenStatus());
         isVisible = true;
-        penColorIndex = turtle.getPenColorIndex();
-        penSizeIndex = turtle.getPenSizeIndex();
+        penColorIndex = turtle.getPenColorIndex().intValue();
+        penSizeIndex = turtle.getPenSizeIndex().intValue();
     }
 
     private void bindCoordinates(DoubleProperty x, DoubleProperty y) {
@@ -108,12 +108,10 @@ public class FrontTurtle {
     }
     
     public void setLineColor(Paint colorValue ){
-        System.out.println(" Line Color " + colorValue);
         lineColor = colorValue;
     }
     
     public void setLineWidth(Double widthValue){
-        System.out.println( " Line Width " + widthValue);
         lineWidth = widthValue;
     }
     
