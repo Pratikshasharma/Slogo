@@ -1,10 +1,4 @@
 package gui;
-import javafx.animation.Animation;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import commandreference.ControlButtons;
 import javafx.geometry.Insets;
@@ -18,12 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.HLineTo;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import navigationTabs.FileTab;
 import navigationTabs.Help;
 import navigationTabs.Language;
@@ -136,7 +124,6 @@ public class MainGUI {
 
     private Pane createTurtlePane(){
         myCanvas = new Pane();
-        //setBackgroundColorProps();
         System.out.println(" PREFS " + myPrefs.getBackground("white"));
         myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 2px");
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
@@ -156,11 +143,11 @@ public class MainGUI {
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
-
+    
     public FileTab getMyFileTab(){
         return myFileTab;
     }
-
+    
     public void updateTurtleLocation(FrontTurtle turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
@@ -171,17 +158,23 @@ public class MainGUI {
             addTurtleOnScene(turtle);
             return;
         }
+        
+        // clear screen remove the lines and set the commands
+        
+        // animate 
         if(turtle.isPenUp()){
             addLineOnCanvas(turtle, x, y);
         }
     }
 
-    
-
 
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
         System.out.println("line added");
-        myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        if(turtle.getLine().size()<1){
+            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }else{
+            myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }
     }
 
     public Menu getLanguageMenu(){
@@ -240,8 +233,7 @@ public class MainGUI {
         return myTools.getPenColorSubMenu();
     }
     public void addColorOption(String key){
-        MenuItem newOption = new MenuItem(key);
-        myTools.getPenColorSubMenu().getItems().add(newOption);
+        myTools.addColorOption(key);
     }
 
     public void setBackgroundColor(String backgroundRGB){
@@ -250,18 +242,9 @@ public class MainGUI {
         p.changeBackground(myRoot);    
     }
 
-    //    private BackgroundChangeable getBackgroundChanger(){
-    //        BackgroundChangeable backgroundChanger = (root) -> {  
-    //            System.out.println(" Color " + backgroundColor.toString());
-    //            VBox pane = (VBox) root.getLeft();
-    //            Pane p = (Pane) pane.getChildren().get(0);
-    //            p.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width:4px");
-    //            root.setLeft(pane);
-    //        };
-    //        return backgroundChanger;
-    //    }
 
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
+    
 }  

@@ -17,23 +17,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class AppController {
-	
-	class CoordinateObserver implements Observer {
-		private int myID;
-		CoordinateObserver(int id){
-			myID = id;
-		}
-		@Override
-		public void update(java.util.Observable o, Object arg) {
-			updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
-		}
-	}
-	
+
+    class CoordinateObserver implements Observer {
+        private int myID;
+        CoordinateObserver(int id){
+            myID = id;
+        }
+        @Override
+        public void update(java.util.Observable o, Object arg) {
+            updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(myID));
+        }
+    }
+
     private SimulationController mySimulationController;
     private GUIController myGUIController;
     private TurtleManager myTurtleManager;
     private final String DEFAULT_TURTLE = "turtle.png";
-    private String myLanguage;
 
     public AppController() {
         initializeGUIController();
@@ -100,16 +99,15 @@ public class AppController {
                 updateTurtlesOnFront(myTurtleManager.getTurtleAtIndex(id));
             }
 
-			private void processNewTurtle(Turtleable newTurtle, int id) {
-				myTurtleManager.addTurtle(id, newTurtle);
+            private void processNewTurtle(Turtleable newTurtle, int id) {
+                myTurtleManager.addTurtle(id, newTurtle);
                 setCoordinateListeners(id, newTurtle);
                 newTurtle.getImageView().setOnMouseClicked(e -> {
                     setActiveID(id);
                 });
-			}
+            }
         });
     }
-
     private void setActiveID(int id) {
         mySimulationController.getStorage().setActive(id);
         myTurtleManager.setActiveTurtle(id);
@@ -137,7 +135,7 @@ public class AppController {
                 int id = getUnusedID();
                 mySimulationController.getStorage().addNewActors(id, filePath);
             } catch (MalformedURLException error) {
-               ErrorAlert alert = new ErrorAlert("Image File not Loaded");
+                ErrorAlert alert = new ErrorAlert("Image File not Loaded");
             }
         });
     }
@@ -183,11 +181,11 @@ public class AppController {
                                  String newValue) {
                 Double colorIndex = mySimulationController.receive(newValue.toString());
                 updateLineColor(colorIndex.intValue());
-                
+
             }
         });
     }
-    
+
     private void addBackgroundColorListener(){
         myGUIController.getBackGroundColorCommand().addListener(new ChangeListener <String>(){
             @Override
@@ -195,7 +193,7 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double colorIndex = mySimulationController.receive(newValue.toString());
-                System.out.println(" STring " + colorIndex);
+                
                 updateBackgroundColor(colorIndex.intValue());  
             }
         });
@@ -208,12 +206,11 @@ public class AppController {
                                  String oldValue,
                                  String newValue) {
                 Double sizeIndex = mySimulationController.receive(newValue.toString());
-                System.out.println( " Comes here ");
                 updateLineSize(sizeIndex);
             }
         });   
     }
-    
+
     private void addColorMapListener(){
         mySimulationController.getStorage().getPalette().addListener(new MapChangeListener<Integer, int[]>() {
             @Override
@@ -225,28 +222,28 @@ public class AppController {
     public MenuItem getNewWindowMenu(){
         return myGUIController.getNewWindowMenu();
     }
-    
+
     private void updateLineColor(Integer colorIndex){
         FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
         activeTurtle.setLineColor(getColor(colorIndex));
     }
-    
+
     private Paint getColor(Integer Index){
         int[] colorValues = mySimulationController.getStorage().getPalette().get(Index);
+
         Color color = Color.rgb(colorValues[0], colorValues[1], colorValues[2]); 
         return color;
     }
-    
+
     private void updateLineSize(Double lineSize){
-        System.out.println( " Comes here ?? ");
         FrontTurtle activeTurtle = myTurtleManager.getActiveTurtle();
         activeTurtle.setLineWidth(lineSize);
     }
-    
+
     private void updateBackgroundColor(Integer colorIndex){
         myGUIController.setBackgroundColor(getRGBString(colorIndex));
     }   
-    
+
     private String getRGBString(Integer index){
         int [] rgb = mySimulationController.getStorage().getPalette().get(index);
         String myString = "rgb(" + rgb[0] + "," + rgb[1] + ", " + rgb[2] + ")";
