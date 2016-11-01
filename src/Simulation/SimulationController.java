@@ -30,10 +30,10 @@ public class SimulationController {
 //    	for (String line : lines) {
 //    		System.out.println(line);
 //    	}
+    	myCommandStorage.setKillCommands(false);
     	InfoNode test=simParser.parseText(lines, myCommandStorage);
     	
-    	//test.printTree();
-    	myCommandStorage.setKillCommands(false);
+    	simParser.printTree(test);
     	double result=myCommandProcess.executeList(myCommandStorage,test);
 //    	System.out.println(result);
     	return result;
