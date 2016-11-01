@@ -25,7 +25,6 @@ public class TreeFactory {
 	private Map<String, Boolean> myActiveMethods;
 	private InfoNode ZERO_NODE = new InfoNode("0", "Constant");
 	private InfoNode NULL_NODE = null;
-	private boolean killParse = false;
 
 	private ResourceBundle inputResource = ResourceBundle.getBundle("resources/CommandInputs");
 
@@ -52,35 +51,26 @@ public class TreeFactory {
 
 	public InfoNode produceTree() {
 		InfoNode first = ZERO_NODE;
-		try {
-			first = createTree(myList.pop());
-			InfoNode current = first;
+		first = createTree(myList.pop());
+		InfoNode current = first;
 
-			while (!myList.isEmpty()) {
-				InfoNode nextNode = myList.pop();
-				if (nextNode.getToken().equals("ListEnd")) {
-					return first;
-				}
-				InfoNode nextTree = createTree(nextNode);
-				if (nextTree != null) {
-					current.setNext(nextTree);
-				}
-				if (killParse) {
-					return first;
-				}
-				current = current.next();
+		while (!myList.isEmpty()) {
+			InfoNode nextNode = myList.pop();
+			if (nextNode.getToken().equals("ListEnd")) {
+				return first;
 			}
-		} catch (ParserException e) {
-			myCustom.setKillCommands(true);
-			e.showError(e.getMessage());
-			return first;
+			InfoNode nextTree = createTree(nextNode);
+			if (nextTree != null) {
+				current.setNext(nextTree);
+			}
+
+			current = current.next();
 		}
-		
 
 		return first;
 	}
 
-	private InfoNode createTree(InfoNode current) {
+	private InfoNode createTree(InfoNode current) throws UserDefinitionException {
 		InfoNode nextItem;
 		int intParam;
 		String currentToken = current.getToken();
@@ -104,10 +94,10 @@ public class TreeFactory {
 				current = appendList(nextItem, grouping);
 				return current;
 			case ("ListStart"):
-				current = produceTree();
-				break;
+				// current = produceTree();
+				// break;
+				throw new ParserException("Cannot start command with a list");
 			case ("ListEnd"):
-				
 				return NULL_NODE;
 			default:
 				stringParam = inputResource.getString(currentToken);
@@ -148,32 +138,25 @@ public class TreeFactory {
 			}
 
 		} catch (NoSuchElementException e) {
-			myCustom.setKillCommands(true);
+			// myCustom.setKillCommands(true);
 			throw new ParserException("error in createTree: possibly not enough parameters given");
-		} catch (UserDefinitionException e) {
-			e.showError(e.getMessage());
-			killParse = true;
-			return ZERO_NODE;
 		}
 
 		return current;
 	}
-	
+
 	private InfoNode makeUserDefined(InfoNode current, InfoNode command) {
 		InfoNode commandName = command;
 		current.addParameter(commandName);
 		InfoNode nextTo = myList.pop();
-		Map<String, Double> variableMap = myCustom.getVariableMap();
 		List<InfoNode> varList = new ArrayList<InfoNode>();
 		if (nextTo.getToken().equals("ListStart")) {
 			varList = loopList(false, true);
 			for (InfoNode e : varList) {
-				if (variableMap.keySet().contains(e.getName()) || myLocalVar.contains(e.getName())) {
-
-					throw new UserDefinitionException("User Defined: Cannot use global variable as local variable.");
-				}
 				myLocalVar.add(e.getName());
 			}
+		} else {
+			throw new ParserException("Incorrect method (TO) creating syntax");
 		}
 		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
@@ -203,21 +186,40 @@ public class TreeFactory {
 		}
 		return first;
 	}
-	
+
 	private List<InfoNode> loopList(boolean variableBool, boolean userBool) {
 		List<InfoNode> list = new ArrayList<InfoNode>();
 		InfoNode current = myList.pop();
+		// FOR and DOTIMES add the first item as a local variable
+		System.out.println("varbook" + variableBool);
 		if (variableBool) {
 			myLocalVar.add(current.getName());
 		}
 		while (!current.getToken().equals("ListEnd") && !current.getToken().equals("GroupEnd")) {
+			// TO method needs to add all as
 			if (userBool) {
-				myLocalVar.add(current.getName());
+				System.out.println("current name : " + current.getName());
+				checkPreExistence(current);
 			}
 			list.add(createTree(current));
 			current = myList.pop();
 		}
 		return list;
+	}
+
+	private void checkPreExistence(InfoNode e) {
+		Map<String, Double> variableMap = myCustom.getVariableMap();
+		for (String n : variableMap.keySet()) {
+			System.out.println("keyset: " + n);
+		}
+		for (String f : myLocalVar) {
+			System.out.println("localvar: " + f);
+		}
+		if (!variableMap.keySet().contains(e.getName()) && !myLocalVar.contains(e.getName())) {
+			myLocalVar.add(e.getName());
+		} else {
+			throw new UserDefinitionException("User Defined: Cannot use global variable as local variable.");
+		}
 	}
 
 	private void checkExistence(InfoNode current) {
