@@ -1,6 +1,8 @@
 package commandreference;
 
 import java.net.MalformedURLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Observer;
 import Actors.Actor;
 import Simulation.SimulationController;
@@ -11,6 +13,7 @@ import gui.GUIController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
@@ -267,7 +270,10 @@ public class AppController {
    
     private void setOnSaveButtonClicked(){
     	myGUIController.setOnSaveButtonClicked(e -> {
-    		//TODO:
+    	    Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
+    	    Map<String,InfoNode> functions=mySimulationController.getStorage().getFunctionMap();
+    	    Map<String,List<String>> functionvariables=mySimulationController.getStorage().getFunctionVariablesMap();
+    	    
     	});
     }
     
