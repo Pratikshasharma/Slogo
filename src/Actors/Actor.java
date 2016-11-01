@@ -56,7 +56,7 @@ public abstract class Actor implements Turtleable {
 		degreesMoved=angle-myAngle.get();
 		myAngle.set(angle%DEGREES_CIRCLE);
 	}
-	
+
 	public double getAngle(){
 		return myAngle.get();
 	}
@@ -126,29 +126,20 @@ public abstract class Actor implements Turtleable {
 		return myLine;
 	}
 
-	
-	public boolean isReadyForChange(){
-		return coordinates.isReadyForChange();
-	}
-	
-	public void setReadyForChange(boolean b){
-		coordinates.setReadForChange(b);
-	}
-	
 	public void setReset(){
-	    reset.set(reset.get()+1);
+		reset.set(reset.get()+1);
 	}	
 
-        private void init(double x, double y, String imageFilePath){
-                coordinates = new Coordinates(x, y);
-                myAngle = new SimpleDoubleProperty(0);
-                myImage = new ImageView(imageFilePath);
-                myImage.setFitWidth(40);
-                myImage.setFitHeight(40);
-                myLine = new Line();
-                distanceTraveled=0;
-                penDown=true;
-                visible=true;       
-                reset.set(0);
-        }
+	private void init(double x, double y, String imageFilePath){
+		coordinates = new Coordinates(x, y);
+		myAngle = new SimpleDoubleProperty(0);
+		myImage = new ImageView(imageFilePath);
+		myImage.setFitWidth(40);
+		myImage.setFitHeight(40);
+		myLine = new Line();
+		distanceTraveled=0;
+		penDown=true;
+		visible=true;   
+		reset = new SimpleDoubleProperty(0);
+	}
 }
