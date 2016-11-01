@@ -28,7 +28,7 @@ public abstract class ActorCommand implements Command{
         }
         return result;
     }
-
+    
     @Override
     public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);
 
