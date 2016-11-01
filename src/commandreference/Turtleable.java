@@ -18,14 +18,7 @@ public interface Turtleable {
 	
 	public Coordinates getCoordinates();
 	
-	public DoubleProperty getPenColorIndex();
-	
-	public DoubleProperty getPenSizeIndex();
-	
-	public DoubleProperty getShapeIndex();
-	
 	public BooleanProperty getPenStatus();
-	
 	
 	public ImageView getImageView();
 	

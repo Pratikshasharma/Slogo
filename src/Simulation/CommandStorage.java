@@ -7,15 +7,9 @@ import java.util.Map;
 import Actors.Actor;
 import Actors.Turtle;
 import Simulation.Node.InfoNode;
-<<<<<<< HEAD
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-=======
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
->>>>>>> d5a8f642dae57ee3f100611eb802a80a72e58689
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class CommandStorage extends Storage {
@@ -26,20 +20,7 @@ public class CommandStorage extends Storage {
     private ObservableMap<String,InfoNode> functions;
     private Map<String,List<String>> functionvariables;
     private ObservableMap<Integer,int[]> colorMap;
-<<<<<<< HEAD
     private IntegerProperty backgroundColorIndex;
-    private boolean killcommands;
-
-    public CommandStorage () {
-        actors = FXCollections.observableMap(new HashMap<Integer,Actor>());
-        active = new ArrayList<Integer>();
-        variables = FXCollections.observableMap(new HashMap<String,Double>());
-        functions = FXCollections.observableMap(new HashMap<String,InfoNode>());
-        functionvariables = new HashMap<String,List<String>>();
-        colorMap = FXCollections.observableMap( new HashMap<Integer,int[]>());
-        backgroundColorIndex = new SimpleIntegerProperty();
-=======
-    private DoubleProperty backgroundindex ;
     private boolean killcommands;
 
     public CommandStorage () {
@@ -49,9 +30,8 @@ public class CommandStorage extends Storage {
         functions=FXCollections.observableMap(new HashMap<String,InfoNode>());
         functionvariables=new HashMap<String,List<String>>();
         colorMap=FXCollections.observableMap( new HashMap<Integer,int[]>());
-        backgroundindex = new SimpleDoubleProperty(0);
-        backgroundindex.set(1);
->>>>>>> d5a8f642dae57ee3f100611eb802a80a72e58689
+        backgroundColorIndex = new SimpleIntegerProperty(0);
+        backgroundColorIndex.set(1);
         addColorValues();
         killcommands = false;
     }
@@ -88,11 +68,7 @@ public class CommandStorage extends Storage {
     }
     
     public void setBackgroundIndex(int index){
-<<<<<<< HEAD
         backgroundColorIndex.set(index);
-=======
-        backgroundindex.set(index);
->>>>>>> d5a8f642dae57ee3f100611eb802a80a72e58689
     }
     
     public void setPaletteVal(int index, int[] color){
@@ -126,13 +102,8 @@ public class CommandStorage extends Storage {
         return active.get(0);
     }
     
-<<<<<<< HEAD
     public IntegerProperty getBackgroundIndex(){
         return backgroundColorIndex;
-=======
-    public DoubleProperty getBackgroundIndex(){
-        return backgroundindex;
->>>>>>> d5a8f642dae57ee3f100611eb802a80a72e58689
     }
     
     public int[] getPaletteVal(int key){

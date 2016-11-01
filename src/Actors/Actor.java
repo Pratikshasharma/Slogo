@@ -12,7 +12,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 public abstract class Actor implements Turtleable {
@@ -90,38 +89,29 @@ public abstract class Actor implements Turtleable {
 		visible=vis;
 	}
 
-
 	public boolean getVisibility(){
 		return visible;
 	}    
 
 	public void setPenColorIndex(int index) {
-		penColorIndex.set(index);
-	}
-
-	@Override
-	public DoubleProperty getPenColorIndex() {
+		penColorIndex = index;
+	}     
+	
+	public int getPenColorIndex(){
 		return penColorIndex;
 	}
-
-	public void setPenSizeIndex(int index) {
-		penSizeIndex.set(index);
+	
+	public void setPenSizeIndex(int size){
+		penSizeIndex = size;
 	}
-
-	@Override
-	public DoubleProperty getPenSizeIndex() {
-		return penSizeIndex;
+	
+	public void setShapeIndex(int dex){
+		shapeIndex = dex;
 	}
-
-	public void setShapeIndex(int index) {
-		shapeIndex.set(index);
-	}       
-
-	@Override
-	public DoubleProperty getShapeIndex() {
+	
+	public int getShapeIndex(){
 		return shapeIndex;
-	}	
-
+	}
 
 	@Override
 	public ImageView getImageView(){

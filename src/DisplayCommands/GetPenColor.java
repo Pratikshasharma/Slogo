@@ -9,7 +9,7 @@ public class GetPenColor extends DisplayCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
-         return myCommandStorage.getActor(myCommandStorage.getActive()).getPenColorIndex().get();
+         return myCommandStorage.getActor(myCommandStorage.getActive()).getPenColorIndex();
     }
 
 }
