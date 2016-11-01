@@ -5,6 +5,7 @@ import Actors.Actor;
 import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
+import gui.MainGUI;
 
 public class Backward extends ActorCommand{
     @Override
@@ -17,6 +18,12 @@ public class Backward extends ActorCommand{
             pixels+=segmentedpixels;
             x+=Math.cos(actor.getAngle()/180*Math.PI)*segmentedpixels;
             y+=Math.sin(actor.getAngle()/180*Math.PI)*segmentedpixels;
+            if(x>MainGUI.TURTLE_PANE_WIDTH){
+                
+            }
+            if(y>MainGUI.TURTLE_PANE_HEIGHT){
+                
+            }
             actor.setPos(setValErrorCheck(actor.getX().get()-x,actor.getX().get()),setValErrorCheck(actor.getY().get()-y,actor.getY().get()));
         }
         return pixels;
