@@ -60,9 +60,6 @@ public class MainGUI {
 
     private VBox createLeft(){
         VBox left = new VBox();   
-        //setBackgroundColorProps();    
-//        setPenColorProps();
-//        setPenWidthProps();
         left.getChildren().addAll(createTurtlePane(), myConsole.getTextField());
         return left;
     }
@@ -73,22 +70,6 @@ public class MainGUI {
         return top;
     }
 
-//    private void setPenColorProps(){
-//        for(MenuItem m : myTools.getPenColorSubMenu().getItems()){
-//            m.setOnAction(e -> {
-//                myPrefs.setPenColor(m.getText().toLowerCase());
-//            });
-//        }
-//    }
-//
-//    private void setPenWidthProps(){
-//        for(MenuItem m : myTools.getPenSizeSubMenu().getItems()){
-//            m.setOnAction(e -> {
-//                myPrefs.setPenWidth(Integer.valueOf(m.getText().toLowerCase()));
-//            });
-//        }
-//    }
-
     public void updateActiveTurtleInfo(int id, FrontTurtle turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
     }
@@ -96,7 +77,7 @@ public class MainGUI {
     private HBox createBottom(){
         HBox bottomBox = new HBox(20);
         VBox activeLabels = new VBox(20);
-        VBox controlButtons = new VBox(20);
+        VBox controlButtons = new VBox();
         setOnClearButton();
         controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton(), myControlButtons.getSaveButton(), myControlButtons.getLoadButton());
         activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
@@ -113,8 +94,6 @@ public class MainGUI {
 
     private Pane createTurtlePane(){
         myCanvas = new Pane();
-        //setBackgroundColorProps();
-        System.out.println(" PREFS " + myPrefs.getBackground("white"));
         myCanvas.setStyle("-fx-background-color: " + myPrefs.getBackground("white") + "; -fx-border-color: black; -fx-border-width: 2px");
         myCanvas.setPrefSize(TURTLE_PANE_WIDTH,TURTLE_PANE_HEIGHT);
         return myCanvas;
@@ -133,29 +112,37 @@ public class MainGUI {
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
-
+    
     public FileTab getMyFileTab(){
         return myFileTab;
     }
-
+    
     public void updateTurtleLocation(FrontTurtle turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
-        System.out.println(x + " " + y);
         turtle.getImageView().setX(turtle.getCoordinates().getX().get());
         turtle.getImageView().setY(turtle.getCoordinates().getY().get());
         if(x == 0 && y == 0){
             addTurtleOnScene(turtle);
             return;
         }
+        
+        // clear screen remove the lines and set the commands
+        
+        // animate 
         if(turtle.isPenUp()){
             addLineOnCanvas(turtle, x, y);
         }
     }
 
+
     private void addLineOnCanvas(FrontTurtle turtle, double x, double y){
         System.out.println("line added");
-        myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        if(turtle.getLine().size()<1){
+            myCanvas.getChildren().add(turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }else{
+            myCanvas.getChildren().add(turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get()));
+        }
     }
 
     public Menu getLanguageMenu(){
@@ -215,22 +202,23 @@ public class MainGUI {
     }
     
     public void addColorOption(String key){
-        MenuItem newOption = new MenuItem(key);
-        myTools.getPenColorSubMenu().getItems().add(newOption);
+        myTools.addColorOption(key);
     }
 
     public void setBackgroundColor(String backgroundRGB){
         String backgroundColor = backgroundRGB;
         BackgroundChangeable p = getBackgroundChanger();
-        p.changeBackground(myRoot, backgroundColor);    
+        p.changeBackground(myRoot, backgroundColor); 
+        setBackgroundPreference(backgroundRGB);
     }
 
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
     
-    public void setBackgroundPreference(String color){
+    private void setBackgroundPreference(String color){
     	myPrefs.setBackground(color);
+    	System.out.println("here");
     }
     
     public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
