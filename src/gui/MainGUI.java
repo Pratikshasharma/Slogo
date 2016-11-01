@@ -197,9 +197,8 @@ public class MainGUI {
     }
 
     public void setBackgroundColor(String backgroundRGB){
-        String backgroundColor = backgroundRGB;
         BackgroundChangeable p = getBackgroundChanger();
-        p.changeBackground(myRoot, backgroundColor); 
+        p.changeBackground(myRoot, backgroundRGB); 
         setBackgroundPreference(backgroundRGB);
     }
 
@@ -209,7 +208,6 @@ public class MainGUI {
     
     private void setBackgroundPreference(String color){
     	myPrefs.setBackground(color);
-    	System.out.println("here");
     }
     
     public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
