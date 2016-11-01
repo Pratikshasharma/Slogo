@@ -125,7 +125,7 @@ public abstract class Actor implements Turtleable {
 	public Line getLine(){
 		return myLine;
 	}
-
+	
 	public void setReset(){
 		reset.set(reset.get()+1);
 	}	
