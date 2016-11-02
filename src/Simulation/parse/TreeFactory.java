@@ -234,7 +234,7 @@ public class TreeFactory {
 		if (current.getToken().equals("Variable")) {
 			mapKey = myCustom.getVariableMap().keySet();
 			if (!mapKey.contains(name) && !myLocalVar.contains(name)) {
-				throw new ParserException("undefined variable name (inside checkExistence): " + name);
+				throw new ParserException("undefined variable name or name of method's local variable: " + name);
 			}
 		}
 		if (current.getToken().equals("Command")) {
