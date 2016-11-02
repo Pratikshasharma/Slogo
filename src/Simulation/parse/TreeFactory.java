@@ -13,16 +13,19 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import SlogoException.ParserException;
 import SlogoException.UserDefinitionException;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
+/**
+ * The class that creates the expression tree of InfoNodes through recursive methods. 
+ * 
+ * @author joykim
+ *
+ */
 public class TreeFactory {
 	private Deque<InfoNode> myList;
 	private CommandStorage myCustom;
 	private List<String> myLocalVar;
 	private Map<String, String> myLocalFunc;
 	private Map<String, Boolean> mySpecialList;
-	private Map<String, Boolean> myActiveMethods;
 	private InfoNode ZERO_NODE = new InfoNode("0", "Constant");
 	private InfoNode NULL_NODE = null;
 
@@ -41,6 +44,7 @@ public class TreeFactory {
 		this(new CommandStorage(), list);
 	}
 
+	//lists that require loopList, lists that turn into lists, not trees.
 	private void initializeSpecialList() {
 		mySpecialList = new HashMap<String, Boolean>();
 		mySpecialList.put("DoTimes", true);
@@ -70,6 +74,12 @@ public class TreeFactory {
 		return first;
 	}
 
+	/**
+	 * Creates a branch of the tree.
+	 * @param current
+	 * @return InfoNode current
+	 * @throws UserDefinitionException
+	 */
 	private InfoNode createTree(InfoNode current) throws UserDefinitionException {
 		InfoNode nextItem;
 		int intParam;
@@ -79,11 +89,9 @@ public class TreeFactory {
 
 		try {
 			switch (currentToken) {
-			case ("Constant"):
-				return current;
 			case ("Variable"):
 				checkExistence(current);
-				return current;
+				break;
 			case ("Command"):
 				checkExistence(current);
 				stringParam = Integer.toString((myCustom.getFunctionVariables(currentName).size()));
@@ -94,11 +102,12 @@ public class TreeFactory {
 				current = appendList(nextItem, grouping);
 				return current;
 			case ("ListStart"):
-				// current = produceTree();
-				// break;
 				throw new ParserException("Cannot start command with a list");
 			case ("ListEnd"):
 				return NULL_NODE;
+			case ("MakeUserInstruction"):
+				current = makeUserDefined(current);
+				return current;
 			default:
 				stringParam = inputResource.getString(currentToken);
 				break;
@@ -108,57 +117,47 @@ public class TreeFactory {
 			while (intParam > 0) {
 				nextItem = myList.pop();
 				if (currentToken.equals("MakeVariable")) {
-					boolean globalVarCheck = false;
-					for (List<String> e : myCustom.getFunctionVariablesMap().values()){
-						if (e.contains(nextItem.getName())) {
-							globalVarCheck = true;
-						}
-							
-					}
-					if (!globalVarCheck) {
-						myLocalVar.add(nextItem.getName());
-					} else {
-						throw new ParserException("Cannot use function local variables as global variables");
-					}
-				}
-				if (currentToken.equals("MakeUserInstruction")) {
-					current = makeUserDefined(current, nextItem);
-					return current;
+					checkExistingLocal(nextItem);
 				}
 				if (nextItem.getToken().equals("ListEnd")) {
 					throw new NoSuchElementException();
-
 				}
 				if (nextItem.getToken().equals("ListStart")) {
 					if (mySpecialList.containsKey(currentToken)) {
 						List<InfoNode> toAdd = loopList(mySpecialList.get(currentToken), false);
-
 						current = appendList(current, toAdd);
-
 					} else {
 						nextItem = produceTree();
 						current.addParameter(nextItem);
-
 					}
 				} else {
 					nextItem = createTree(nextItem);
 					current.addParameter(nextItem);
-
 				}
 				intParam--;
 			}
-
 		} catch (NoSuchElementException e) {
-			// myCustom.setKillCommands(true);
 			throw new ParserException("error in createTree: possibly not enough parameters given");
 		}
-
 		return current;
 	}
 
-	private InfoNode makeUserDefined(InfoNode current, InfoNode command) {
-		InfoNode commandName = command;
-		current.addParameter(commandName);
+
+
+	/**
+	 * A more specific method that takes care of the creation User Defined methods, 
+	 * through the method TO
+	 * @param current
+	 * @param command
+	 * @return
+	 */
+	private InfoNode makeUserDefined(InfoNode current) {
+		InfoNode commandName = myList.pop();
+		if (commandName.getToken().equals("Command")) {
+			current.addParameter(commandName);
+		} else {
+			throw new UserDefinitionException("No command name, improper syntax");
+		}
 		InfoNode nextTo = myList.pop();
 		List<InfoNode> varList = new ArrayList<InfoNode>();
 		if (nextTo.getToken().equals("ListStart")) {
@@ -167,7 +166,7 @@ public class TreeFactory {
 				myLocalVar.add(e.getName());
 			}
 		} else {
-			throw new ParserException("Incorrect method (TO) creating syntax");
+			throw new UserDefinitionException("Incorrect method creating syntax (TO)");
 		}
 		myLocalFunc.put(commandName.getName(), Integer.toString(varList.size()));
 		current = appendList(current, varList);
@@ -175,12 +174,17 @@ public class TreeFactory {
 		nextTo = myList.pop();
 		if (nextTo.getToken().equals("ListStart")) {
 			nextTo = produceTree();
-
 		}
 		current.addParameter(nextTo);
 		return current;
 	}
 
+	/**
+	 * Adds a list of InfoNodes to the parameter list of current. 
+	 * @param current
+	 * @param list
+	 * @return
+	 */
 	private InfoNode appendList(InfoNode current, List<InfoNode> list) {
 		for (InfoNode node : list) {
 			current.addParameter(node);
@@ -188,29 +192,24 @@ public class TreeFactory {
 		return current;
 	}
 
-	private InfoNode regularList() {
-		InfoNode first = myList.pop();
-		InfoNode current = first;
-		while (!first.getToken().equals("ListEnd")) {
-			current = createTree(current);
-			current = myList.pop();
-		}
-		return first;
-	}
-
+	/**
+	 * The special method to loop through a list (indicated by brackets) instead
+	 * of the standard making the contents of a list into a tree.
+	 * @param variableBool
+	 * @param userBool
+	 * @return
+	 */
 	private List<InfoNode> loopList(boolean variableBool, boolean userBool) {
 		List<InfoNode> list = new ArrayList<InfoNode>();
 		InfoNode current = myList.pop();
 		// FOR and DOTIMES add the first item as a local variable
-		System.out.println("varbook" + variableBool);
 		if (variableBool) {
 			myLocalVar.add(current.getName());
 		}
 		while (!current.getToken().equals("ListEnd") && !current.getToken().equals("GroupEnd")) {
 			// TO method needs to add all as
 			if (userBool) {
-				System.out.println("current name : " + current.getName());
-				checkPreExistence(current);
+				checkExistingGlobal(current);
 			}
 			list.add(createTree(current));
 			current = myList.pop();
@@ -218,16 +217,42 @@ public class TreeFactory {
 		return list;
 	}
 
-	private void checkPreExistence(InfoNode e) {
+	/**
+	 * A method to check that a desired variable name for the creation of a custom method 
+	 * does not already exist as a global variable.
+	 * @param current
+	 * @throws UserDefinitionException
+	 */
+	private void checkExistingGlobal(InfoNode current) {
 		Map<String, Double> variableMap = myCustom.getVariableMap();
 
-		if (!variableMap.keySet().contains(e.getName()) && !myLocalVar.contains(e.getName())) {
-			myLocalVar.add(e.getName());
+		if (!variableMap.keySet().contains(current.getName()) && !myLocalVar.contains(current.getName())) {
+			myLocalVar.add(current.getName());
 		} else {
 			throw new UserDefinitionException("User Defined: Cannot use global variable as local variable.");
 		}
 	}
+	
+	private void checkExistingLocal(InfoNode nextItem) {
+		boolean globalVarCheck = false;
+		for (List<String> e : myCustom.getFunctionVariablesMap().values()){
+			if (e.contains(nextItem.getName())) {
+				globalVarCheck = true;
+			}		
+		}
+		if (!globalVarCheck) {
+			myLocalVar.add(nextItem.getName());
+		} else {
+			throw new ParserException("Cannot use function local variables as global variables");
+		}
+	}
 
+	/**
+	 * A method that checks whether the desired variable or functions exists and is ready
+	 * for use. 
+	 * @param current
+	 * @throws ParserException
+	 */
 	private void checkExistence(InfoNode current) {
 		String name = current.getName();
 		Set<String> mapKey;
@@ -241,7 +266,6 @@ public class TreeFactory {
 			mapKey = myCustom.getFunctionMap().keySet();
 			if (!mapKey.contains(name) && !myLocalFunc.keySet().contains(name)) {
 				throw new ParserException("undefined function name (inside checkExistence method): " + name);
-				// message: undefined function name
 			}
 		}
 	}
