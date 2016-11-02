@@ -31,6 +31,8 @@ public class AppController {
 	private static final String BACKGROUND_COMMAND = "SETBACKGROUND ";
 	private static final String PEN_COLOR_COMMAND = "setpencolor " ;
 	private static final String PEN_SIZE_COMMAND = "setpensize ";
+	private final String PEN_DOWN_COMMAND = "pendown";
+	private final String PEN_UP_COMMAND = "penup";
 
 	private class CoordinateObserver implements Observer {
 		private int myID;
@@ -84,6 +86,7 @@ public class AppController {
 		setBackgroundColorMenuHandler();
 		setPenColorMenuHandler();
 		setPenSizeMenuHandler();
+		setOnTogglePenClicked();
 		addColorMapListener();
 	}
 
@@ -101,7 +104,9 @@ public class AppController {
 		mySimulationController.getStorage().getFunctionMap().addListener(new MapChangeListener<String, InfoNode>(){
 			@Override
 			public void onChanged(MapChangeListener.Change change){
-				myGUIController.addToFunctionHistory((String) change.getKey());
+				if(!myGUIController.functionHistoryContains((String) change.getKey())){
+					myGUIController.addToFunctionHistory((String) change.getKey());
+				}
 			}
 		});
 	}
@@ -165,7 +170,7 @@ public class AppController {
 
 	private int getUnusedID(){
 		int i = 0;
-		for(i = 0; i < mySimulationController.getStorage().getActorMap().keySet().size(); i++){
+		for(i = 1; i <= mySimulationController.getStorage().getActorMap().keySet().size(); i++){
 			if(!mySimulationController.getStorage().getActorMap().keySet().contains(i)){
 				return i;
 			}
@@ -394,6 +399,18 @@ public class AppController {
 					//do nothing
 				}
 			}
+		});
+	}
+	
+	private void setOnTogglePenClicked(){
+		myGUIController.setOnTogglePen(e -> {
+			if(myTurtleManager.getActiveTurtle().getPenStatus().get()){
+				mySimulationController.receive(PEN_UP_COMMAND);
+			} else {
+				mySimulationController.receive(PEN_DOWN_COMMAND);
+			}
+			System.out.println("here");
+			updateActiveLabels();
 		});
 	}
 

@@ -133,4 +133,12 @@ public class GUIController {
     public Menu getBackgroundMenu(){
     	return myMainGUI.getBackgroundMenu();
     }
+    
+    public boolean functionHistoryContains(String func){
+    	return myMainGUI.getHistory().getFunctionsList().getItems().contains(func);
+    }
+    
+    public void setOnTogglePen(EventHandler<? super MouseEvent> handler){
+    	myMainGUI.setOnTogglePenClicked(handler);
+    }
 }

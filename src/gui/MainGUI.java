@@ -250,7 +250,6 @@ public class MainGUI {
     }
 
     public void setBackgroundColor(String backgroundRGB){
-    	System.out.println("here");
         getBackgroundChanger().changeBackground(myRoot, backgroundRGB); 
         setBackgroundPreference(backgroundRGB);
     }
@@ -275,5 +274,9 @@ public class MainGUI {
 		for(Line l : turtle.getLine()){
 			myCanvas.getChildren().remove(l);
 		}
+	}
+	
+	public void setOnTogglePenClicked(EventHandler<? super MouseEvent> handler){
+		myControlButtons.setOnTogglePen(handler);
 	}
 }  
