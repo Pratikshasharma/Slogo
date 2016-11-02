@@ -409,7 +409,6 @@ public class AppController {
 			} else {
 				mySimulationController.receive(PEN_DOWN_COMMAND);
 			}
-			System.out.println("here");
 			updateActiveLabels();
 		});
 	}
