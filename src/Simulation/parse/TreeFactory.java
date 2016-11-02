@@ -108,7 +108,18 @@ public class TreeFactory {
 			while (intParam > 0) {
 				nextItem = myList.pop();
 				if (currentToken.equals("MakeVariable")) {
-					myLocalVar.add(nextItem.getName());
+					boolean globalVarCheck = false;
+					for (List<String> e : myCustom.getFunctionVariablesMap().values()){
+						if (e.contains(nextItem.getName())) {
+							globalVarCheck = true;
+						}
+							
+					}
+					if (!globalVarCheck) {
+						myLocalVar.add(nextItem.getName());
+					} else {
+						throw new ParserException("Cannot use function local variables as global variables");
+					}
 				}
 				if (currentToken.equals("MakeUserInstruction")) {
 					current = makeUserDefined(current, nextItem);
@@ -209,12 +220,7 @@ public class TreeFactory {
 
 	private void checkPreExistence(InfoNode e) {
 		Map<String, Double> variableMap = myCustom.getVariableMap();
-		for (String n : variableMap.keySet()) {
-			System.out.println("keyset: " + n);
-		}
-		for (String f : myLocalVar) {
-			System.out.println("localvar: " + f);
-		}
+
 		if (!variableMap.keySet().contains(e.getName()) && !myLocalVar.contains(e.getName())) {
 			myLocalVar.add(e.getName());
 		} else {
