@@ -1,4 +1,1 @@
-make :var 10.0
-to func [ :var ] [ ( fd ( sum 100 :var  )  ) ifelse ( or :var 10 30  )  [ ( fd 10  )  ] [ ( bk 300  )  ]  ]
-to asdf [ :asdfasdf ] [ ( fd ( sum 100 :asdfasdf  )  ) ifelse ( or :asdfasdf 10 30  )  [ ( fd 10  )  ] [ ( bk 300  )  ]  ]
-to hlep [ :vari ] [ ( fd ( sum 100 :vari  )  ) ifelse ( or 10 30  )  [ ( fd 10  )  ] [ ( bk 300  )  ]  ]
+to func [ :var ] [ ( fd :var  )  ]
