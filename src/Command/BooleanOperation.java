@@ -15,9 +15,9 @@ public abstract class BooleanOperation implements Command{
     
     public boolean boolErrorCheck(double result){
         if(result==Double.NaN){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
