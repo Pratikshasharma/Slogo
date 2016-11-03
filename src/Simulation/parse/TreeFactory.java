@@ -94,7 +94,14 @@ public class TreeFactory {
 				break;
 			case ("Command"):
 				checkExistence(current);
-				stringParam = Integer.toString((myCustom.getFunctionVariables(currentName).size()));
+			System.out.println(current.getName());
+				if (myCustom.getFunctionVariablesMap().containsKey(currentName)){
+					stringParam = Integer.toString((myCustom.getFunctionVariables(currentName).size()));
+				} else if (myLocalFunc.containsKey(currentName)){
+					stringParam = myLocalFunc.get(currentName);
+				} else {
+					throw new ParserException("no such method");
+				}
 				break;
 			case ("GroupStart"):
 				nextItem = myList.pop();
