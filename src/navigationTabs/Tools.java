@@ -2,6 +2,8 @@ package navigationTabs;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
+
+
 public class Tools extends MenuCreator {
     private Menu colorSubMenu;
     private Menu penSizeSubMenu;
@@ -47,4 +49,5 @@ public class Tools extends MenuCreator {
         backgroundColorMenu.getItems().add(new MenuItem(key));
         colorSubMenu.getItems().add(new MenuItem(key));
     }
+
 }
