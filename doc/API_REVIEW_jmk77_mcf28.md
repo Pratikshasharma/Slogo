@@ -1,7 +1,5 @@
 # Part 1
 
-..
-
 **What about your API/design is intended to be flexible?**
 
 The CommandCheck API, in order for new user commands to be accounted for. Because the user-defined commands will be formulated from existing commands that are
