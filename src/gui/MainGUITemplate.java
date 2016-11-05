@@ -7,7 +7,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import navigationTabs.FileTab;
-
+/**
+ * @author pratikshasharma
+ */
 public interface MainGUITemplate {
 
     public void updateActiveTurtleInfo(int id, Turtleable turtle);
