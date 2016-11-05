@@ -4,6 +4,12 @@ import java.util.List;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * The general command interface. Every command has to figure out how to deal with multiple actors (eg ignore, loop through) and how to execute over multiple inputs.
+ * 
+ * @author Vincent
+ *
+ */
 public interface Command {
     /**
      * Take care of running multiple actors

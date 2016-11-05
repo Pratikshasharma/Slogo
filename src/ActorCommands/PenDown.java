@@ -6,7 +6,17 @@ import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Sets the actor to draw trails.
+ * Returns 1.
+ * 
+ * @author Vincent
+ *
+ */
 public class PenDown extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

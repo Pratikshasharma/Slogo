@@ -6,7 +6,17 @@ import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Sets the heading of the actor.
+ * Returns angle moved.
+ * 
+ * @author Vincent
+ *
+ */
 public class SetHeading extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

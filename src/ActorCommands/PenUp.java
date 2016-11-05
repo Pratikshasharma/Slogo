@@ -6,7 +6,17 @@ import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Sets the actor to not draw trails.
+ * Returns 0.
+ * 
+ * @author Vincent
+ *
+ */
 public class PenUp extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

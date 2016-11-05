@@ -7,6 +7,12 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Makes variable and returns value of variable.
+ * 
+ * @author Vincent
+ *
+ */
 public class MakeVariable extends ComplexCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,

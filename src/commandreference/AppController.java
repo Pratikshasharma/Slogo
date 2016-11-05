@@ -30,6 +30,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * Purpose: Controller in between the GUIController and SimulatonController
  * Controls execution between the front end and the back end
  *
+ * @author Pratiksha, Ted, Vincent
  */
 public class AppController {
 
@@ -261,6 +262,9 @@ public class AppController {
         return myString;
     }
 
+    /**
+     * Save function and variable history.
+     */
     private void setOnSaveButtonClicked(){
         myGUIController.setOnSaveButtonClicked(e -> {
             Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
@@ -383,6 +387,9 @@ public class AppController {
     }
 
 
+    /*
+     *  Load slogo file into command input. For entering function and variable history but also can be used just in general.
+     */
     private void setOnLoadButtonClicked(){
         myGUIController.setOnLoadButtonClicked(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();

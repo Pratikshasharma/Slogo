@@ -7,8 +7,18 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Execute a set of commands a certain number of times.
+ * Return value of last command executed.
+ * 
+ * @author Vincent
+ *
+ */
 public class Repeat extends ComplexCommand{
     private static final String LOOP_VARIABLE=":repcount";
+    /* (non-Javadoc)
+     * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
