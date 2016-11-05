@@ -9,6 +9,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import navigationTabs.FileTab;
 
+/**
+ * @author pratikshasharma
+ */
 public interface IGUIController {
 
     public Parent init();

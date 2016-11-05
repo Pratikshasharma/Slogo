@@ -20,7 +20,12 @@ import navigationTabs.Language;
 import navigationTabs.Tools;
 import navigationTabs.Window;
 
-
+/**
+ * Purpose: Add all nodes required in the scene
+ * Dependencies: Classes: FileTab, Language, Tools, Console, Help,Window, ControlButtons,UserDefault, ActiveTurtleDisplayInformation
+ * @author pratikshasharma, Teddy
+ *
+ */
 
 public class MainGUI implements MainGUITemplate{
     private FileTab myFileTab;
@@ -53,6 +58,10 @@ public class MainGUI implements MainGUITemplate{
         setHistoryClickables();
     }
 
+    /**
+     * @return Parent
+     * Returns main root of the scene
+     */
     public Parent createRoot(){
         myRoot.setTop(createTop());
         myRoot.setLeft(createLeft());
@@ -121,6 +130,9 @@ public class MainGUI implements MainGUITemplate{
         return myFileTab;
     }
 
+    /**
+     * Updates location of the active turtle
+     */
     public void updateTurtleLocation(Turtleable turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
@@ -233,6 +245,9 @@ public class MainGUI implements MainGUITemplate{
         myControlButtons.setOnLoad(handler);
     }
 
+    /**
+     * Clears lines in the screen 
+     */
     public void clearTurtleLines(Turtleable turtle) {
         for(Line l : turtle.getLine()){
             myCanvas.getChildren().remove(l);

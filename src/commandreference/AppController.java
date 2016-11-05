@@ -26,6 +26,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+/**
+ * Purpose: Controller in between the GUIController and SimulatonController
+ * Controls execution between the front end and the back end
+ *
+ */
 public class AppController {
 
     private static final String BACKGROUND_COMMAND = "SETBACKGROUND ";

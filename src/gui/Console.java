@@ -2,8 +2,13 @@ package gui;
 
 import javafx.scene.control.TextArea;
 
+/**
+ * Purpose: Create a Console object for the user to type commands in
+ * Dependencies: TextArea (Java fx Object)
+ * @author Teddy, pratikshasharma
+ *
+ */
 public class Console{
-	
     private TextArea myCommandWindow;
     private boolean StartsTyping;
 
@@ -24,10 +29,16 @@ public class Console{
         myCommandWindow.setPrefSize(MainGUI.TURTLE_PANE_WIDTH, MainGUI.TURTLE_PANE_HEIGHT/4);
     }
 
+    /**
+     * @return TextArea
+     */
     public TextArea getTextField(){
         return myCommandWindow;
     }
-    
+    /**
+     * Sets text on Console
+     * @param text
+     */
     public void setText(String text){
     	myCommandWindow.setText(text);
     }
