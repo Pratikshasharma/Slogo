@@ -13,15 +13,37 @@ import ComplexCommands.CustomCommand;
 import java.lang.reflect.InvocationTargetException;
 
 
+/**
+ * This is the main class of the execution process that moves through the tree of Nodes.
+ * It returns constants and variables and calls the appropriate commands when needed.
+ * 
+ * Called by SimulationController, other command packages.
+ * Calls the other command packages through reflection, ExecutionException.
+ * 
+ * @author Vincent
+ *
+ */
 public class CommandProcess {
     private static final String ERROR_TITLE="Back End: Command Execution Error";
     private static final String PACKAGE_NAME_FILE="resources/CommandPackageName";
     private ResourceBundle myResources;
     
+    /**
+     * Constructor
+     */
     public CommandProcess(){
         myResources = ResourceBundle.getBundle(PACKAGE_NAME_FILE);
     }
     
+    /**
+     * The main execution method called on every node. 
+     * Main purpose is to make sure is to iterate through the tree properly until completed.
+     * Also deals with errors by catching incorrect processes as well as invalidating other commands that follow.
+     * 
+     * @param myCommandStorage
+     * @param myNode
+     * @return
+     */
     public double executeList(CommandStorage myCommandStorage, InfoNode myNode){
         double result=Double.NaN;
         String lastcommandname = "No command run";
@@ -44,6 +66,14 @@ public class CommandProcess {
         return result;
     }
     
+    
+    /**
+     * Differentiates between the type of nodes and executes accordingly.
+     * 
+     * @param myCommandStorage
+     * @param myNode
+     * @return
+     */
     private double chooseProcess(CommandStorage myCommandStorage,InfoNode myNode){
         String type=myNode.getToken();
         switch(type){
@@ -58,6 +88,13 @@ public class CommandProcess {
         }
     }
     
+    /**
+     * Executes commands that are provided in the original list of commands.
+     * 
+     * @param myCommandStorage
+     * @param myNode
+     * @return
+     */
     private double executeCommand(CommandStorage myCommandStorage, InfoNode myNode){
         Class cls;
         Command clsInstance;
@@ -67,7 +104,6 @@ public class CommandProcess {
             return clsInstance.call(myCommandStorage, myNode.getParameters());
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
- //           e.printStackTrace();
             showError(myNode.getName());
         }
         //if error, will just return Double.NaN,set up error change up till top level (that way you can kind of see where error is by following path)
@@ -76,6 +112,13 @@ public class CommandProcess {
         return Double.NaN;
     }
     
+    /**
+     * Executes custom commands that are created by the user.
+     * 
+     * @param myCommandStorage
+     * @param myNode
+     * @return
+     */
     private double executeCustomCommand(CommandStorage myCommandStorage, InfoNode myNode){
         CustomCommand myCustomCommand=new CustomCommand();
         myNode.getParameters().add(0,myNode);//so can get name
