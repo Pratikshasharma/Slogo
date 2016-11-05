@@ -10,16 +10,23 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
-public class Slogo {
+/**
+ * Purpose: To return Scene that is to set on the stage when Slogo is started
+ *          To enable creation of multiple windows by housing a map of AppControllers and Ids 
+ * @author pratikshasharma
+ *Dependencies: SCENE_WIDTH and SCENE_HEIGHT in GUIController class
+ *Assumptions: Assumes AppController class 
+ */
+
+public class Slogo implements ISlogo{
     private TabPane myTabPane;
     private final String TAB_TITLE = "Slogo ";
     BorderPane root;
-
     ObservableMap<Integer,AppController> myMultipleWindowMap; 
-    public TabPane getTab(){
-        return myTabPane;
-    }
 
+    /**
+     * @return Scene when the initial window is created
+     */
     public Scene startSlogo(){
         myMultipleWindowMap = FXCollections.observableMap(new HashMap<Integer,AppController>());
         myTabPane = new TabPane();
@@ -49,8 +56,7 @@ public class Slogo {
     private Scene createFirstWindow() {
         addNewTab();
         root.setCenter(myTabPane);
-        Scene scene = new Scene(root,GUIController.SCENE_WIDTH,GUIController.SCENE_HEIGHT);
-        // scene.setOnKeyPressed(e -> myAppController.handleKeyInput(e.getCode()));  
+        Scene scene = new Scene(root,GUIController.SCENE_WIDTH,GUIController.SCENE_HEIGHT); 
         return scene;
     }
 
@@ -59,8 +65,15 @@ public class Slogo {
             @Override
             public void onChanged (javafx.collections.MapChangeListener.Change<? extends Integer, ? extends AppController> change) {
                 change.getValueAdded().getNewWindowMenu().setOnAction(e ->addNewTab());
-                
             }
         });
-    }   
+    }
+
+    /**
+     * @return myTabPane
+     * returns the Tab representing the created Slogo Window
+     */
+    public TabPane getTab(){
+        return myTabPane;
+    }
 }

@@ -1,14 +1,20 @@
 package navigationTabs;
 import javafx.scene.control.MenuItem;
+/**
+ * 
+ * @author pratikshasharma
+ *Dependencies: MenuTemplate Super Class
+ *Assumptions: Assumes createMenuItem() method exists in MenuTemplate super class
+ *
+ */
 
-public class FileTab extends MenuCreator{
+public class FileTab extends MenuTemplate{
     private MenuItem newTurtle;
     public FileTab(){
         super("FileCommand");
     }
 
-    @Override
-    protected void addItems () {
+    public void addItems () {
         newTurtle = createMenuItem("NewTurtleCommand"); 
         myMenu.getItems().addAll(newTurtle);
         myMenuBar.getMenus().add(myMenu);
@@ -17,4 +23,5 @@ public class FileTab extends MenuCreator{
     public MenuItem getNewTurtleItem(){
         return this.newTurtle;
     }
+
 }

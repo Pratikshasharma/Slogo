@@ -2,7 +2,7 @@ package gui;
 
 import javafx.scene.control.TextArea;
 
-public class Console {
+public class Console{
 	
     private TextArea myCommandWindow;
     private boolean StartsTyping;
