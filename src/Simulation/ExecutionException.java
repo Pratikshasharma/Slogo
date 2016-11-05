@@ -3,6 +3,7 @@ package Simulation;
 /**
  * The Exception class thrown when an error is detected with execution.
  * 
+ * Called by CommandProcess.
  * 
  * @author Vincent
  *
