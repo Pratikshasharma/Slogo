@@ -6,7 +6,17 @@ import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Sets set of actors to be active.
+ * Returns index of last actor set active.
+ * 
+ * @author Vincent
+ *
+ */
 public class Tell extends MultipleActorCommand{
+    /* (non-Javadoc)
+     * @see Command.MultipleActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {

@@ -20,7 +20,7 @@ import javafx.collections.ObservableMap;
  * 
  * Called by every class in the backend including SimulationController, CommandProcess, Parser, and Commands.
  * 
- * @author Vincent
+ * @author Vincent, Ted
  *
  */
 public class CommandStorage extends Storage {

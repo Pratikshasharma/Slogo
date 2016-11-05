@@ -8,7 +8,18 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import gui.MainGUI;
 
+/**
+ * Moves actor backwards a certain number of pixels.
+ * Returns pixels.
+ * 
+ * @author Vincent
+ *
+ */
 public class Backward extends ActorCommand{
+    
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {

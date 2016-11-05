@@ -7,7 +7,17 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Execute a for loop on a set of commands with defined temporary variable, start and end, and increment.
+ * Returns value of last command executed.
+ * 
+ * @author Vincent
+ *
+ */
 public class For extends ComplexCommand{
+    /* (non-Javadoc)
+     * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

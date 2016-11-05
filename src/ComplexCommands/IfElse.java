@@ -5,7 +5,17 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Execute an if-else statement that runs set of commands if true and another set of commands if false.
+ * Returns value of last command.
+ * 
+ * @author Vincent
+ *
+ */
 public class IfElse extends ComplexCommand{
+    /* (non-Javadoc)
+     * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

@@ -7,7 +7,17 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import gui.MainGUI;
 
+/**
+ * Sets the position of the actor
+ * Returns distance traveled.
+ * 
+ * @author Vincent
+ *
+ */
 public class SetPosition extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

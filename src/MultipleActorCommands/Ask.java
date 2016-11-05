@@ -6,7 +6,17 @@ import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Ask a set of actors to execute a set of commands.
+ * Returns value of last command.
+ * 
+ * @author Vincent
+ *
+ */
 public class Ask extends MultipleActorCommand{
+    /* (non-Javadoc)
+     * @see Command.MultipleActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {
