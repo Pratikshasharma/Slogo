@@ -26,6 +26,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+/**
+ * Communication between front end and back end.
+ * Includes button functionality.
+ * 
+ * @author Vincent
+ *
+ */
 public class AppController {
 
 	private static final String BACKGROUND_COMMAND = "SETBACKGROUND ";
@@ -251,6 +258,10 @@ public class AppController {
 		return myString;
 	}
 
+	/**
+	 * Save button functionality. 
+	 * Saves functions and variables to file.
+	 */
 	private void setOnSaveButtonClicked(){
 		myGUIController.setOnSaveButtonClicked(e -> {
 			Map<String,Double> variables=mySimulationController.getStorage().getVariableMap();
@@ -373,6 +384,9 @@ public class AppController {
         }
 
 
+	/**
+	 * Loads slogo files.
+	 */
 	private void setOnLoadButtonClicked(){
 		myGUIController.setOnLoadButtonClicked(e -> {
 			Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();

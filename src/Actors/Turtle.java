@@ -3,6 +3,9 @@ package Actors;
 /**
  * Turtle object that implement the actor.
  * 
+ * Accessed by Simulation Controller.
+ * Implements Actor class.
+ * 
  * @author Vincent
  *
  */
