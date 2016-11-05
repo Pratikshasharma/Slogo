@@ -51,7 +51,7 @@ public class CommandProcess {
             try{
                 while(myNode!=null && !myCommandStorage.getKillCommands()){
                     lastcommandname=myNode.getName();
-                    System.out.println(lastcommandname);
+                    //System.out.println(lastcommandname);
                     result=chooseProcess(myCommandStorage, myNode);
                     if(result==Double.NaN){
                         myCommandStorage.setKillCommands(true);

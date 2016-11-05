@@ -3,7 +3,7 @@ package Simulation.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoNode extends Node{
+public class InfoNode {
 
 	private String myName; //the name of the actual user input
 	private String myToken; // the category it belongs in (Constant, Command, Variable, etc..)

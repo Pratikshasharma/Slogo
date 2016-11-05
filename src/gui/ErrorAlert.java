@@ -4,6 +4,11 @@ package gui;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * 
+ * @author pratikshasharma
+ * Displays an Error alert with the Error message
+ */
 public class ErrorAlert {
     //private ResourceBundle myResources;
     public static final String ERROR_FILE = "Errors";

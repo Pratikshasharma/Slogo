@@ -59,7 +59,7 @@ public class SimulationController {
     	myCommandStorage.setKillCommands(false);
     	InfoNode test=simParser.parseText(lines, myCommandStorage);
     	
-    	simParser.printTree(test);
+    	//simParser.printTree(test);
     	double result=myCommandProcess.executeList(myCommandStorage,test);
     	return result;
     }
