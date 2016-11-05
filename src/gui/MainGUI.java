@@ -20,7 +20,9 @@ import navigationTabs.Language;
 import navigationTabs.Tools;
 import navigationTabs.Window;
 
-public class MainGUI {
+
+
+public class MainGUI implements MainGUITemplate{
     private FileTab myFileTab;
     private Language myLanguageTab; 
     private Tools myTools;
@@ -36,7 +38,7 @@ public class MainGUI {
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
-    public MainGUI() {
+    public MainGUI()  {
         myRoot = new BorderPane();
         myFileTab = new FileTab();
         myTools = new Tools();
@@ -71,7 +73,7 @@ public class MainGUI {
         top.getChildren().addAll(addItemsInMenuBar());
         return top;
     }
-    
+
     public void updateActiveTurtleInfo(int id, Turtleable turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
     }
@@ -106,7 +108,7 @@ public class MainGUI {
         menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu(), myWindow.getMyMenu());
         return menuBar;
     }
-    
+
     private void addTurtleOnScene(Turtleable turtle){
         if(!isOnCanvas(turtle.getImageView())){
             turtle.getImageView().setX(turtle.getCoordinates().getX().get());
@@ -114,11 +116,11 @@ public class MainGUI {
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
-    
+
     public FileTab getMyFileTab(){
         return myFileTab;
     }
-    
+
     public void updateTurtleLocation(Turtleable turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
@@ -132,21 +134,21 @@ public class MainGUI {
             addLineOnCanvas(turtle, x, y);
         }
     }
-    
+
     private void addLineOnCanvas(Turtleable turtle, double x, double y){
-    	double red = turtle.getColorArray()[0];
-    	double green = turtle.getColorArray()[1];
-    	double blue = turtle.getColorArray()[2];
+        double red = turtle.getColorArray()[0];
+        double green = turtle.getColorArray()[1];
+        double blue = turtle.getColorArray()[2];
         if(turtle.getLine().size()<1){
-        	Line l = turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
-        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
-        	l.setStyle("-fx-stroke: " + myString);
-        	myCanvas.getChildren().add(l);
+            Line l = turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get()+turtle.getImageView().getBoundsInLocal().getWidth()/2, turtle.getCoordinates().getY().get());
+            String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+            l.setStyle("-fx-stroke: " + myString);
+            myCanvas.getChildren().add(l);
         } else {
-        	Line l = turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
-        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
-        	l.setStyle("-fx-stroke: " + myString);
-        	myCanvas.getChildren().add(l);
+            Line l = turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
+            String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+            l.setStyle("-fx-stroke: " + myString);
+            myCanvas.getChildren().add(l);
         }
     }
 
@@ -158,7 +160,7 @@ public class MainGUI {
         return myCanvas.getChildren().contains(myNode);
     }
 
-    public BackgroundChangeable getBackgroundChanger(){
+    private BackgroundChangeable getBackgroundChanger(){
         BackgroundChangeable backgroundChanger = (root, backgroundColor) ->{
             VBox pane = (VBox) root.getLeft();
             Pane p = (Pane) pane.getChildren().get(0);
@@ -205,7 +207,7 @@ public class MainGUI {
     public Menu getPenColorMenu(){
         return myTools.getPenColorSubMenu();
     }
-    
+
     public void addColorOption(String key){
         myTools.addColorOption(key);
     }
@@ -218,26 +220,28 @@ public class MainGUI {
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
-    
+
     private void setBackgroundPreference(String color){
-    	myPrefs.setBackground(color);
+        myPrefs.setBackground(color);
     }
-    
+
     public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
-    	myControlButtons.setOnSave(handler);
+        myControlButtons.setOnSave(handler);
     }
-    
+
     public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
-    	myControlButtons.setOnLoad(handler);
+        myControlButtons.setOnLoad(handler);
     }
-    
-	public void clearTurtleLines(Turtleable turtle) {
-		for(Line l : turtle.getLine()){
-			myCanvas.getChildren().remove(l);
-		}
-	}
-	
-	public void setOnTogglePenClicked(EventHandler<? super MouseEvent> handler){
-		myControlButtons.setOnTogglePen(handler);
-	}
+
+    public void clearTurtleLines(Turtleable turtle) {
+        for(Line l : turtle.getLine()){
+            myCanvas.getChildren().remove(l);
+        }
+    }
+
+    public void setOnTogglePenClicked(EventHandler<? super MouseEvent> handler){
+        myControlButtons.setOnTogglePen(handler);
+    }
+
+ 
 }  

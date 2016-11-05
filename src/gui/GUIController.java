@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.File;
-
 import commandreference.Turtleable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
@@ -13,7 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import navigationTabs.FileTab;
 
-public class GUIController {
+public class GUIController implements IGUIController{
     private MainGUI myMainGUI;
     public static final double SCENE_WIDTH = 900;
     public static final double SCENE_HEIGHT = 800;

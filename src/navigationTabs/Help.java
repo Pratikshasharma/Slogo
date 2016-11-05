@@ -1,15 +1,21 @@
 package navigationTabs;
-
 import commandreference.HTMLReferencePage;
 import javafx.scene.control.MenuItem;
 
-public class Help extends MenuCreator {
+/**
+ * 
+ * @author pratikshasharma
+ * Dependencies: MenuTemplate Super Class and MenuLayout Interface
+ */
 
+public class Help extends MenuTemplate {
 	public Help () {
-		super("HelpCommand");
-		
+	super("HelpCommand");	
 	}
 
+	/**
+	 * adds items in the menu 
+	 */
 	@Override
 	protected void addItems () {
 		MenuItem displayCommandReference = new MenuItem("CommandReferencesCommand");

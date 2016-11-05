@@ -1,7 +1,7 @@
 package navigationTabs;
 
 
-public class Window extends MenuCreator {
+public class Window extends MenuTemplate {
 
     public Window () {
         super("WindowCommand");
