@@ -2,7 +2,6 @@ package MultipleActorCommands;
 
 import java.util.ArrayList;
 import java.util.List;
-import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -13,14 +12,13 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class AskWith extends MultipleActorCommand{
+public class AskWith extends MultipleActorCommandRevertActive{
     /* (non-Javadoc)
      * @see Command.MultipleActorCommand#execute(Simulation.CommandStorage, java.util.List)
      */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {
-        List<Integer> originalActive=new ArrayList<Integer>(myCommandStorage.getActiveList());
         List<Integer> askActive=new ArrayList<Integer>();
         for(int i: myCommandStorage.getActiveList()){
             myCommandStorage.setActive(i);
@@ -29,9 +27,7 @@ public class AskWith extends MultipleActorCommand{
             }
         }
         myCommandStorage.setActive(askActive);        
-        double result=myCommandProcess.executeList(myCommandStorage,args.get(1));
-        myCommandStorage.setActive(originalActive);
-        return result;
+        return myCommandProcess.executeList(myCommandStorage,args.get(1));
     }
 
 }

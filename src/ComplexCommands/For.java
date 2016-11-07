@@ -3,7 +3,6 @@ package ComplexCommands;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -14,7 +13,7 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class For extends ComplexCommand{
+public class For extends ComplexCommandScope{
     /* (non-Javadoc)
      * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
      */
@@ -22,7 +21,6 @@ public class For extends ComplexCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         double result=0;
-        Map<String,Double> originalvariables= new HashMap<String,Double>(myCommandStorage.getVariableMap());
         //store to keep original map-dealing with temporary variables
         String variable=args.get(0).getName();
         int start=(int) myCommandProcess.executeList(myCommandStorage, args.get(1));
@@ -32,13 +30,6 @@ public class For extends ComplexCommand{
             myCommandStorage.addVariable(variable, (double) i);
             result=myCommandProcess.executeList(myCommandStorage, args.get(4));
         }
-        Map<String,Double> tempmap= new HashMap<String,Double>(myCommandStorage.getVariableMap());
-        Map<String,Double> updatedvariables= new HashMap<String,Double>();
-        for(String var:originalvariables.keySet()){
-            updatedvariables.put(var,tempmap.get(var));
-        }
-        myCommandStorage.setVariableMap(updatedvariables);
-        
         return result;    
     }
 }

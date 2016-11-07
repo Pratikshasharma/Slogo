@@ -3,7 +3,6 @@ package ActorCommands;
 import java.util.ArrayList;
 import java.util.List;
 import Actors.Actor;
-import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import gui.MainGUI;
@@ -15,8 +14,7 @@ import gui.MainGUI;
  * @author Vincent
  *
  */
-public class Backward extends ActorCommand{
-    
+public class Backward extends ActorCommandSetValueErrorCheck{    
     /* (non-Javadoc)
      * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
      */
@@ -30,32 +28,30 @@ public class Backward extends ActorCommand{
             System.out.println(segmentedpixels);
 
             pixels+=segmentedpixels;
-            x+=Math.cos(actor.getAngle()*Math.PI/180)*segmentedpixels;
-            y+=Math.sin(actor.getAngle()*Math.PI/180)*segmentedpixels;
-            System.out.println(x);
-            System.out.println(y);
+            x+=Math.cos(actor.getAngle()*TO_RADIANS)*segmentedpixels;
+            y+=Math.sin(actor.getAngle()*TO_RADIANS)*segmentedpixels;
 
             if(actor.getX().get()-x<0){
                 x=actor.getX().get();
-                y=Math.tan(actor.getAngle()*Math.PI/180)*(x);
+                y=Math.tan(actor.getAngle()*TO_RADIANS)*(x);
             }
             if(actor.getX().get()-x>MainGUI.TURTLE_PANE_WIDTH){
                 x=actor.getX().get()-MainGUI.TURTLE_PANE_WIDTH;
-                y=Math.tan((actor.getAngle()+180)*Math.PI/180)*(x);
+                y=Math.tan((actor.getAngle()+HALF_CIRCLE_DEGREES)*TO_RADIANS)*(x);
             }
             if(actor.getY().get()-y<0){
                 y=actor.getY().get();
-                x=y/Math.tan((actor.getAngle()+180)*Math.PI/180);
+                x=y/Math.tan((actor.getAngle()+HALF_CIRCLE_DEGREES)*TO_RADIANS);
             }
             if(actor.getY().get()-y>MainGUI.TURTLE_PANE_HEIGHT){
                 y=actor.getY().get()-MainGUI.TURTLE_PANE_HEIGHT;
-                x=y/Math.tan((actor.getAngle()+180)*Math.PI/180);
+                x=y/Math.tan((actor.getAngle()+HALF_CIRCLE_DEGREES)*TO_RADIANS);
             }
             if(x==actor.getX().get()-MainGUI.TURTLE_PANE_WIDTH || x==actor.getX().get()){
-                actor.setAngle(180-actor.getAngle());
+                actor.setAngle(HALF_CIRCLE_DEGREES-actor.getAngle());
             }
             if(y==actor.getY().get()-MainGUI.TURTLE_PANE_HEIGHT|| y==actor.getY().get()){
-                actor.setAngle(360-actor.getAngle());
+                actor.setAngle(FULL_CIRCLE_DEGREES-actor.getAngle());
             }
             
             actor.setPos(setValErrorCheck(actor.getX().get()-x,actor.getX().get()),setValErrorCheck(actor.getY().get()-y,actor.getY().get()));
@@ -65,7 +61,7 @@ public class Backward extends ActorCommand{
                 Backward leftoverback=new Backward();
                 double leftover=segmentedpixels-actor.getDistance();
                 List<InfoNode> leftoverargs=new ArrayList<InfoNode>();
-                leftoverargs.add(new InfoNode(Double.toString(leftover),"Constant"));
+                leftoverargs.add(new InfoNode(Double.toString(leftover),LEFTOVER_TYPE));
                 leftoverback.call(myCommandStorage, leftoverargs);
             }
         }

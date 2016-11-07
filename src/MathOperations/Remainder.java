@@ -1,7 +1,6 @@
 package MathOperations;
 
 import java.util.List;
- import Command.MathOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

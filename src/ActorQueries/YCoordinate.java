@@ -2,7 +2,6 @@ package ActorQueries;
 
 import java.util.List;
 import Actors.Actor;
-import Command.ActorQuery;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

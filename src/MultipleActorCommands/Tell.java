@@ -2,7 +2,6 @@ package MultipleActorCommands;
 
 import java.util.ArrayList;
 import java.util.List;
-import Command.MultipleActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

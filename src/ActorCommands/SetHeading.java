@@ -2,7 +2,6 @@ package ActorCommands;
 
 import java.util.List;
 import Actors.Actor;
-import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -13,7 +12,7 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class SetHeading extends ActorCommand{
+public class SetHeading extends ActorCommandSetValueErrorCheck{
     /* (non-Javadoc)
      * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
      */

@@ -1,7 +1,6 @@
 package DisplayCommands;
 
 import java.util.List;
-import Command.DisplayCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -12,7 +11,7 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class SetPenColor extends DisplayCommand{
+public class SetPenColor extends DisplayCommandIndexCheck{
     /* (non-Javadoc)
      * @see Command.DisplayCommand#execute(Simulation.CommandStorage, java.util.List)
      */

@@ -2,7 +2,6 @@ package ActorCommands;
 
 import java.util.List;
 import Actors.Actor;
-import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

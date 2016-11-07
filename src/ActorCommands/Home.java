@@ -2,7 +2,6 @@ package ActorCommands;
 
 import java.util.List;
 import Actors.Actor;
-import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import gui.MainGUI;
@@ -15,6 +14,9 @@ import gui.MainGUI;
  *
  */
 public class Home extends ActorCommand{
+    private static final double X_HOME=MainGUI.TURTLE_PANE_WIDTH / 2;
+    private static final double Y_HOME=MainGUI.TURTLE_PANE_WIDTH / 2;
+    
     /* (non-Javadoc)
      * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
      */
@@ -22,7 +24,7 @@ public class Home extends ActorCommand{
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       
         Actor actor=myCommandStorage.getActor(myCommandStorage.getActive());
-        actor.setPos(MainGUI.TURTLE_PANE_WIDTH / 2, MainGUI.TURTLE_PANE_HEIGHT / 2);
+        actor.setPos(X_HOME,Y_HOME);
         return actor.getDistance();
     }
 

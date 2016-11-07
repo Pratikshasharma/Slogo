@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
 import Simulation.Node.InfoNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import ActorCommands.ActorCommand;
 import ActorCommands.Forward;
-import Command.ActorCommand;
-import Command.Command;
+import Command.CommandInterface;
 import ComplexCommands.CustomCommand;
 import java.lang.reflect.InvocationTargetException;
 
@@ -97,10 +97,10 @@ public class CommandProcess {
      */
     private double executeCommand(CommandStorage myCommandStorage, InfoNode myNode){
         Class cls;
-        Command clsInstance;
+        CommandInterface clsInstance;
         try {
             cls = Class.forName(myResources.getString(myNode.getToken()) + myNode.getToken());
-            clsInstance = (Command) cls.newInstance();
+            clsInstance = (CommandInterface) cls.newInstance();
             return clsInstance.call(myCommandStorage, myNode.getParameters());
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {

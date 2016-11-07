@@ -1,7 +1,6 @@
 package BooleanOperations;
 
 import java.util.List;
-import Command.BooleanOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

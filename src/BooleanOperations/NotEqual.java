@@ -1,7 +1,6 @@
 package BooleanOperations;
 
 import java.util.List;
-import Command.BooleanOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -11,19 +10,14 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class NotEqual extends BooleanOperation{
+public class NotEqual extends BooleanOperationCompare{
     /* (non-Javadoc)
      * @see Command.BooleanOperation#execute(Simulation.CommandStorage, java.util.List)
      */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {     
-        double a=myCommandProcess.executeList(myCommandStorage,args.get(0));
-        double b=myCommandProcess.executeList(myCommandStorage, args.get(1));
-        if(boolErrorCheck(a) && boolErrorCheck(b)){
-            return Double.NaN;
-        }
-         return (a!=b)?1:0;
+        return (myCommandProcess.executeList(myCommandStorage,args.get(0))!=myCommandProcess.executeList(myCommandStorage, args.get(1)))?1:0;
     }
 
 }

@@ -1,7 +1,6 @@
 package MathOperations;
 
 import java.util.List;
-import Command.MathOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
@@ -11,7 +10,7 @@ import Simulation.Node.InfoNode;
  * @author Vincent
  *
  */
-public class Quotient extends MathOperation{
+public class Quotient extends MathOperationValueErrorCheck{
     /* (non-Javadoc)
      * @see Command.MathOperation#execute(Simulation.CommandStorage, java.util.List)
      */

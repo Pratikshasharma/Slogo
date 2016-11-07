@@ -1,7 +1,6 @@
 package DisplayCommands;
 
 import java.util.List;
-import Command.DisplayCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 

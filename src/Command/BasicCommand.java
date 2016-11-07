@@ -1,3 +1,10 @@
+/*
+ * THIS IS PART OF MY CODE MASTERPIECE.
+ * This is part of the second level of my hierarchy and provides the basic call for a command.
+ * See CommandInterface for more complete description.
+ * 
+ */
+
 package Command;
 
 import java.util.List;
@@ -6,13 +13,12 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
 /**
- * Abstract class for Multiple Actor commands.
- * Determines how those commands deal with multiple active actors (execute once since will see how execute on all after).
+ * Most basic form of command running abstract class.
  * 
  * @author Vincent
  *
  */
-public abstract class MultipleActorCommand implements Command{
+public abstract class BasicCommand implements CommandInterface{
     public CommandProcess myCommandProcess;
     
     /* (non-Javadoc)
@@ -28,6 +34,6 @@ public abstract class MultipleActorCommand implements Command{
      * @see Command.Command#execute(Simulation.CommandStorage, java.util.List)
      */
     @Override
-    public abstract double execute (CommandStorage myCommandStorage,  List<InfoNode> args);
+    public abstract double execute (CommandStorage myCommandStorage, List<InfoNode> args);
 
 }
