@@ -15,11 +15,21 @@ Lastly, saving/loading was implemented in more of an intemediary class rather th
 
 
 ## Front End
-One major change in the internal front end api was the addition of the navigationtabs package which consists of classes such as Tools.java, FileTab.java, Help.java,etc.
-These classes are all menu objects which are then called in the MainGUI class to add them up to the Scene. 
-
+One major change in the internal front end API was the addition of the navigationtabs package which consists of classes such as Tools.java, FileTab.java, Help.java,etc.
+These classes are all menu objects which are then called in the MainGUI class to add them up to the Scene. The MenuLayout interface has the APIs for the MenuTemplate super class.
 Another change is the use of functional interfaces for creating our own lambda expressions that fully encapsulate instance variables that would have 
 otherwise needed to be passed around.
+
+The APIs for MainGUI.java class are also a part of the Display APIs. Though the APIs did not change much, there were definitely addition of a couple of more public methods that were needed
+as we progressed for the GUIController to have access to some of the front end components. The MainGUITemplate interface houses all the APIs for MainGUI.java that are a part of the Display API.
+
+One another change in Display API is the addition of TurtleManager class whcih has a bunch of public methods to set and get Active turtle. The public methods it houses are also a part of the Integration API.
+
+One change in the Integration API is the creation of ISlogo interface which consists of methods to start the slogo program and return Tab for the active workspace.
+
+The biggest change in the Integration API is the addition of Turtleable interface which consists of methods that allow the front end to interact with the back end and get the reuqired data.
+
+
 
 
 
