@@ -14,12 +14,12 @@ Ted Marchildon: Front end Components Set up and front-end back-end integration
 
 Pratiksha Sharma: Front end Components Set up and integration
 
-Vincent Zhang:Command execution
+Vincent Zhang: Back end Components minus parsing (Command execution, storage, saving/loading)
 
 ## Resources:
 Stackoverflow
 http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
-
+http://www.oracle.com/technetwork/articles/java/javareflection-1536171.html
 
 ## Files used to Start the Project
 Main.java
