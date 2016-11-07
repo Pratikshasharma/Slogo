@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TurtleManager {
 	
-	Map<Integer, Turtleable> myTurtles;
+	private Map<Integer, Turtleable> myTurtles;
 	private int myActiveID;
 	
 	public TurtleManager(){
