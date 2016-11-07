@@ -20,8 +20,8 @@ import javafx.scene.layout.BorderPane;
 
 public class Slogo implements ISlogo{
     private TabPane myTabPane;
-    private final String TAB_TITLE = "Slogo ";
-    BorderPane root;
+    private static final String TAB_TITLE = "Slogo ";
+    private BorderPane myRoot;
     ObservableMap<Integer,AppController> myMultipleWindowMap; 
 
     /**
@@ -30,10 +30,9 @@ public class Slogo implements ISlogo{
     public Scene startSlogo(){
         myMultipleWindowMap = FXCollections.observableMap(new HashMap<Integer,AppController>());
         myTabPane = new TabPane();
-        root = new BorderPane();
+        myRoot = new BorderPane();
         setNewWindowObserver();
-        Scene scene = createFirstWindow();  
-        return scene;
+        return createInitialWindow();  
     }
 
     private Integer getId(){
@@ -53,11 +52,10 @@ public class Slogo implements ISlogo{
         myTabPane.getTabs().add(myTab);
     }
 
-    private Scene createFirstWindow() {
+    private Scene createInitialWindow() {
         addNewTab();
-        root.setCenter(myTabPane);
-        Scene scene = new Scene(root,GUIController.SCENE_WIDTH,GUIController.SCENE_HEIGHT); 
-        return scene;
+        myRoot.setCenter(myTabPane);
+        return new Scene(myRoot,GUIController.SCENE_WIDTH,GUIController.SCENE_HEIGHT); 
     }
 
     private void setNewWindowObserver(){

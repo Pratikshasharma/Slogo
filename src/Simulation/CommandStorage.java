@@ -13,7 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 public class CommandStorage extends Storage {
-	private final String DEFAULT_IMAGE_PATH = "turtle.png";
+    private final String DEFAULT_IMAGE_PATH = "turtle.png";
     private ObservableMap<Integer,Actor> actors;
     private List<Integer> active;
     private ObservableMap<String,Double> variables;

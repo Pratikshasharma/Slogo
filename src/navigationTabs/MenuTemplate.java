@@ -21,7 +21,6 @@ public abstract class MenuTemplate implements MenuLayout {
     public static final String RESOURCE_PACKAGE = "resources";
     public static final String BUTTON_LABEL_FILE = "Button";
 
-
     public MenuTemplate(String property) {
         myResources= ResourceBundle.getBundle(RESOURCE_PACKAGE + File.separator + BUTTON_LABEL_FILE);
         String label = myResources.getString(property);
@@ -55,6 +54,14 @@ public abstract class MenuTemplate implements MenuLayout {
      */
     public Menu getMyMenu(){
         return myMenu;
+    }
+    
+    /**
+     * Allows adding a new menuItem in the menu
+     * @param property
+     */
+    public void addNewMenuItem(String property){
+        myMenu.getItems().add(createMenuItem(property));
     }
 }
 
