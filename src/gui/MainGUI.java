@@ -1,6 +1,6 @@
 package gui;
 import javafx.event.EventHandler;
-import commandreference.ControlButtons;
+import commandreference.ControlButtonManager;
 import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -37,7 +37,7 @@ public class MainGUI implements MainGUITemplate{
     private BorderPane myRoot;
     private Pane myCanvas;
     private Window myWindow;
-    private ControlButtons myControlButtons;
+    private ControlButtonManager myControlButtons;
     private UserDefaults myPrefs;
     private ActiveTurtleDisplayInformation myActiveTurtleInfo;
     public static final double TURTLE_PANE_WIDTH = 550;
@@ -53,7 +53,7 @@ public class MainGUI implements MainGUITemplate{
         myHistory = new History();
         myWindow = new Window();
         myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
-        myControlButtons = new ControlButtons();
+        myControlButtons = new ControlButtonManager();
         myPrefs = new UserDefaults(this.getClass().toString());
         setHistoryClickables();
     }
@@ -92,7 +92,7 @@ public class MainGUI implements MainGUITemplate{
         VBox activeLabels = new VBox(20);
         VBox controlButtons = new VBox();
         setOnClearButton();
-        controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton(), myControlButtons.getSaveButton(), myControlButtons.getLoadButton());
+        controlButtons.getChildren().addAll(myControlButtons.getRunButtonNode(), myControlButtons.getClearButtonNode(), myControlButtons.getTogglePenButtonNode(), myControlButtons.getSaveButtonNode(), myControlButtons.getLoadButtonNode());
         activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
         bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
         return bottomBox;
