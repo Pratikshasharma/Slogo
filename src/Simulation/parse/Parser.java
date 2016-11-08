@@ -10,9 +10,13 @@ import SlogoException.UserDefinitionException;
 
 
 /**
+ * The class that begins the parsing. Entering this class initiates the 
+ * syntax regex checking. When a syntax error/exception is not caught, 
+ * it continues to call the produceTree method in TreeFactory class to
+ * continue the parsing and creating of the expression tree to send to
+ * execution. 
  * 
  * @author joykim
- *
  */
 public class Parser {
 	public final static String LANG_PATH = "resources/languages/";
@@ -44,7 +48,16 @@ public class Parser {
 		}
 	}
 
-	// given some text, prints results of parsing it using the given language
+	/**
+	 * The central method to parsing the commands. Given a String array of
+	 * lines of texts, it separates them into individual words or tokens into
+	 * a list of nodes and goes into the TreeFactory class then returns one
+	 * tree node. 
+	 * 
+	 * @param text
+	 * @param custom
+	 * @return toSend, a successfully made InfoNode to be executed. 
+	 */
 	public InfoNode parseText(String[] text, CommandStorage custom) {
 
 		InfoNode toSend = null;
