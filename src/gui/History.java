@@ -1,3 +1,9 @@
+// This entire file is part of my masterpiece.
+// Ted Marchildon
+
+/*
+ * Meant to show the creation of the lambda expressions for the masterpiece
+ */
 package gui;
 
 import javafx.geometry.Insets;
