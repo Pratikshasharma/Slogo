@@ -24,7 +24,7 @@ public abstract class ControlButton {
 		return myButton;
 	}
 	
-	public void setOnMouseClicked(EventHandler<? super MouseEvent> handler){
+	protected void setOnMouseClicked(EventHandler<? super MouseEvent> handler){
 		myButton.setOnMouseClicked(handler);
 	}
 }
