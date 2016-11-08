@@ -1,5 +1,10 @@
 // This entire file is part of my masterpiece.
 // Ted Marchildon
+/*
+ * I wanted this to show the functional interfaces and lambda expressions used. They are in the 
+ * backgroundChangeable method and the History class, where I create and define our own lambdas.
+ * 
+ */
 
 package gui;
 import javafx.event.EventHandler;
