@@ -1,6 +1,6 @@
 /*
- * THIS IS PART OF MY CODE MASTERPIECE.
- * 
+ * This entire file is part of my code masterpiece.
+ * Vincent Zhang 
  * The masterpiece I am submitting is the hierarchy of my commands. 
  * I have included the top command interface and the 2nd and 3rd level of abstract classes for the sake of submitting only a little code, but the actual commands that use these levels are implicit.
  * 

@@ -1,5 +1,6 @@
 /*
- * THIS IS PART OF MY CODE MASTERPIECE.
+ * This entire file is part of my code masterpiece.
+ * Vincent Zhang
  * This is part of the second level of my hierarchy and provides the call for commands that use local variables.
  * See CommandInterface for more complete description.
  * 

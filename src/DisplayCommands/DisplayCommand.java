@@ -1,5 +1,6 @@
 /*
- * THIS IS PART OF MY CODE MASTERPIECE.
+ * This entire file is part of my code masterpiece.
+ * Vincent Zhang
  * This is part of the third level of my hierarchy and basic functionality for DisplayCommands.
  * See CommandInterface for more complete description.
  * 
