@@ -10,6 +10,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
+//This entire file is part of my masterpiece.
+//Pratiksha Sharma
+// Meant to show the use of Observable Maps which I use to create and keep rack of Multiple workspaces created
+
+
 /**
  * Purpose: To return Scene that is to set on the stage when Slogo is started
  *          To enable creation of multiple windows by housing a map of AppControllers and Ids 
@@ -20,15 +25,15 @@ import javafx.scene.layout.BorderPane;
 
 public class Slogo implements ISlogo{
     private TabPane myTabPane;
-    private static final String TAB_TITLE = "Slogo ";
+    
     private BorderPane myRoot;
-    ObservableMap<Integer,AppController> myMultipleWindowMap; 
+    ObservableMap<Integer,AppController> myWorkspaces; 
 
     /**
      * @return Scene when the initial window is created
      */
     public Scene startSlogo(){
-        myMultipleWindowMap = FXCollections.observableMap(new HashMap<Integer,AppController>());
+        myWorkspaces = FXCollections.observableMap(new HashMap<Integer,AppController>());
         myTabPane = new TabPane();
         myRoot = new BorderPane();
         setNewWindowObserver();
@@ -38,7 +43,7 @@ public class Slogo implements ISlogo{
     private Integer getId(){
         Random rand = new Random();
         int randomInteger = rand.nextInt();
-        while(myMultipleWindowMap.containsKey(randomInteger)){
+        while(myWorkspaces.containsKey(randomInteger)){
             randomInteger = rand.nextInt();
         }
         return randomInteger;
@@ -46,8 +51,8 @@ public class Slogo implements ISlogo{
 
     private void addNewTab() {
         AppController myAppController = new AppController();
-        myMultipleWindowMap.put(getId(),myAppController);
-        Tab myTab = new Tab(TAB_TITLE + myMultipleWindowMap.size());
+        myWorkspaces.put(getId(),myAppController);
+        Tab myTab = new Tab(TAB_TITLE + myWorkspaces.size());
         myTab.setContent(myAppController.initiateApp());
         myTabPane.getTabs().add(myTab);
     }
@@ -59,7 +64,7 @@ public class Slogo implements ISlogo{
     }
 
     private void setNewWindowObserver(){
-        myMultipleWindowMap.addListener( new MapChangeListener<Integer,AppController>(){
+        myWorkspaces.addListener( new MapChangeListener<Integer,AppController>(){
             @Override
             public void onChanged (javafx.collections.MapChangeListener.Change<? extends Integer, ? extends AppController> change) {
                 change.getValueAdded().getNewWindowMenu().setOnAction(e ->addNewTab());
