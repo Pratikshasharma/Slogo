@@ -8,7 +8,17 @@ import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 import gui.MainGUI;
 
+/**
+ * Move actor forwards a certain number of pixels.
+ * Returns pixels.
+ * 
+ * @author Vincent
+ *
+ */
 public class Forward extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {

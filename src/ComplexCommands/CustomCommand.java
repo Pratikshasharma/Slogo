@@ -7,7 +7,17 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Executes a previously defined user function.
+ * Returns value of last command in the custom command execution.
+ * 
+ * @author Vincent
+ *
+ */
 public class CustomCommand extends ComplexCommand{
+    /* (non-Javadoc)
+     * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

@@ -7,6 +7,13 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Execute a set of commands a certain number of times using a temporary variable.
+ * Return value of last command executed.
+ * 
+ * @author Vincent
+ *
+ */
 public class DoTimes extends ComplexCommand{
     @Override
     public double execute (CommandStorage myCommandStorage,

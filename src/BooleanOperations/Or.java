@@ -5,7 +5,16 @@ import Command.BooleanOperation;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Returns integer value of boolean operation or for several values.
+ * 
+ * @author Vincent
+ *
+ */
 public class Or extends BooleanOperation{
+    /* (non-Javadoc)
+     * @see Command.BooleanOperation#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

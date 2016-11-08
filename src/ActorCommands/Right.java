@@ -6,7 +6,17 @@ import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Turns the actor a certain number of degrees.
+ * Returns the angle moved.
+ * 
+ * @author Vincent
+ *
+ */
 public class Right extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

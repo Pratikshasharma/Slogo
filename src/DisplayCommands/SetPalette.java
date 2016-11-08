@@ -5,8 +5,18 @@ import Command.DisplayCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Maps a color index to a color rgb values in the palette.
+ * Returns the index.
+ * 
+ * @author Vincent
+ *
+ */
 public class SetPalette extends DisplayCommand{
     private static final double RGB_UPPER_BOUND=255;
+    /* (non-Javadoc)
+     * @see Command.DisplayCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 

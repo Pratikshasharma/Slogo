@@ -1,6 +1,14 @@
+// This entire file is part of my masterpiece.
+// Ted Marchildon
+/*
+ * I wanted this to show the functional interfaces and lambda expressions used. They are in the 
+ * backgroundChangeable method and the History class, where I create and define our own lambdas.
+ * 
+ */
+
 package gui;
 import javafx.event.EventHandler;
-import commandreference.ControlButtons;
+import commandreference.ControlButtonManager;
 import commandreference.Turtleable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -20,7 +28,14 @@ import navigationTabs.Language;
 import navigationTabs.Tools;
 import navigationTabs.Window;
 
-public class MainGUI {
+/**
+ * Purpose: Add all nodes required in the scene
+ * Dependencies: Classes: FileTab, Language, Tools, Console, Help,Window, ControlButtons,UserDefault, ActiveTurtleDisplayInformation
+ * @author pratikshasharma, Teddy
+ *
+ */
+
+public class MainGUI implements MainGUITemplate{
     private FileTab myFileTab;
     private Language myLanguageTab; 
     private Tools myTools;
@@ -30,13 +45,13 @@ public class MainGUI {
     private BorderPane myRoot;
     private Pane myCanvas;
     private Window myWindow;
-    private ControlButtons myControlButtons;
+    private ControlButtonManager myControlButtons;
     private UserDefaults myPrefs;
     private ActiveTurtleDisplayInformation myActiveTurtleInfo;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
 
-    public MainGUI() {
+    public MainGUI()  {
         myRoot = new BorderPane();
         myFileTab = new FileTab();
         myTools = new Tools();
@@ -46,11 +61,15 @@ public class MainGUI {
         myHistory = new History();
         myWindow = new Window();
         myActiveTurtleInfo = new ActiveTurtleDisplayInformation();
-        myControlButtons = new ControlButtons();
+        myControlButtons = new ControlButtonManager();
         myPrefs = new UserDefaults(this.getClass().toString());
         setHistoryClickables();
     }
 
+    /**
+     * @return Parent
+     * Returns main root of the scene
+     */
     public Parent createRoot(){
         myRoot.setTop(createTop());
         myRoot.setLeft(createLeft());
@@ -71,7 +90,7 @@ public class MainGUI {
         top.getChildren().addAll(addItemsInMenuBar());
         return top;
     }
-    
+
     public void updateActiveTurtleInfo(int id, Turtleable turtle){
         myActiveTurtleInfo.updateStatus(id, turtle);
     }
@@ -81,7 +100,7 @@ public class MainGUI {
         VBox activeLabels = new VBox(20);
         VBox controlButtons = new VBox();
         setOnClearButton();
-        controlButtons.getChildren().addAll(myControlButtons.getRunButton(), myControlButtons.getClearButton(), myControlButtons.getTogglePenButton(), myControlButtons.getSaveButton(), myControlButtons.getLoadButton());
+        controlButtons.getChildren().addAll(myControlButtons.getRunButtonNode(), myControlButtons.getClearButtonNode(), myControlButtons.getTogglePenButtonNode(), myControlButtons.getSaveButtonNode(), myControlButtons.getLoadButtonNode());
         activeLabels.getChildren().addAll(myActiveTurtleInfo.getIDLabel(), myActiveTurtleInfo.getCurrentOrienation(), myActiveTurtleInfo.getPenStatus());
         bottomBox.getChildren().addAll(myConsole.getTextField(), controlButtons, activeLabels);
         return bottomBox;
@@ -106,7 +125,7 @@ public class MainGUI {
         menuBar.getMenus().addAll(myFileTab.getMyMenu(), myTools.getMyMenu(), myLanguageTab.getMyMenu(), myHelpTab.getMyMenu(), myWindow.getMyMenu());
         return menuBar;
     }
-    
+
     private void addTurtleOnScene(Turtleable turtle){
         if(!isOnCanvas(turtle.getImageView())){
             turtle.getImageView().setX(turtle.getCoordinates().getX().get());
@@ -114,11 +133,14 @@ public class MainGUI {
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
-    
+
     public FileTab getMyFileTab(){
         return myFileTab;
     }
-    
+
+    /**
+     * Updates location of the active turtle
+     */
     public void updateTurtleLocation(Turtleable turtle){
         double x = turtle.getImageView().getX();
         double y = turtle.getImageView().getY();
@@ -132,21 +154,21 @@ public class MainGUI {
             addLineOnCanvas(turtle, x, y);
         }
     }
-    
+
     private void addLineOnCanvas(Turtleable turtle, double x, double y){
-    	double red = turtle.getColorArray()[0];
-    	double green = turtle.getColorArray()[1];
-    	double blue = turtle.getColorArray()[2];
+        double red = turtle.getColorArray()[0];
+        double green = turtle.getColorArray()[1];
+        double blue = turtle.getColorArray()[2];
         if(turtle.getLine().size()<1){
-        	Line l = turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
-        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
-        	l.setStyle("-fx-stroke: " + myString);
-        	myCanvas.getChildren().add(l);
+            Line l = turtle.drawLine(x+turtle.getImageView().getBoundsInLocal().getWidth()/2, y, turtle.getCoordinates().getX().get()+turtle.getImageView().getBoundsInLocal().getWidth()/2, turtle.getCoordinates().getY().get());
+            String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+            l.setStyle("-fx-stroke: " + myString);
+            myCanvas.getChildren().add(l);
         } else {
-        	Line l = turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
-        	String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
-        	l.setStyle("-fx-stroke: " + myString);
-        	myCanvas.getChildren().add(l);
+            Line l = turtle.drawLine(x, y, turtle.getCoordinates().getX().get(), turtle.getCoordinates().getY().get());
+            String myString = "rgb(" + ((int) red) + "," + ((int) green) + "," + ((int) blue) + ")";
+            l.setStyle("-fx-stroke: " + myString);
+            myCanvas.getChildren().add(l);
         }
     }
 
@@ -158,7 +180,7 @@ public class MainGUI {
         return myCanvas.getChildren().contains(myNode);
     }
 
-    public BackgroundChangeable getBackgroundChanger(){
+    private BackgroundChangeable getBackgroundChanger(){
         BackgroundChangeable backgroundChanger = (root, backgroundColor) ->{
             VBox pane = (VBox) root.getLeft();
             Pane p = (Pane) pane.getChildren().get(0);
@@ -205,7 +227,7 @@ public class MainGUI {
     public Menu getPenColorMenu(){
         return myTools.getPenColorSubMenu();
     }
-    
+
     public void addColorOption(String key){
         myTools.addColorOption(key);
     }
@@ -218,26 +240,31 @@ public class MainGUI {
     public Menu getBackgroundMenu(){
         return myTools.getBackgroundColorMenu();
     }
-    
+
     private void setBackgroundPreference(String color){
-    	myPrefs.setBackground(color);
+        myPrefs.setBackground(color);
     }
-    
+
     public void setOnSaveButtonClicked(EventHandler<? super MouseEvent> handler){
-    	myControlButtons.setOnSave(handler);
+        myControlButtons.setOnSave(handler);
     }
-    
+
     public void setOnLoadButtonClicked(EventHandler<? super MouseEvent> handler){
-    	myControlButtons.setOnLoad(handler);
+        myControlButtons.setOnLoad(handler);
     }
-    
-	public void clearTurtleLines(Turtleable turtle) {
-		for(Line l : turtle.getLine()){
-			myCanvas.getChildren().remove(l);
-		}
-	}
-	
-	public void setOnTogglePenClicked(EventHandler<? super MouseEvent> handler){
-		myControlButtons.setOnTogglePen(handler);
-	}
+
+    /**
+     * Clears lines in the screen 
+     */
+    public void clearTurtleLines(Turtleable turtle) {
+        for(Line l : turtle.getLine()){
+            myCanvas.getChildren().remove(l);
+        }
+    }
+
+    public void setOnTogglePenClicked(EventHandler<? super MouseEvent> handler){
+        myControlButtons.setOnTogglePen(handler);
+    }
+
+ 
 }  

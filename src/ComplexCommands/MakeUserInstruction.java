@@ -6,7 +6,17 @@ import Command.ComplexCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Makes a new user defined instruction
+ * Returns 1 if successful.
+ * 
+ * @author Vincent
+ *
+ */
 public class MakeUserInstruction extends ComplexCommand{
+    /* (non-Javadoc)
+     * @see Command.ComplexCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

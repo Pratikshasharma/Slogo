@@ -1,10 +1,13 @@
+// This entire file is part of my masterpiece.
+// Ted Marchildon
+
 package gui;
 
 import javafx.scene.layout.BorderPane;
 
 /*
  * Used to implement a lambda expression for changing the background color of the canvas
- * 
+ * @author Teddy
  */
 public interface BackgroundChangeable {
 	

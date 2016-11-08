@@ -6,7 +6,17 @@ import Command.ActorCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Set the actor to be visible
+ * Returns 1.
+ * 
+ * @author Vincent
+ *
+ */
 public class ShowTurtle extends ActorCommand{
+    /* (non-Javadoc)
+     * @see Command.ActorCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

@@ -6,7 +6,16 @@ import Command.ActorQuery;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * REturns pen status of the actor.
+ * 
+ * @author Vincent
+ *
+ */
 public class IsPenDown extends ActorQuery{
+    /* (non-Javadoc)
+     * @see Command.ActorQuery#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) {       

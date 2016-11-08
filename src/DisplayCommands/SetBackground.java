@@ -5,7 +5,17 @@ import Command.DisplayCommand;
 import Simulation.CommandStorage;
 import Simulation.Node.InfoNode;
 
+/**
+ * Set color index for background.
+ * Return the index.
+ * 
+ * @author Vincent
+ *
+ */
 public class SetBackground extends DisplayCommand{
+    /* (non-Javadoc)
+     * @see Command.DisplayCommand#execute(Simulation.CommandStorage, java.util.List)
+     */
     @Override
     public double execute (CommandStorage myCommandStorage,
                            List<InfoNode> args) { 
