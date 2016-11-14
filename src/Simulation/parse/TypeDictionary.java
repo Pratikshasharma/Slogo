@@ -8,6 +8,10 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/**
+ * Based on the given code from example_advanced/src/regularExpression/ProgramParser
+ *
+ */
 public class TypeDictionary {
 	// "types" and the regular expression patterns that recognize those types
 	// note, it is a list because order matters (some patterns may be more
