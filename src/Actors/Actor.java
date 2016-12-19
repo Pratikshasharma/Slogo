@@ -10,6 +10,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -179,5 +180,12 @@ public abstract class Actor implements Turtleable {
 	
 	public double[] getColorArray(){
 		return penColorArray;
+	}
+	
+	public void setImageView(ImageView myImageView){
+	    this.myImage=myImageView;
+	}
+	public void setImage(Image image){
+	myImage.setImage(image);
 	}
 }

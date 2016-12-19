@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -31,5 +32,9 @@ public interface Turtleable {
 	public void clearLines();
 	
 	public double[] getColorArray();
+	
+	public void setImageView(ImageView myImageView);
+	
+	public void setImage(Image myImage);
 	
 }

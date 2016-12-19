@@ -1,5 +1,8 @@
 package gui;
 import javafx.event.EventHandler;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 import commandreference.ControlButtons;
 import commandreference.Turtleable;
 import javafx.geometry.Insets;
@@ -8,6 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -42,6 +48,8 @@ public class MainGUI implements MainGUITemplate{
     private ActiveTurtleDisplayInformation myActiveTurtleInfo;
     public static final double TURTLE_PANE_WIDTH = 550;
     public static final double TURTLE_PANE_HEIGHT = 450;
+    private HBox myHBox;
+    private ScrollPane myScrollPane;
 
     public MainGUI()  {
         myRoot = new BorderPane();
@@ -56,6 +64,8 @@ public class MainGUI implements MainGUITemplate{
         myControlButtons = new ControlButtons();
         myPrefs = new UserDefaults(this.getClass().toString());
         setHistoryClickables();
+        myHBox = new HBox();
+        myScrollPane = new ScrollPane();
     }
 
     /**
@@ -80,6 +90,8 @@ public class MainGUI implements MainGUITemplate{
     private HBox createTop(){
         HBox top = new HBox(20);
         top.getChildren().addAll(addItemsInMenuBar());
+
+        top.getChildren().add(myScrollPane);
         return top;
     }
 
@@ -120,11 +132,44 @@ public class MainGUI implements MainGUITemplate{
 
     private void addTurtleOnScene(Turtleable turtle){
         if(!isOnCanvas(turtle.getImageView())){
+            ImageView imageview = new ImageView(turtle.getImageView().getImage());
+
+            // Added to change the ImageView of the active turtle
+            imageview.setFitHeight(40);
+            imageview.setFitWidth(40);
+            myHBox.getChildren().add(imageview);
+
+            myScrollPane.setContent(myHBox);
+
             turtle.getImageView().setX(turtle.getCoordinates().getX().get());
             turtle.getImageView().setY(turtle.getCoordinates().getY().get());
+            turtle.getImageView().setId(turtle.getImageView().toString());
+           
+            imageview.setOnMouseClicked(e-> changeImageView(turtle, imageview));
+
             myCanvas.getChildren().add(turtle.getImageView());
         }
     }
+
+    // ADded this to change the image of the active turtle
+    
+    private void changeImageView(Turtleable turtle, ImageView oldImageView){
+        FileOpener file = new FileOpener();
+        try{
+            String filePath = file.chooseFile().toURL().toString();
+            if(filePath!=null){
+                ImageView image = new ImageView(new Image(filePath));
+                image.setFitHeight(40);
+                image.setFitWidth(40);    
+                oldImageView.setImage(image.getImage());
+
+                turtle.setImage(image.getImage());
+            }
+        } catch (MalformedURLException error) {
+            ErrorAlert alert = new ErrorAlert("Image File not Loaded");
+        }
+    }
+
 
     public FileTab getMyFileTab(){
         return myFileTab;
@@ -258,5 +303,9 @@ public class MainGUI implements MainGUITemplate{
         myControlButtons.setOnTogglePen(handler);
     }
 
- 
+
+    public void addImage(ImageView myImageView){
+        myHBox.getChildren().add(myImageView);   
+    }
+
 }  

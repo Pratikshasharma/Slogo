@@ -80,15 +80,17 @@ public class GUIController implements IGUIController{
      * @return Turtle Image File
      */
     public File chooseFile(){
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("Image Files","*.bmp", "*.png", "*.jpg", "*.gif");
-        String userDirectoryString = System.getProperty("user.dir") + File.separator + "images";
-        File userDirectory = new File(userDirectoryString);
-        fileChooser.setInitialDirectory(userDirectory);
-        fileChooser.getExtensionFilters().add(extentionFilter);
-        Stage myStage = new Stage();
-        File chosenFile = fileChooser.showOpenDialog(myStage);
-        return chosenFile;
+//        FileChooser fileChooser = new FileChooser();
+//        FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("Image Files","*.bmp", "*.png", "*.jpg", "*.gif");
+//        String userDirectoryString = System.getProperty("user.dir") + File.separator + "images";
+//        File userDirectory = new File(userDirectoryString);
+//        fileChooser.setInitialDirectory(userDirectory);
+//        fileChooser.getExtensionFilters().add(extentionFilter);
+//        Stage myStage = new Stage();
+//        File chosenFile = fileChooser.showOpenDialog(myStage);
+//        return chosenFile;
+        FileOpener myFileOpener = new FileOpener();
+        return myFileOpener.chooseFile();
     }
 
     /**
